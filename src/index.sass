@@ -4,6 +4,9 @@
 @import './assets/styles/_mixins'
 @import './assets/styles/_defaultstyles'
 
+*
+  transition: all .2s !important
+
 #root, body
   background: $color-secondary
   min-height: 100vh
@@ -34,11 +37,3 @@ footer
   @include flexbox
   @include flex-direction($direction: column)
   @include margin-padding($m-direction: top, $m-amount: 35px)
-
-  .log-reg-form
-    @include figure($width: 420px, $height: 350px)
-    @include margin-padding($m-direction: top, $m-amount: 19px, $p-direction: all, $p-amount: 25px)
-    @include flexbox
-    @include flex-direction($direction: column)
-    @include border-radius($radius: 15px)
-    background: $color-secondary

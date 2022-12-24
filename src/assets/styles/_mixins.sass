@@ -6,6 +6,10 @@
   @else
     width: $width
 
+@mixin font($size: 1rem, $weight: 400)
+  font-size: $size
+  font-weight: $weight
+
 @mixin max-width($m-width, $center: true)
   max-width: $m-width
   width: 100%
@@ -27,12 +31,13 @@
 
 // flex
 
-@mixin flexbox
+@mixin flexbox($gap: 0)
   display: -webkit-box
   display: -moz-box
   display: -ms-flexbox
   display: -webkit-flex
   display: flex
+  gap: $gap
 
 @mixin flex-direction($direction: row)
   -webkit-flex-direction: $direction
@@ -118,3 +123,16 @@
     -ms-flex-line-pack: end
   @else
     -ms-flex-line-pack: $value
+
+// position
+
+@mixin position($position, $left: 0, $h-center: false, $top: 0, $v-center: false)
+  position: $position
+  left: $left
+  top: $top
+  @if $v-center
+    top: 50%
+    transform: translateY(-50%)
+  @if $h-center
+    left: 50%
+    transform: translateX(-50%)

@@ -1,0 +1,10 @@
+@import '../../assets/styles/_mixins'
+@import '../../assets/styles/_variables'
+
+.log-reg-form
+  @include figure($width: 420px, $height: 350px)
+  @include margin-padding($m-direction: top, $m-amount: 19px, $p-direction: all, $p-amount: 25px)
+  @include flexbox($gap: 16px)
+  @include flex-direction($direction: column)
+  @include border-radius($radius: 15px)
+  background: $color-secondary

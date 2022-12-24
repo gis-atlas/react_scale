@@ -1,0 +1,29 @@
+@import '../../../assets/styles/_mixins'
+@import '../../../assets/styles/_variables'
+
+$padding: 10px 12px
+
+div.form-input
+  position: relative
+
+  input
+    width: 100%
+    height: 100%
+    border: 2px solid $color-primary
+    @include border-radius($radius: 4px)
+    @include font($size: 14px, $weight: 700)
+    @include margin-padding($p-direction: all, $p-amount: 10px 10px)
+
+    &:focus + label
+      @include position($position: absolute, $left: 0, $top: 0)
+      @include font($size: 12px, $weight: 600)
+
+  label
+    @include position($position: absolute, $left: 0, $top: center, $v-center: true)
+    @include font($size: 14px, $weight: 700)
+    @include margin-padding($p-direction: all, $p-amount: 10px 12px)
+    color: $color-sedondary-darker
+    cursor: text
+    &.filled
+      @include position($position: absolute, $left: 0, $top: 0)
+      @include font($size: 12px, $weight: 600)
