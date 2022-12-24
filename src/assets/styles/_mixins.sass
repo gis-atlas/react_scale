@@ -1,0 +1,14 @@
+@mixin figure($width, $height, $radius: 4px)
+  width: $width
+  height: $height
+  border-radius: $radius
+
+@mixin margin-padding($m-direction, $m-amount, $p-direction, $p-amount)
+  @if $m-direction == all
+    margin: $m-amount
+  @else
+    margin-#{$m-direction}: $m-amount
+  @if $p-direction == all
+    padding: $p-amount
+  @else
+    padding-#{$p-direction}: $p-amount
