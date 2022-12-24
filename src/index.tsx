@@ -13,6 +13,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Header />
-    <RouterProvider router={router} />
+    <main>
+      <div className='content'>
+        <RouterProvider router={router} />
+      </div>
+    </main>
+    <footer>фывыфв</footer>
   </React.StrictMode>
 );

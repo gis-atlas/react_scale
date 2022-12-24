@@ -1,6 +1,18 @@
-@mixin figure($width, $height, $radius: 4px)
-  width: $width
+@mixin figure($adaptive: true, $width, $height)
   height: $height
+  @if $adaptive
+    width: $width
+    max-width: 100%
+  @else
+    width: $width
+
+@mixin max-width($m-width, $center: true)
+  max-width: $m-width
+  width: 100%
+  @if $center
+    margin: auto
+
+@mixin border-radius($radius: 0)
   border-radius: $radius
 
 @mixin margin-padding($m-direction, $m-amount, $p-direction, $p-amount)
@@ -12,3 +24,97 @@
     padding: $p-amount
   @else
     padding-#{$p-direction}: $p-amount
+
+// flex
+
+@mixin flexbox
+  display: -webkit-box
+  display: -moz-box
+  display: -ms-flexbox
+  display: -webkit-flex
+  display: flex
+
+@mixin flex-direction($direction: row)
+  -webkit-flex-direction: $direction
+  -ms-flex-direction: $direction
+  flex-direction: $direction
+  @if $direction == row-reverse
+    -webkit-box-direction: reverse
+    -webkit-box-orient: horizontal
+    -moz-box-direction: reverse
+    -moz-box-orient: horizontal
+  @else if $direction == column
+    -webkit-box-direction: normal
+    -webkit-box-orient: vertical
+    -moz-box-direction: normal
+    -moz-box-orient: vertical
+  @else if $direction == column-reverse
+    -webkit-box-direction: reverse
+    -webkit-box-orient: vertical
+    -moz-box-direction: reverse
+    -moz-box-orient: vertical
+  @else
+    -webkit-box-direction: normal
+    -webkit-box-orient: horizontal
+    -moz-box-direction: normal
+    -moz-box-orient: horizontal
+
+@mixin flex($fg: 1, $fs: 0, $fb: auto)
+
+  $fg-boxflex: $fg
+  -webkit-box: $fg-boxflex
+  -moz-box: $fg-boxflex
+  -webkit-flex: $fg $fs $fb
+  -ms-flex: $fg $fs $fb
+  flex: $fg $fs $fb
+
+  @if type-of($fg) == 'list'
+    $fg-boxflex: nth($fg, 1)
+
+@mixin justify-content($value: flex-start)
+  -webkit-justify-content: $value
+  justify-content: $value
+  @if $value == flex-start
+    -webkit-box-pack: start
+    -moz-box-pack: start
+    -ms-flex-pack: start
+  @else if $value == flex-end
+    -webkit-box-pack: end
+    -moz-box-pack: end
+    -ms-flex-pack: end
+  @else if $value == space-between
+    -webkit-box-pack: justify
+    -moz-box-pack: justify
+    -ms-flex-pack: justify
+  @else if $value == space-around
+    -ms-flex-pack: distribute
+  @else
+    -webkit-box-pack: $value
+    -moz-box-pack: $value
+    -ms-flex-pack: $value
+
+@mixin align-items($value: stretch)
+  -webkit-align-items: $value
+  align-items: $value
+  @if $value == flex-start
+    -webkit-box-align: start
+    -moz-box-align: start
+    -ms-flex-align: start
+  @else if $value == flex-end
+    -webkit-box-align: end
+    -moz-box-align: end
+    -ms-flex-align: end
+  @else
+    -webkit-box-align: $value
+    -moz-box-align: $value
+    -ms-flex-align: $value
+
+@mixin align-content($value: stretch)
+  -webkit-align-content: $value
+  align-content: $value
+  @if $value == flex-start
+    -ms-flex-line-pack: start
+  @else if $value == flex-end
+    -ms-flex-line-pack: end
+  @else
+    -ms-flex-line-pack: $value

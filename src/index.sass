@@ -2,18 +2,33 @@
 @import './assets/styles/_variables'
 @import './assets/styles/_nullstyles'
 @import './assets/styles/_mixins'
+@import './assets/styles/_defaultstyles'
 
-*
-  font-family: 'Nunito', sans-serif !important
-  color: $color-text-primary
+#root, body
+  background: $color-primary
+  min-height: 100vh
 
-h1, h2, h3, h4, h5, h6
-  font-weight: 700
-  line-height: 1.364em
-  max-width: 200px
+#root
+  @include flexbox
+  @include flex-direction($direction: column)
 
-h1
-  font-size: calc(1rem / 8 * 15)
+header
+  height: $header-height
+
+header, footer, main > .content
+  @include max-width($m-width: $max-inner-width)
+
+header, footer
+  @include flexbox
+  @include align-items($value: center)
+
+main
+  @include flex($fg: 1)
+  @include border-radius($radius: 30px)
+  background: $color-light
+
+footer
+  height: $footer-height
 
 div.square
   @include figure($width: 30px, $height: 30px)
