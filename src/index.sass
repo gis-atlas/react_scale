@@ -37,3 +37,19 @@ footer
   @include flexbox
   @include flex-direction($direction: column)
   @include margin-padding($m-direction: top, $m-amount: 35px)
+  .log-reg-form
+    @include figure($width: 420px, $height: 350px)
+    @include margin-padding($m-direction: top, $m-amount: 19px, $p-direction: all, $p-amount: 25px)
+    @include flexbox
+    @include flex-direction($direction: column)
+    @include justify-content($value: space-between)
+    @include border-radius($radius: 15px)
+    background: $color-secondary
+    .inputs
+      @include flexbox($gap: 16px)
+      @include flex-direction($direction: column)
+
+  h1
+    @include margin-padding($m-direction: top, $m-amount: 19px, $p-direction: all, $p-amount: 25px)
+  .buttons
+    @include flexbox($gap: 15px)

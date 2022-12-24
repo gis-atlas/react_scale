@@ -14,9 +14,13 @@ div.form-input
     @include font($size: 14px, $weight: 700)
     @include margin-padding($p-direction: all, $p-amount: 10px 10px)
 
+    &::placeholder
+      color: $color-sedondary-darker
+
     &:focus + label
       @include position($position: absolute, $left: 0, $top: 0)
       @include font($size: 12px, $weight: 600)
+      @include margin-padding($p-direction: all, $p-amount: 10px 12px)
 
   label
     @include position($position: absolute, $left: 0, $top: center, $v-center: true)
