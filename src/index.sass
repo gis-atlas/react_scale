@@ -5,7 +5,7 @@
 @import './assets/styles/_defaultstyles'
 
 #root, body
-  background: $color-primary
+  background: $color-secondary
   min-height: 100vh
 
 #root
@@ -30,6 +30,15 @@ main
 footer
   height: $footer-height
 
-div.square
-  @include figure($width: 30px, $height: 30px)
-  @include margin-padding($m-direction: top, $m-amount: 20px, $p-direction: left, $p-amount: 20px)
+.log-reg-container
+  @include flexbox
+  @include flex-direction($direction: column)
+  @include margin-padding($m-direction: top, $m-amount: 35px)
+
+  .log-reg-form
+    @include figure($width: 420px, $height: 350px)
+    @include margin-padding($m-direction: top, $m-amount: 19px, $p-direction: all, $p-amount: 25px)
+    @include flexbox
+    @include flex-direction($direction: column)
+    @include border-radius($radius: 15px)
+    background: $color-secondary

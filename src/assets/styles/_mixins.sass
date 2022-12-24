@@ -15,7 +15,7 @@
 @mixin border-radius($radius: 0)
   border-radius: $radius
 
-@mixin margin-padding($m-direction, $m-amount, $p-direction, $p-amount)
+@mixin margin-padding($m-direction: top, $m-amount: 0, $p-direction: top, $p-amount: 0)
   @if $m-direction == all
     margin: $m-amount
   @else
