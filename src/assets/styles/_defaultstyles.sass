@@ -1,3 +1,4 @@
+@import './_mixins'
 *
   font-family: 'Nunito', sans-serif !important
   color: $color-text-primary
@@ -8,4 +9,7 @@ h1, h2, h3, h4, h5, h6
   max-width: 200px
 
 h1
-  font-size: calc(1rem / 8 * 15)
+  @include font($size: 30px, $weight: 700)
+
+h2
+  @include font($size: 20px, $weight: 700)

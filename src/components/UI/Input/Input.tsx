@@ -4,9 +4,10 @@ import './index.sass';
 interface IInput {
   label?: string;
   placeholder?: string;
+  styles?: object;
 }
 
-const Input = ({ label, placeholder }: IInput) => {
+const Input = ({ label, placeholder, styles }: IInput) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isInputEmpty, setIsInputEmpty] = useState<boolean>(true);
   const [focused, setFocused] = useState<boolean>(false);
@@ -21,7 +22,7 @@ const Input = ({ label, placeholder }: IInput) => {
   };
 
   return (
-    <div className='form-input'>
+    <div className='form-input' style={styles}>
       <input
         ref={ref}
         onChange={handleInput}
