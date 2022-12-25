@@ -1,6 +1,7 @@
 import Card from '../components/Cards/Card';
 import Button from '../components/UI/Button/Button';
 import Input from '../components/UI/Input/Input';
+import ImageUploader from '../components/Uploaders/Image/ImageUploader';
 
 const Profile = () => {
   return (
@@ -11,7 +12,7 @@ const Profile = () => {
         styles={{ display: 'flex', flexDirection: 'column', gap: '30px' }}
       >
         <div className='d-flex' style={{ gap: '27px' }}>
-          <p>img</p>
+          <ImageUploader />
           <div className='d-grid' style={{ flex: 1 }}>
             <Input label='Имя' />
             <Input label='Дата рождения' />

@@ -126,14 +126,19 @@
 
 // position
 
-@mixin position($position, $left: 0, $h-center: false, $top: 0, $v-center: false)
+@mixin position($position, $left: 0, $h-center: false, $top: 0, $v-center: false, $z-index: 1)
   position: $position
   left: $left
   top: $top
-  @if $v-center
+  z-index: $z-index
+  @if $v-center and $h-center
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+  @else if $v-center
     top: 50%
     transform: translateY(-50%)
-  @if $h-center
+  @else if $h-center
     left: 50%
     transform: translateX(-50%)
 

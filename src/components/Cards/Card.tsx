@@ -10,7 +10,7 @@ interface ICard {
 const Card = ({ title, children, styles }: ICard) => {
   return (
     <section className='custom-card'>
-      <h2>{title}</h2>
+      <h3>{title}</h3>
       <div className='custom-card-content' style={styles}>
         {children}
       </div>

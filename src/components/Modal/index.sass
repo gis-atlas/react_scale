@@ -1,0 +1,22 @@
+@import '../../assets/styles/_mixins'
+@import '../../assets/styles/_variables'
+
+.modal-wrapper
+  @include position($position: absolute, $left: 0, $top: 0, $z-index: 2)
+  opacity: 0
+  visibility: hidden
+  width: 100%
+  height: 100%
+  background: rgba(0,0,0,.3)
+  &.active
+    opacity: 1
+    visibility: visible
+
+  .modal
+    @include figure($width: 410px, $height: 360px)
+    @include position($position: absolute, $h-center: true, $v-center: true, $z-index: 2)
+    @include border-radius($radius: 20px)
+    @include margin-padding($p-direction: all, $p-amount: 33px 38px)
+    box-shadow: 0px 4px 15px rgba(72, 107, 160, 0.25)
+    background: $color-light
+    &.active
