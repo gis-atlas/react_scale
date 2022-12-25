@@ -1,9 +1,21 @@
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/reducer';
+import { getUserData } from '../store/user';
 import Card from '../components/Cards/Card';
 import Button from '../components/UI/Button/Button';
 import Input from '../components/UI/Input/Input';
 import ImageUploader from '../components/Uploaders/Image/ImageUploader';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../store';
 
 const Profile = () => {
+  const dispatch = useAppDispatch();
+  const num = useSelector((state: RootState) => state.user);
+  useEffect(() => {
+    console.log('asdasd');
+    dispatch(getUserData());
+  }, []);
+  console.log(num);
   return (
     <div className='profile'>
       <h1>Профиль</h1>
