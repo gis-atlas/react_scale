@@ -10,12 +10,15 @@ import { useAppDispatch } from '../store';
 
 const Profile = () => {
   const dispatch = useAppDispatch();
-  const num = useSelector((state: RootState) => state.user);
+  const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
+  const { name, telegram, birthday, city } = useSelector(
+    (state: RootState) => state.user
+  );
   useEffect(() => {
-    console.log('asdasd');
-    dispatch(getUserData());
-  }, [dispatch]);
-  console.log(num);
+    if (isLoggedIn) {
+      dispatch(getUserData());
+    }
+  }, []);
   return (
     <div className='profile'>
       <h1>Профиль</h1>
@@ -26,10 +29,10 @@ const Profile = () => {
         <div className='d-flex' style={{ gap: '27px' }}>
           <ImageUploader />
           <div className='d-grid' style={{ flex: 1 }}>
-            <Input label='Имя' />
-            <Input label='Дата рождения' />
-            <Input label='Ник в telegram' />
-            <Input label='Город' />
+            <Input label='Имя' defaultValue={name} />
+            <Input label='Дата рождения' defaultValue={telegram} />
+            <Input label='Ник в telegram' defaultValue={birthday} />
+            <Input label='Город' defaultValue={city} />
           </div>
         </div>
         <div className='d-flex' style={{ justifyContent: 'end' }}>

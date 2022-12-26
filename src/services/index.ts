@@ -1,12 +1,16 @@
 import axios from 'axios';
 
-export default axios.create({
+const client = axios.create({
   baseURL: '',
   headers: {
     'Content-Type': 'application/json',
   },
-  proxy: {
-    host: 'https://app.gis.earth',
-    port: 80,
-  },
+  withCredentials: true,
 });
+
+client.interceptors.request.use((config: any) => {
+  config.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+  return config;
+});
+
+export default client;

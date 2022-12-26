@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './index.sass';
 
 interface IInput {
@@ -9,6 +9,7 @@ interface IInput {
   type?: string;
   className?: string;
   name?: string;
+  defaultValue?: string;
 }
 
 const Input = ({
@@ -18,19 +19,33 @@ const Input = ({
   type = 'text',
   className,
   name,
+  defaultValue = '',
 }: IInput) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isInputEmpty, setIsInputEmpty] = useState<boolean>(true);
   const [focused, setFocused] = useState<boolean>(false);
+  const [value, setValue] = useState<string>(defaultValue);
 
-  const handleInput = (): void => {
-    if (ref.current?.value.length === 0) {
-      console.log('asd');
+  const handleInput = (e: any): void => {
+    setValue(e.target.value);
+    if (value.length === 0) {
       setIsInputEmpty(true);
     } else {
       setIsInputEmpty(false);
     }
   };
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
+
+  useEffect(() => {
+    if (value.length !== 0) {
+      setIsInputEmpty(false);
+    } else {
+      setIsInputEmpty(true);
+    }
+  }, [value]);
 
   return (
     <div
@@ -47,6 +62,7 @@ const Input = ({
         onBlur={() => setFocused(false)}
         type={type}
         name={name}
+        value={value}
       />
       <label
         className={!isInputEmpty ? 'filled' : ''}

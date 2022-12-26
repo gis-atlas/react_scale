@@ -15,21 +15,21 @@ export const registerUser = createAsyncThunk('user/registerUser', async () => {
     pwd: 'password',
     confirm: 'password',
   });
-  console.log(result);
   return result.data;
 });
 
 export const getUserData = createAsyncThunk('user/getUserData', async () => {
-  console.log('asdfgsgdfsdd');
-  const result = await client.get('/api/auth/profile');
-  console.log(result);
+  const resultProfileData = await client.get('/api/auth/profile');
+  const resultUserData: any = await client.get('/api/auth/users/me');
+  const resultUserAccountData = resultUserData.account;
+  const result = { ...resultProfileData, ...resultUserAccountData };
   return result.data;
 });
 
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    isLoggedIn: false,
+    isLoggedIn: localStorage.getItem('isLoggedIn') || false,
     id: '',
     role: '',
     type: '',
@@ -44,15 +44,18 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(loginUser.fulfilled, (state, action) => {
+      const { accessToken, refreshToken, id } = action.payload;
       state.isLoggedIn = true;
-      const { email, accessToken, refreshToken, id, role, type } =
-        action.payload;
       state.id = id;
-      state.email = email;
       state.access = accessToken;
       state.refresh = refreshToken;
-      state.role = role;
-      state.type = type;
+      localStorage.setItem('token', accessToken);
+      localStorage.setItem('refresh', refreshToken);
+      localStorage.setItem('isLoggedIn', 'true');
+      return state;
+    });
+    builder.addCase(getUserData.fulfilled, (state, action) => {
+      return { ...state, ...action.payload };
     });
   },
 });

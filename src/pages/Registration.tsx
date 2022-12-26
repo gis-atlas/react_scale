@@ -20,11 +20,11 @@ const Registration = () => {
           />
         </div>
         <div className='buttons'>
-          <Button color='secondary' styles={{ flex: '1 0 auto' }} type='submit'>
-            Зарегистрироваться
-          </Button>
-          <Button color='primary' onClick={() => navigate('/login')}>
+          <Button color='secondary' onClick={() => navigate('/login')}>
             Войти
+          </Button>
+          <Button color='primary' styles={{ flex: '1 0 auto' }} type='submit'>
+            Зарегистрироваться
           </Button>
         </div>
       </Form>

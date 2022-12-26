@@ -24,7 +24,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate('/');
+      navigate('/profile');
     }
   }, [isLoggedIn, navigate]);
 
@@ -41,11 +41,11 @@ const Login = () => {
           <Input label='Пароль' name='password' />
         </div>
         <div className='buttons'>
-          <Button color='secondary' styles={{ flex: '1 0 auto' }} type='submit'>
-            Войти
-          </Button>
-          <Button color='primary' onClick={() => navigate('/registration')}>
+          <Button color='secondary' onClick={() => navigate('/registration')}>
             Зарегистрироваться
+          </Button>
+          <Button color='primary' styles={{ flex: '1 0 auto' }} type='submit'>
+            Войти
           </Button>
         </div>
       </Form>
