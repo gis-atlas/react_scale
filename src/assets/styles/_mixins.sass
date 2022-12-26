@@ -1,0 +1,189 @@
+@mixin figure($adaptive: true, $width, $height)
+  height: $height
+  @if $adaptive
+    width: $width
+    max-width: 100%
+  @else
+    width: $width
+
+@mixin font($size: 1rem, $weight: 400)
+  font-size: $size
+  font-weight: $weight
+
+@mixin max-width($m-width, $center: true)
+  max-width: $m-width
+  width: 100%
+  @if $center
+    margin: auto
+
+@mixin border-radius($radius: 0)
+  border-radius: $radius
+
+@mixin margin-padding($m-direction: top, $m-amount: 0, $p-direction: top, $p-amount: 0)
+  @if $m-direction == all
+    margin: $m-amount
+  @else
+    margin-#{$m-direction}: $m-amount
+  @if $p-direction == all
+    padding: $p-amount
+  @else
+    padding-#{$p-direction}: $p-amount
+
+// flex
+
+@mixin flexbox($gap: 0)
+  display: -webkit-box
+  display: -moz-box
+  display: -ms-flexbox
+  display: -webkit-flex
+  display: flex
+  gap: $gap
+
+@mixin flex-direction($direction: row)
+  -webkit-flex-direction: $direction
+  -ms-flex-direction: $direction
+  flex-direction: $direction
+  @if $direction == row-reverse
+    -webkit-box-direction: reverse
+    -webkit-box-orient: horizontal
+    -moz-box-direction: reverse
+    -moz-box-orient: horizontal
+  @else if $direction == column
+    -webkit-box-direction: normal
+    -webkit-box-orient: vertical
+    -moz-box-direction: normal
+    -moz-box-orient: vertical
+  @else if $direction == column-reverse
+    -webkit-box-direction: reverse
+    -webkit-box-orient: vertical
+    -moz-box-direction: reverse
+    -moz-box-orient: vertical
+  @else
+    -webkit-box-direction: normal
+    -webkit-box-orient: horizontal
+    -moz-box-direction: normal
+    -moz-box-orient: horizontal
+
+@mixin flex($fg: 1, $fs: 0, $fb: auto)
+
+  $fg-boxflex: $fg
+  -webkit-box: $fg-boxflex
+  -moz-box: $fg-boxflex
+  -webkit-flex: $fg $fs $fb
+  -ms-flex: $fg $fs $fb
+  flex: $fg $fs $fb
+
+  @if type-of($fg) == 'list'
+    $fg-boxflex: nth($fg, 1)
+
+@mixin justify-content($value: flex-start)
+  -webkit-justify-content: $value
+  justify-content: $value
+  @if $value == flex-start
+    -webkit-box-pack: start
+    -moz-box-pack: start
+    -ms-flex-pack: start
+  @else if $value == flex-end
+    -webkit-box-pack: end
+    -moz-box-pack: end
+    -ms-flex-pack: end
+  @else if $value == space-between
+    -webkit-box-pack: justify
+    -moz-box-pack: justify
+    -ms-flex-pack: justify
+  @else if $value == space-around
+    -ms-flex-pack: distribute
+  @else
+    -webkit-box-pack: $value
+    -moz-box-pack: $value
+    -ms-flex-pack: $value
+
+@mixin align-items($value: stretch)
+  -webkit-align-items: $value
+  align-items: $value
+  @if $value == flex-start
+    -webkit-box-align: start
+    -moz-box-align: start
+    -ms-flex-align: start
+  @else if $value == flex-end
+    -webkit-box-align: end
+    -moz-box-align: end
+    -ms-flex-align: end
+  @else
+    -webkit-box-align: $value
+    -moz-box-align: $value
+    -ms-flex-align: $value
+
+@mixin align-content($value: stretch)
+  -webkit-align-content: $value
+  align-content: $value
+  @if $value == flex-start
+    -ms-flex-line-pack: start
+  @else if $value == flex-end
+    -ms-flex-line-pack: end
+  @else
+    -ms-flex-line-pack: $value
+
+// position
+
+@mixin position($position, $left: 0, $h-center: false, $top: 0, $v-center: false, $z-index: 1)
+  position: $position
+  left: $left
+  top: $top
+  z-index: $z-index
+  @if $v-center and $h-center
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+  @else if $v-center
+    top: 50%
+    transform: translateY(-50%)
+  @else if $h-center
+    left: 50%
+    transform: translateX(-50%)
+
+// grid
+
+@mixin display-grid($column-gap: 0, $row-gap: 0)
+  display: -ms-grid
+  display: grid
+  gap: $column-gap $row-gap
+
+// $columns values should be delimited by a space
+@mixin grid-template-columns($columns)
+  -ms-grid-columns: $columns
+  grid-template-columns: $columns
+
+// $rows values should be delimited by a space
+@mixin grid-template-rows($rows)
+  -ms-grid-rows: $rows
+  grid-template-rows: $rows
+
+// Can be used in combination with above grid-template-X mixins.
+// These result in the same output:
+// @include grid-template-columns(10px grid-repeat(4, 20px) 30px);
+// @include grid-template-columns(10px 20px 20px 20px 20px 30px);
+@function grid-repeat($repeat, $stuff: 1fr)
+  $list: ()
+  @for $i from 1 through $repeat
+    $list: append($list, $stuff, space)
+
+  @return $list
+
+@mixin grid-column($col-start, $col-end)
+  -ms-grid-column: $col-start
+  -ms-grid-column-span: $col-end - $col-start
+  grid-column: #{$col-start} / #{$col-end}
+
+@mixin grid-row($row-start, $row-end)
+  -ms-grid-row: $row-start
+  -ms-grid-row-span: $row-end - $row-start
+  grid-row: #{$row-start} / #{$row-end}
+
+@mixin grid-align-self($value)
+  -ms-grid-row-align: $value
+  align-self: $value
+
+@mixin grid-justify-self($value)
+  -ms-grid-column-align: $value
+  justify-self: $value

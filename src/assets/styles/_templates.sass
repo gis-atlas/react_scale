@@ -1,0 +1,9 @@
+@import './_mixins'
+.d-flex
+  @include flexbox
+  .f-column
+    @include flex-direction($direction: column)
+
+.d-grid
+  @include display-grid($row-gap: 37px, $column-gap: 25px)
+  @include grid-template-columns($columns: 1fr 1fr)

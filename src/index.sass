@@ -1,0 +1,63 @@
+@import './assets/styles/_fonts'
+@import './assets/styles/_variables'
+@import './assets/styles/_nullstyles'
+@import './assets/styles/_mixins'
+@import './assets/styles/_defaultstyles'
+@import './assets/styles/_templates'
+
+*
+  transition: all .2s !important
+
+#root, body
+  background: $color-secondary
+  min-height: 100vh
+
+#root
+  @include flexbox
+  @include flex-direction($direction: column)
+
+header
+  height: $header-height
+
+header, footer, main > .content
+  @include max-width($m-width: $max-inner-width)
+
+header, footer
+  @include flexbox
+  @include align-items($value: center)
+
+main
+  @include flex($fg: 1)
+  @include border-radius($radius: 30px)
+  @include margin-padding($p-direction: top, $p-amount: 35px)
+  background: $color-light
+
+footer
+  height: $footer-height
+
+.log-reg-container
+  @include flexbox
+  @include flex-direction($direction: column)
+  .log-reg-form
+    // @include figure($width: 420px, $height: 350px)
+    min-height: 250px
+    width: 420px
+    @include margin-padding($m-direction: top, $m-amount: 19px, $p-direction: all, $p-amount: 25px)
+    @include flexbox
+    @include flex-direction($direction: column)
+    @include justify-content($value: space-between)
+    @include border-radius($radius: 15px)
+    background: $color-secondary
+    .inputs
+      @include flexbox($gap: 16px)
+      @include flex-direction($direction: column)
+      @include margin-padding($m-direction: bottom, $m-amount: 80px)
+
+  h1
+    @include margin-padding($m-direction: left, $m-amount: 25px)
+  .buttons
+    @include flexbox($gap: 15px)
+
+.profile
+  h1
+    @include margin-padding($m-direction: left, $m-amount: 25px)

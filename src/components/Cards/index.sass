@@ -1,0 +1,11 @@
+@import '../../assets/styles/_mixins'
+@import '../../assets/styles/_variables'
+
+section.custom-card
+  @include margin-padding($m-direction: all, $m-amount: 50px 0 19px 0)
+  h3
+    @include margin-padding($m-direction: left, $m-amount: 25px)
+  .custom-card-content
+    @include margin-padding($m-direction: top, $m-amount: 19px, $p-direction: all, $p-amount: 34px 39px)
+    @include border-radius($radius: 15px)
+    background: $color-secondary
