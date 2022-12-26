@@ -14,7 +14,7 @@ const Profile = () => {
   useEffect(() => {
     console.log('asdasd');
     dispatch(getUserData());
-  }, []);
+  }, [dispatch]);
   console.log(num);
   return (
     <div className='profile'>

@@ -12,11 +12,15 @@ const Registration = () => {
       <Form className='log-reg-form' submitHandler={a}>
         <div className='inputs'>
           <Input label='Email адрес' placeholder='johndoe@gmail.com' />
-          <Input label='Пароль' />
-          <Input label='Повторите пароль' />
+          <Input label='Пароль' type='password' />
+          <Input
+            label='Повторите пароль'
+            type='password'
+            className='password-repeat'
+          />
         </div>
         <div className='buttons'>
-          <Button color='secondary' styles={{ flex: '1 0 auto' }}>
+          <Button color='secondary' styles={{ flex: '1 0 auto' }} type='submit'>
             Зарегистрироваться
           </Button>
           <Button color='primary' onClick={() => navigate('/login')}>

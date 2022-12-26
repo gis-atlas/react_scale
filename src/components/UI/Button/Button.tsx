@@ -8,9 +8,16 @@ interface IButton {
   color?: string;
   styles?: Object;
   onClick?: ReactEventHandler;
+  type?: 'submit' | 'reset' | 'button';
 }
 
-const Button = ({ children, color = 'primary', styles, onClick }: IButton) => {
+const Button = ({
+  children,
+  color = 'primary',
+  styles,
+  onClick,
+  type = 'button',
+}: IButton) => {
   return (
     <button
       className={classNames('custom-button', {
@@ -18,6 +25,7 @@ const Button = ({ children, color = 'primary', styles, onClick }: IButton) => {
       })}
       style={styles}
       onClick={onClick}
+      type={type}
     >
       {children}
     </button>
