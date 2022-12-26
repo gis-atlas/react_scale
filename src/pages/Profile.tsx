@@ -44,8 +44,16 @@ const Profile = () => {
         styles={{ display: 'flex', flexDirection: 'column', gap: '30px' }}
       >
         <div className='d-flex' style={{ gap: '39px' }}>
-          <Input label='Старый пароль' styles={{ flex: '1 0 auto' }} />
-          <Input label='Новый пароль' styles={{ flex: '1 0 auto' }} />
+          <Input
+            label='Старый пароль'
+            type='password'
+            styles={{ flex: '1 0 auto' }}
+          />
+          <Input
+            label='Новый пароль'
+            type='password'
+            styles={{ flex: '1 0 auto' }}
+          />
         </div>
         <div className='d-flex' style={{ justifyContent: 'end' }}>
           <Button styles={{}}>Обновить</Button>

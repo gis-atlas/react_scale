@@ -38,7 +38,7 @@ const Login = () => {
             placeholder='johndoe@gmail.com'
             name='email'
           />
-          <Input label='Пароль' name='password' />
+          <Input label='Пароль' name='password' type='password' />
         </div>
         <div className='buttons'>
           <Button color='secondary' onClick={() => navigate('/registration')}>
