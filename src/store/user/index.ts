@@ -1,30 +1,38 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import client from '../../services';
+import UserAPI from './api';
+import { ILogin, IRegister, IProfile, IProfileUpdate } from './type';
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  async (loginData: object) => {
-    const result = await client.post('/api/auth/login', loginData);
+  async (loginData: ILogin) => {
+    const result = await UserAPI.login(loginData);
     return result.data;
   }
 );
 
-export const registerUser = createAsyncThunk('user/registerUser', async () => {
-  const result = await client.post('/api/auth/signup', {
-    email: 'user@example.com',
-    pwd: 'password',
-    confirm: 'password',
-  });
-  return result.data;
-});
+export const registerUser = createAsyncThunk(
+  'user/registerUser',
+  async (registerData: IRegister) => {
+    const result = await UserAPI.register(registerData);
+    return result.data;
+  }
+);
 
-export const getUserData = createAsyncThunk('user/getUserData', async () => {
-  const resultProfileData = await client.get('/api/auth/profile');
-  const resultUserData: any = await client.get('/api/auth/users/me');
-  const resultUserAccountData = resultUserData.account;
-  const result = { ...resultProfileData, ...resultUserAccountData };
-  return result.data;
-});
+export const getProfileData = createAsyncThunk(
+  'user/getProfileData',
+  async () => {
+    const result = await UserAPI.getProfileData();
+    return result.data;
+  }
+);
+
+export const updateProfileData = createAsyncThunk(
+  'user/updateProfileData',
+  async (updateData: IProfileUpdate) => {
+    const result = await UserAPI.updateProfileData(updateData);
+    return result.data;
+  }
+);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -45,17 +53,21 @@ export const userSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(loginUser.fulfilled, (state, action) => {
       const { accessToken, refreshToken, id } = action.payload;
+      console.log(action.payload);
       state.isLoggedIn = true;
       state.id = id;
       state.access = accessToken;
       state.refresh = refreshToken;
       localStorage.setItem('token', accessToken);
       localStorage.setItem('refresh', refreshToken);
-      localStorage.setItem('isLoggedIn', 'true');
       return state;
     });
-    builder.addCase(getUserData.fulfilled, (state, action) => {
+    builder.addCase(getProfileData.fulfilled, (state, action) => {
+      console.log(action.payload);
       return { ...state, ...action.payload };
+    });
+    builder.addCase(updateProfileData.fulfilled, (state, action) => {
+      console.log(action.payload);
     });
   },
 });
