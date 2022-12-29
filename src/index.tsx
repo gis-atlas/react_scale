@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { RouterProvider } from 'react-router-dom';
+import { BrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import { router } from './routes';
 import { store } from './store';
 
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import './index.sass';
 
 const root = ReactDOM.createRoot(

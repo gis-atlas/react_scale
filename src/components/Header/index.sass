@@ -1,0 +1,13 @@
+@import '../../assets/styles/_mixins'
+
+header
+  @include display-grid
+  @include grid-template-columns($columns: 150px 1fr 150px)
+
+  nav
+    @include flexbox
+    @include margin-padding($m-direction: all, $m-amount: 0 auto)
+    ul
+      @include flexbox($gap: 50px)
+      li
+        color: rgba(46, 78, 93, .6)
