@@ -1,8 +1,17 @@
 @import '../../assets/styles/_mixins'
+@import '../../assets/styles/_variables'
 
 header
   @include display-grid
   @include grid-template-columns($columns: 150px 1fr 150px)
+
+  .logo
+    @include flexbox($gap: 8px)
+    @include align-items($value: center)
+    span
+      @include font($size: 16px, $weight: 700)
+    img, span
+      cursor: pointer
 
   nav
     @include flexbox
@@ -10,4 +19,15 @@ header
     ul
       @include flexbox($gap: 50px)
       li
-        color: rgba(46, 78, 93, .6)
+        cursor: pointer
+        a
+          @include margin-padding($p-direction: all, $p-amount: 3px 20px)
+          color: rgba(46, 78, 93, .6)
+          @include font($size: 14px, $weight: 700)
+          @include border-radius($radius: 20px)
+
+          &:hover
+            color: $color-text-primary
+          &.active
+            color: $color-text-primary
+            background: $color-primary
