@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import './index.sass';
+import '../index.sass';
 
 const Header = () => {
   const navigate = useNavigate();

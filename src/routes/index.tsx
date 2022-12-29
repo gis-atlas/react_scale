@@ -1,5 +1,6 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
-import Header from '../components/Header/Header';
+import Header from '../components/Headers/Header/Header';
+import AuthHeader from '../components/Headers/AuthHeader/AuthHeader';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
@@ -43,11 +44,26 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/registration',
-    element: <Registration />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
+    element: (
+      <>
+        <AuthHeader />
+        <main>
+          <div className='content'>
+            <Outlet />
+          </div>
+        </main>
+        <footer>фывыфв</footer>
+      </>
+    ),
+    children: [
+      {
+        path: '/registration',
+        element: <Registration />,
+      },
+      {
+        path: '/login',
+        element: <Login />,
+      },
+    ],
   },
 ]);
