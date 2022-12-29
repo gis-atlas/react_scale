@@ -4,6 +4,7 @@ import AuthHeader from '../components/Headers/AuthHeader/AuthHeader';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
+import Projects from '../pages/Projects';
 import Registration from '../pages/Registration';
 import Test from '../pages/Test';
 
@@ -31,7 +32,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/projects',
-        element: <div>Проекты</div>,
+        element: <Projects />,
       },
       {
         path: '/catalog',

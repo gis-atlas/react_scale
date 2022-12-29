@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import UserAPI from './api';
-import { ILogin, IRegister, IProfile, IProfileUpdate } from './type';
+import { ILogin, IRegister, IProfileUpdate } from './type';
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
@@ -28,8 +28,9 @@ export const getProfileData = createAsyncThunk(
 
 export const updateProfileData = createAsyncThunk(
   'user/updateProfileData',
-  async (updateData: IProfileUpdate) => {
+  async (updateData: IProfileUpdate, thunkApi) => {
     const result = await UserAPI.updateProfileData(updateData);
+    thunkApi.dispatch(getProfileData());
     return result.data;
   }
 );

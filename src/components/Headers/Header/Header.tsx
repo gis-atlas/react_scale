@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <header>
       <div className='logo'>
-        <img src='/images/logo-icon.svg' alt='' onClick={goToHome} />
+        <img src='/images/icons/logo.svg' alt='' onClick={goToHome} />
         <span onClick={goToHome}>Viewer</span>
       </div>
       <nav>

@@ -29,6 +29,7 @@ const Profile = () => {
       city: form.city.value,
     };
     dispatch(updateProfileData(updateData));
+    setEditMode(false);
   };
   useEffect(() => {
     dispatch(getProfileData());
