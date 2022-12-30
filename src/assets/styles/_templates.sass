@@ -1,9 +1,22 @@
 @import './_mixins'
 .d-flex
   @include flexbox
-  .f-column
+  &.f-column
     @include flex-direction($direction: column)
+  &.jc-c
+    @include justify-content($value: center)
+  &.ai-c
+    @include align-items($value: center)
 
 .d-grid
   @include display-grid($row-gap: 37px, $column-gap: 25px)
   @include grid-template-columns($columns: 1fr 1fr)
+
+.disabled
+  -webkit-filter: opacity(.7)
+
+.user-background
+  background: conic-gradient(from 180deg at 50% 50%, rgba(50, 47, 187, .4) 0deg, rgba(142, 14, 145, 0.08) 360deg)
+
+.guest-background
+  background: radial-gradient(50% 50% at 50% 50%, rgba(173, 30, 73, 0.4) 0%, rgba(255, 159, 47, 0.4) 100%)

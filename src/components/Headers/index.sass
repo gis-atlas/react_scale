@@ -1,0 +1,57 @@
+@import '../../assets/styles/_mixins'
+@import '../../assets/styles/_variables'
+
+header
+  @include flexbox
+
+  &.auth
+    @include flexbox($gap: 20px)
+    @include justify-content($value: space-between)
+    nav
+      @include margin-padding($m-direction: all, $m-amount: 0)
+      ul
+        @include flexbox($gap: 20px)
+        @include align-items($value: center)
+        li
+          a
+            @include margin-padding($p-direction: all, $p-amount: 5px 20px)
+            color: $color-text-primary
+            background: $color-primary
+
+  .lang
+    @include figure($width: 30px, $height: 30px)
+    @include flexbox
+    @include justify-content($value: center)
+    @include align-items($value: center)
+    @include font($size: 10px, $weight: 700)
+    @include border-radius($radius: 50%)
+    cursor: pointer
+    background: $color-secondary
+    -webkit-filter: drop-shadow(0px 2px 2px rgba(169, 169, 169, 0.25))
+
+  .logo
+    @include flexbox($gap: 8px)
+    @include align-items($value: center)
+    span
+      @include font($size: 16px, $weight: 700)
+    img, span
+      cursor: pointer
+
+  nav
+    @include flexbox
+    @include margin-padding($m-direction: all, $m-amount: 0 auto)
+    ul
+      @include flexbox($gap: 50px)
+      li
+        cursor: pointer
+        a
+          @include margin-padding($p-direction: all, $p-amount: 3px 20px)
+          color: rgba(46, 78, 93, .6)
+          @include font($size: 14px, $weight: 700)
+          @include border-radius($radius: 20px)
+
+          &:hover
+            color: $color-text-primary
+          &.active
+            color: $color-text-primary
+            background: $color-primary

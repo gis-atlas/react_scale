@@ -1,0 +1,26 @@
+@import '../../../assets/styles/_mixins'
+@import '../../../assets/styles/_variables'
+
+.user-image
+  @include flexbox
+  @include justify-content($value: center)
+  @include align-items($value: center)
+  background: $color-light
+  cursor: pointer
+  overflow: hidden
+  @include position($position: relative)
+  @include figure($width: 70px, $height: 70px)
+  @include border-radius($radius: 10px)
+  box-shadow: 0px 2px 2px rgba(169, 169, 169, 0.25)
+  cursor: pointer
+  img
+    width: inherit
+    height: inherit
+  &.circle
+    border-radius: 50%
+
+  &.small
+    @include figure($width: 32px, $height: 32px)
+
+  &.bordered
+    border: 4px solid $color-user-secondary

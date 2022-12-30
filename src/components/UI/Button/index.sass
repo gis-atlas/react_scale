@@ -2,12 +2,16 @@
 @import '../../../assets/styles/_variables'
 
 button.custom-button
-  @include margin-padding($p-direction: all, $p-amount: 10px 30px)
   @include border-radius($radius: 30px)
   @include font($size: 16px, $weight: 700)
 
   box-shadow: 0px 2px 2px rgba(169, 169, 169, 0.25)
+  &.small
+    @include margin-padding($p-direction: all, $p-amount: 3px 10px)
+    @include font($size: 10px, $weight: 700)
 
+  &.medium
+    @include margin-padding($p-direction: all, $p-amount: 10px 30px)
   &:hover
     -webkit-filter: brightness(97%)
 

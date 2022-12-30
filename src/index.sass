@@ -9,7 +9,7 @@
   transition: all .2s !important
 
 #root, body
-  background: $color-secondary
+  background: $color-secondary-light
   min-height: 100vh
 
 #root
@@ -21,9 +21,9 @@ header
 
 header, footer, main > .content
   @include max-width($m-width: $max-inner-width)
+  @include margin-padding($p-direction: all, $p-amount: 0 10px)
 
 header, footer
-  @include flexbox
   @include align-items($value: center)
 
 main
@@ -47,7 +47,7 @@ footer
     @include flex-direction($direction: column)
     @include justify-content($value: space-between)
     @include border-radius($radius: 15px)
-    background: $color-secondary
+    background: $color-secondary-light
     .inputs
       @include flexbox($gap: 16px)
       @include flex-direction($direction: column)
@@ -61,3 +61,25 @@ footer
 .profile
   h1
     @include margin-padding($m-direction: left, $m-amount: 25px)
+
+.projects
+  .control
+    @include flexbox($gap: 14px)
+    @include justify-content($value: space-between)
+    .form-input
+      @include flex
+    .control-buttons
+      @include flexbox($gap: 7px)
+      .control-button
+        @include flexbox
+        @include justify-content($value: center)
+        @include align-items($value: center)
+        @include figure($width: 40px, $height: 40px)
+        @include border-radius($radius: 6px)
+        cursor: pointer
+        background: $color-light
+        filter: drop-shadow(0px 4px 15px rgba(72, 107, 160, 0.25))
+    span
+      @include font($size: 14px, $weight: 500)
+    .project-count
+      @include font($size: 12px, $weight: 500)
