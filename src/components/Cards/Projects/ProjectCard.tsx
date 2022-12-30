@@ -8,7 +8,8 @@ interface IProjectCard {
   title?: string;
   lastUpdated?: string;
   view?: number;
-  projects?: Array<object>;
+  project?: Array<object>;
+  id: number;
 }
 
 const ProjectCard = ({
@@ -16,15 +17,16 @@ const ProjectCard = ({
   view = 1,
   title,
   lastUpdated,
-  projects,
+  project,
+  id,
 }: IProjectCard) => {
   const navigate = useNavigate();
 
-  const goToMap = (id: number) => {
+  const goToMap = () => {
     navigate(`/projects/${id}`);
   };
   // TODO: заменить на переход на страницу проекта
-  const goToProject = (id: number) => {
+  const goToProject = () => {
     navigate(`/projects/${id}`);
   };
 
@@ -68,7 +70,7 @@ const ProjectCard = ({
               size='small'
               color='secondary d-flex'
               styles={{ gap: '3px', alignSelf: 'end' }}
-              onClick={() => goToProject(2)}
+              onClick={goToProject}
             >
               Перейти
               <img src='/images/icons/arrow.svg' alt='' />
@@ -81,7 +83,7 @@ const ProjectCard = ({
           <Button
             color='secondary d-flex'
             styles={{ gap: '8px' }}
-            onClick={() => goToMap(2)}
+            onClick={goToMap}
           >
             Перейти на карту
             <img src='/images/icons/map.svg' alt='' />

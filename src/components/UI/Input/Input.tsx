@@ -10,6 +10,7 @@ interface IInput {
   className?: string;
   name?: string;
   defaultValue?: string;
+  onInput?: any;
 }
 
 const Input = ({
@@ -20,6 +21,7 @@ const Input = ({
   className,
   name,
   defaultValue = '',
+  onInput = () => {},
 }: IInput) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isInputEmpty, setIsInputEmpty] = useState<boolean>(true);
@@ -33,6 +35,7 @@ const Input = ({
     } else {
       setIsInputEmpty(false);
     }
+    onInput(e.target.value);
   };
 
   useEffect(() => {

@@ -7,7 +7,6 @@ import ImageUploader from '../components/Uploaders/Image/ImageUploader';
 import { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from '../store';
 import { getProfileData, updateProfileData } from '../store/user';
-import { InputType } from 'zlib';
 
 const Profile = () => {
   const dispatch = useAppDispatch();
