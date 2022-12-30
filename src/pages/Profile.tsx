@@ -7,10 +7,11 @@ import ImageUploader from '../components/Uploaders/Image/ImageUploader';
 import { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from '../store';
 import { getProfileData, updateProfileData } from '../store/user';
+import UserImage from '../components/UI/Image/UserImage';
 
 const Profile = () => {
   const dispatch = useAppDispatch();
-  const { name, telegram, birthday, city } = useSelector(
+  const { name, telegram, birthday, city, photo } = useSelector(
     (state: RootState) => state.user
   );
   const [isEditMode, setEditMode] = useState<boolean>(false);
@@ -69,7 +70,7 @@ const Profile = () => {
         ) : (
           <>
             <div className='d-flex' style={{ gap: '27px' }}>
-              <ImageUploader />
+              {photo ? <UserImage /> : <ImageUploader />}
               <div className='d-grid' style={{ flex: 1 }}>
                 <p>{name}</p>
                 <p>{telegram}</p>

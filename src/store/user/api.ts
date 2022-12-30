@@ -33,6 +33,14 @@ const UserAPI = {
       birthday,
     });
   },
+  async getPhoto() {
+    return client.get('/api/auth/profile/pic.jpeg', { responseType: 'blob' });
+  },
+  async updatePhoto(photo: any) {
+    await client.post('api/auth/profile/pic', photo, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
 };
 
 export default UserAPI;

@@ -130,11 +130,8 @@ const Projects = () => {
           ))
         ) : (
           <div className='d-flex f-column jc-c ai-c'>
-            <span>У вас пока нет рабочих проектов.</span>
-            <span>
-              Здесь будут размещены ваши проекты и проекты доступные для
-            </span>
-            <span>совместного редактирования.</span>
+            <span>Не найдено ни одного проекта с названием</span>
+            <span style={{ fontWeight: 700 }}>{elementToSearch}</span>
             <Button
               color='secondary'
               styles={{ marginTop: '21px' }}

@@ -6,7 +6,12 @@
   @include border-radius($radius: 10px)
   box-shadow: 0px 2px 2px rgba(169, 169, 169, 0.25)
   cursor: pointer
+  overflow: hidden
   &:hover
     -webkit-filter: hue-rotate(15deg)
   img
     @include position($position: absolute, $h-center: true, $v-center: true)
+    &.photo
+      -webkit-filter: opacity(.7)
+      width: inherit
+      height: inherit

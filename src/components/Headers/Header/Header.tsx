@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
+import UserImage from '../../UI/Image/UserImage';
 import '../index.sass';
 
 const Header = () => {
@@ -23,7 +24,12 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-      <div>asdsad</div>
+      <ul className='d-flex ai-c' style={{ gap: '19px' }}>
+        <li className='lang'>RU</li>
+        <li>
+          <UserImage size='small' variant='bordered' figure='circle' />
+        </li>
+      </ul>
     </header>
   );
 };

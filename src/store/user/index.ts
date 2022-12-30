@@ -4,8 +4,9 @@ import { ILogin, IRegister, IProfileUpdate } from './type';
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  async (loginData: ILogin) => {
+  async (loginData: ILogin, thunkApi) => {
     const result = await UserAPI.login(loginData);
+    thunkApi.dispatch(getPhoto());
     return result.data;
   }
 );
@@ -35,6 +36,11 @@ export const updateProfileData = createAsyncThunk(
   }
 );
 
+export const getPhoto = createAsyncThunk('user/getPhoto', async () => {
+  const result = await UserAPI.getPhoto();
+  return result.data;
+});
+
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -49,6 +55,7 @@ export const userSlice = createSlice({
     birthday: '',
     telegram: '',
     city: '',
+    photo: '',
   },
   reducers: {},
   extraReducers(builder) {
@@ -69,6 +76,10 @@ export const userSlice = createSlice({
     });
     builder.addCase(updateProfileData.fulfilled, (state, action) => {
       console.log(action.payload);
+    });
+    builder.addCase(getPhoto.fulfilled, (state, action) => {
+      localStorage.setItem('photo', JSON.stringify(action.payload));
+      state.photo = action.payload ? URL.createObjectURL(action.payload) : '';
     });
   },
 });
