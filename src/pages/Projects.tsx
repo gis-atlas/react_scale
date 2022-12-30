@@ -75,7 +75,11 @@ const Projects = () => {
         styles={{ display: 'flex', flexDirection: 'column', gap: '11px' }}
       >
         <div className='control'>
-          <Input label='Поиск по проектам' onInput={onSearchProject} />
+          <Input
+            label='Поиск по проектам'
+            onInput={onSearchProject}
+            prevIcon='/images/icons/loupe.svg'
+          />
           <div className='control-buttons'>
             <div className='control-button' onClick={goToPrevPage}>
               <img src='/images/icons/control-arrow.svg' alt='' />

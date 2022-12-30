@@ -11,9 +11,11 @@ interface IInput {
   name?: string;
   defaultValue?: string;
   onInput?: any;
+  prevIcon?: string;
 }
 
 const Input = ({
+  prevIcon,
   label,
   placeholder,
   styles,
@@ -57,6 +59,7 @@ const Input = ({
       })}
       style={styles}
     >
+      {prevIcon && <img src={prevIcon} alt='' className='icon icon-prev' />}
       <input
         ref={ref}
         onChange={handleInput}
@@ -66,9 +69,15 @@ const Input = ({
         type={type}
         name={name}
         value={value}
+        className={classNames('form-input', {
+          'icon-prev': prevIcon,
+        })}
       />
       <label
-        className={!isInputEmpty ? 'filled' : ''}
+        className={classNames({
+          filled: !isInputEmpty,
+          'icon-prev': prevIcon,
+        })}
         onClick={(e) => ref.current?.focus()}
       >
         {label}
