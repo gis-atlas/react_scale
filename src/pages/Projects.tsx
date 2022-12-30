@@ -1,12 +1,14 @@
 import Card from '../components/Cards/Card';
 import Input from '../components/UI/Input/Input';
+import ProjectCard from '../components/Cards/Projects/ProjectCard';
 
 const Projects = () => {
   return (
     <div className='projects'>
-      <Card title='Недавние проекты'></Card>
+      <Card title='Недавние проекты' variant='comfortable'></Card>
       <Card
         title='Поиск по всем проектам'
+        variant='comfortable'
         styles={{ display: 'flex', flexDirection: 'column', gap: '11px' }}
       >
         <div className='control'>
@@ -24,7 +26,13 @@ const Projects = () => {
           <div className='project-count'>1-5 из 5 проектов</div>
         </div>
       </Card>
-      <Card></Card>
+      <Card
+        variant='comfortable'
+        styles={{ display: 'flex', flexDirection: 'column', gap: '11px' }}
+      >
+        <ProjectCard title='Крымский проект' lastUpdated='10.11.2003' />
+        <ProjectCard title='Проект по уралу' isMyProject />
+      </Card>
     </div>
   );
 };

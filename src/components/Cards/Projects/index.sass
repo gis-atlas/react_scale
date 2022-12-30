@@ -1,0 +1,40 @@
+@import '../../../assets/styles/_variables'
+@import '../../../assets/styles/_mixins'
+
+.project-card
+  @include position($position: relative)
+  @include margin-padding($p-direction: all, $p-amount: 14px 20px)
+  border: 2px solid $color-user
+  background: $color-light
+  &.view-1
+    @include figure($height: 115px)
+    @include margin-padding($p-direction: all, $p-amount: 39px 20px)
+  &.view-2
+    @include figure($width: 140px, $height: 88px)
+  .badge
+    @include position($position: absolute, $left: 20px, $top: 14px)
+  .project-card-inner
+    &.view-1
+      @include flexbox($gap: 9px)
+    .project-card-image
+      @include figure($width: 60px, $height: 60px)
+      @include border-radius($radius: 10px)
+    .project-card-info
+      p
+        @include font($size: 10px, $weight: 500)
+  .redirect-to-map
+    @include margin-padding($p-direction: all, $p-amount: 30px 10px)
+    @include position($position: absolute, $left: -20px, $v-center: true)
+
+.badge
+  @include font($size: 10px, $weight: 600)
+  @include margin-padding($p-direction: all, $p-amount: 3px 10px)
+  @include border-radius($radius: 10px)
+
+  &.user
+    background: $color-user
+    color: $color-user-text
+
+  &.guest
+    background: $color-guest
+    color: $color-guest-text

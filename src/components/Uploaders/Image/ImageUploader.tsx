@@ -9,7 +9,7 @@ const ImageUploader = () => {
   };
   return (
     <>
-      <div className='image-uploader' onClick={openModal}>
+      <div className='image-uploader user-background' onClick={openModal}>
         <img src='/images/icons/pencil.svg' alt='' />
       </div>
       <Modal state={modalShowed} setState={setModalShowed}></Modal>
