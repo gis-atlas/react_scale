@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../UI/Button/Button';
 import './index.sass';
 
@@ -7,6 +8,7 @@ interface IProjectCard {
   title?: string;
   lastUpdated?: string;
   view?: number;
+  projects?: Array<object>;
 }
 
 const ProjectCard = ({
@@ -14,11 +16,24 @@ const ProjectCard = ({
   view = 1,
   title,
   lastUpdated,
+  projects,
 }: IProjectCard) => {
+  const navigate = useNavigate();
+
+  const goToMap = (id: number) => {
+    navigate(`/projects/${id}`);
+  };
+  // TODO: заменить на переход на страницу проекта
+  const goToProject = (id: number) => {
+    navigate(`/projects/${id}`);
+  };
+
   return (
     <div
       className={classNames('project-card', {
         [`view-${view}`]: view,
+        'user-background': view === 2 && isMyProject,
+        'guest-background': view === 2 && !isMyProject,
       })}
     >
       {view === 1 && <Badge isMyProject={isMyProject} />}
@@ -41,18 +56,38 @@ const ProjectCard = ({
           })}
         >
           <h4>{title}</h4>
-          {lastUpdated && (
+          {lastUpdated && view === 1 && (
             <p>
               Последние изменения
               <br />
               {lastUpdated}
             </p>
           )}
+          {view === 2 && (
+            <Button
+              size='small'
+              color='secondary d-flex'
+              styles={{ gap: '3px', alignSelf: 'end' }}
+              onClick={() => goToProject(2)}
+            >
+              Перейти
+              <img src='/images/icons/arrow.svg' alt='' />
+            </Button>
+          )}
         </div>
       </div>
-      <div className='redirect-to-map'>
-        <Button color='secondary'>Перейти на карту</Button>
-      </div>
+      {view === 1 && (
+        <div className='redirect-to-map'>
+          <Button
+            color='secondary d-flex'
+            styles={{ gap: '8px' }}
+            onClick={() => goToMap(2)}
+          >
+            Перейти на карту
+            <img src='/images/icons/map.svg' alt='' />
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
@@ -69,7 +104,7 @@ const Badge = ({ isMyProject }: IBadge) => {
         guest: !isMyProject,
       })}
     >
-      {isMyProject ? 'Мой проект' : 'Гостевой проект'}
+      {isMyProject ? 'Мой проект' : 'Доступен для редактирования'}
     </div>
   );
 };

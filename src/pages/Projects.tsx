@@ -5,7 +5,14 @@ import ProjectCard from '../components/Cards/Projects/ProjectCard';
 const Projects = () => {
   return (
     <div className='projects'>
-      <Card title='Недавние проекты' variant='comfortable'></Card>
+      <Card
+        title='Недавние проекты'
+        variant='comfortable'
+        styles={{ display: 'flex', gap: '29px' }}
+      >
+        <ProjectCard view={2} title='Крымский проект' isMyProject />
+        <ProjectCard view={2} title='Проект по уралу' />
+      </Card>
       <Card
         title='Поиск по всем проектам'
         variant='comfortable'
@@ -30,8 +37,12 @@ const Projects = () => {
         variant='comfortable'
         styles={{ display: 'flex', flexDirection: 'column', gap: '11px' }}
       >
-        <ProjectCard title='Крымский проект' lastUpdated='10.11.2003' />
-        <ProjectCard title='Проект по уралу' isMyProject />
+        <ProjectCard
+          title='Крымский проект'
+          lastUpdated='10.11.2003'
+          isMyProject
+        />
+        <ProjectCard title='Проект по уралу' />
       </Card>
     </div>
   );
