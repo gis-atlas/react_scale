@@ -5,8 +5,14 @@ $padding: 10px 12px
 
 div.form-input
   position: relative
+
   &.password-repeat
     @include margin-padding($m-direction: top, $m-amount: 16px)
+
+  .icon
+    @include position($position: absolute)
+    &.icon-prev
+      @include position($position: absolute, $left: 14px, $v-center: true)
 
   input
     width: 100%
@@ -15,7 +21,8 @@ div.form-input
     @include border-radius($radius: 4px)
     @include font($size: 14px, $weight: 700)
     @include margin-padding($p-direction: all, $p-amount: 10px 10px)
-
+    &.icon-prev
+      @include margin-padding($p-direction: all, $p-amount: 10px 40px)
     &::placeholder
       color: $color-sedondary-darker
       border: 2px solid $color-sedondary-darker
@@ -26,11 +33,13 @@ div.form-input
       @include margin-padding($p-direction: all, $p-amount: 10px 12px)
 
   label
-    @include position($position: absolute, $left: 0, $top: center, $v-center: true)
+    @include position($position: absolute, $left: 0, $top: 0, $v-center: true)
     @include font($size: 14px, $weight: 700)
     @include margin-padding($p-direction: all, $p-amount: 10px 12px)
     color: $color-sedondary-darker
     cursor: text
+    &.icon-prev:not(.filled)
+      @include margin-padding($p-direction: all, $p-amount: 10px 40px)
     &.filled
       @include position($position: absolute, $left: 0, $top: 0)
       @include font($size: 12px, $weight: 600)

@@ -10,9 +10,12 @@ interface IInput {
   className?: string;
   name?: string;
   defaultValue?: string;
+  onInput?: any;
+  prevIcon?: string;
 }
 
 const Input = ({
+  prevIcon,
   label,
   placeholder,
   styles,
@@ -20,6 +23,7 @@ const Input = ({
   className,
   name,
   defaultValue = '',
+  onInput = () => {},
 }: IInput) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isInputEmpty, setIsInputEmpty] = useState<boolean>(true);
@@ -33,6 +37,7 @@ const Input = ({
     } else {
       setIsInputEmpty(false);
     }
+    onInput(e.target.value);
   };
 
   useEffect(() => {
@@ -54,6 +59,7 @@ const Input = ({
       })}
       style={styles}
     >
+      {prevIcon && <img src={prevIcon} alt='' className='icon icon-prev' />}
       <input
         ref={ref}
         onChange={handleInput}
@@ -63,9 +69,15 @@ const Input = ({
         type={type}
         name={name}
         value={value}
+        className={classNames('form-input', {
+          'icon-prev': prevIcon,
+        })}
       />
       <label
-        className={!isInputEmpty ? 'filled' : ''}
+        className={classNames({
+          filled: !isInputEmpty,
+          'icon-prev': prevIcon,
+        })}
         onClick={(e) => ref.current?.focus()}
       >
         {label}

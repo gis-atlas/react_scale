@@ -3,12 +3,12 @@ import { ReactEventHandler, ReactNode } from 'react';
 import './index.sass';
 
 interface IButton {
-  size?: string;
   children?: ReactNode;
   color?: string;
   styles?: Object;
   onClick?: ReactEventHandler;
   type?: 'submit' | 'reset' | 'button';
+  size?: 'small' | 'medium' | 'large';
 }
 
 const Button = ({
@@ -17,11 +17,13 @@ const Button = ({
   styles,
   onClick,
   type = 'button',
+  size = 'medium',
 }: IButton) => {
   return (
     <button
       className={classNames('custom-button', {
         [color]: color,
+        [size]: size,
       })}
       style={styles}
       onClick={onClick}

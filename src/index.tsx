@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { router } from './routes';
 import { store } from './store';
 
-import Header from './components/Header';
 import './index.sass';
 
 const root = ReactDOM.createRoot(
@@ -16,13 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Header />
-      <main>
-        <div className='content'>
-          <RouterProvider router={router} />
-        </div>
-      </main>
-      <footer>фывыфв</footer>
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>
 );
