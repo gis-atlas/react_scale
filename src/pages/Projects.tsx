@@ -8,6 +8,7 @@ import { getProjects } from '../store/project';
 import { useSelector } from 'react-redux';
 import { findMatch, sortProjectsBy } from '../utils';
 import { IProject } from '../store/project/type';
+import Button from '../components/UI/Button/Button';
 
 const Projects = () => {
   const dispatch = useAppDispatch();
@@ -103,27 +104,42 @@ const Projects = () => {
         variant='comfortable'
         styles={{ display: 'flex', flexDirection: 'column', gap: '11px' }}
       >
-        {elementToSearch?.length && searchedProjects?.length
-          ? searchedProjects.map((project: IProject) => (
-              <ProjectCard
-                id={project.id}
-                key={project.id}
-                title={project.name}
-                lastUpdated='10.11.2003'
-                isMyProject
-              />
-            ))
-          : !elementToSearch.length &&
-            projects?.length &&
-            projects.map((project: IProject) => (
-              <ProjectCard
-                id={project.id}
-                key={project.id}
-                title={project.name}
-                lastUpdated='10.11.2003'
-                isMyProject
-              />
-            ))}
+        {elementToSearch?.length && searchedProjects?.length ? (
+          searchedProjects.map((project: IProject) => (
+            <ProjectCard
+              id={project.id}
+              key={project.id}
+              title={project.name}
+              lastUpdated='10.11.2003'
+              isMyProject
+            />
+          ))
+        ) : !elementToSearch.length && projects?.length ? (
+          projects.map((project: IProject) => (
+            <ProjectCard
+              id={project.id}
+              key={project.id}
+              title={project.name}
+              lastUpdated='10.11.2003'
+              isMyProject
+            />
+          ))
+        ) : (
+          <div className='d-flex f-column jc-c ai-c'>
+            <span>У вас пока нет рабочих проектов.</span>
+            <span>
+              Здесь будут размещены ваши проекты и проекты доступные для
+            </span>
+            <span>совместного редактирования.</span>
+            <Button
+              color='secondary'
+              styles={{ marginTop: '21px' }}
+              onClick={() => console.log('asd')}
+            >
+              Создать проект
+            </Button>
+          </div>
+        )}
       </Card>
     </div>
   );

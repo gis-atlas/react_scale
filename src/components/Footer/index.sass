@@ -1,0 +1,11 @@
+@import '../../assets/styles/_mixins'
+
+footer
+  @include flexbox($gap: 100px)
+  .signature
+    @include font($size: 12px, $weight: 700)
+  .policy
+    @include flexbox($gap: 39px)
+    li
+      @include font($size: 12px, $weight: 600)
+      cursor: pointer

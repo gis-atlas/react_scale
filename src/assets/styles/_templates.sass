@@ -1,8 +1,12 @@
 @import './_mixins'
 .d-flex
   @include flexbox
-  .f-column
+  &.f-column
     @include flex-direction($direction: column)
+  &.jc-c
+    @include justify-content($value: center)
+  &.ai-c
+    @include align-items($value: center)
 
 .d-grid
   @include display-grid($row-gap: 37px, $column-gap: 25px)

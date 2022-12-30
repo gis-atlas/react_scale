@@ -7,6 +7,7 @@ import Profile from '../pages/Profile';
 import Projects from '../pages/Projects';
 import Registration from '../pages/Registration';
 import Test from '../pages/Test';
+import Footer from '../components/Footer/Footer';
 
 export const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ export const router = createBrowserRouter([
             <Outlet />
           </div>
         </main>
-        <footer>фывыфв</footer>
+        <Footer />
       </>
     ),
     children: [
@@ -53,7 +54,7 @@ export const router = createBrowserRouter([
             <Outlet />
           </div>
         </main>
-        <footer>фывыфв</footer>
+        <Footer />
       </>
     ),
     children: [
