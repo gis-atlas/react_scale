@@ -22,8 +22,9 @@ const ProjectCard = ({
 }: IProjectCard) => {
   const navigate = useNavigate();
 
-  const goToMap = () => {
-    navigate(`/projects/${id}`);
+  const goToMap = (e: MouseEvent) => {
+    e.stopPropagation();
+    navigate(`/map/${id}`);
   };
   // TODO: заменить на переход на страницу проекта
   const goToProject = () => {
@@ -37,6 +38,7 @@ const ProjectCard = ({
         'user-background': view === 2 && isMyProject,
         'guest-background': view === 2 && !isMyProject,
       })}
+      onClick={view === 1 ? goToProject : () => {}}
     >
       {view === 1 && <Badge isMyProject={isMyProject} />}
       <div

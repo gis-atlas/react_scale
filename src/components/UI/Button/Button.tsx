@@ -6,7 +6,7 @@ interface IButton {
   children?: ReactNode;
   color?: string;
   styles?: Object;
-  onClick?: ReactEventHandler;
+  onClick?: any;
   type?: 'submit' | 'reset' | 'button';
   size?: 'small' | 'medium' | 'large';
 }
