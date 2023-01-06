@@ -131,11 +131,12 @@
 
   z-index: $z-index
   @if $left < 0
-    right: calc($left - 2 * $left)
+    left: auto
+    right: calc($left - 2 * $left) !important
   @else
     left: $left
   @if $top < 0
-    bottom: calc($top - 2 * $top)
+    bottom: calc($top - 2 * $top) !important
   @else
     top: $top
 

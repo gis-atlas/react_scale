@@ -1,0 +1,56 @@
+@import '../../assets/styles/_mixins'
+@import '../../assets/styles/_variables'
+
+.map-menu
+  @include figure($width: 340px, $height: 95vh)
+  @include position($position: absolute, $left: 10px, $top: 10px)
+  @include margin-padding($p-direction: all, $p-amount: 24px 20px 37px 27px)
+  @include border-radius($radius: 15px)
+  background: $color-secondary-light
+  border: 2px solid red
+
+  .map-menu-title
+    @include flexbox($gap: 7px)
+    @include align-items($value: center)
+    img
+      @include margin-padding($m-direction: top, $m-amount: 3px)
+      
+  .other-projects
+    @include flexbox($gap: 15px)
+    @include align-items($value: center)
+    @include margin-padding($m-direction: top, $m-amount: 20px)
+    img, span
+      cursor: pointer
+    img
+      @include figure($width: 13px, $height: 13px)
+      transform: rotate(180deg)
+    span
+      @include font($size: 12px, $weight: 700)
+
+  .map-tabs-control
+    @include flexbox
+    @include border-radius($radius: 6px)
+    @include margin-padding($m-direction: top, $m-amount: 33px)
+    box-shadow: 0px 4px 10px rgba(88, 104, 164, 0.25)
+    background: $color-light
+    
+    li
+      @include flex($fg: 1, $fs: 0, $fb: auto)
+      @include font($size: 12px, $weight: 600)
+      @include border-radius($radius: 6px)
+      @include margin-padding($p-direction: all, $p-amount: 6px 10px)
+      text-align: center
+      cursor: pointer
+
+      &.active
+        box-shadow: 0px 4px 15px rgba(72, 107, 160, 0.25)
+      
+  .map-tabs
+    @include margin-padding($m-direction: top, $m-amount: 33px)
+  
+  .tab-list
+    @include margin-padding($m-direction: top, $m-amount: 25px)
+    @include flexbox($gap: 10px)
+    @include flex-direction($direction: column)
+    
+    

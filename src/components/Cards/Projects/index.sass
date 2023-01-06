@@ -8,9 +8,13 @@
   border: 2px solid $color-user
   background: $color-light
   box-shadow: 0px 4px 15px rgba(72, 107, 160, 0.25)
+  
   &.view-1
     @include figure($height: 115px)
     @include margin-padding($p-direction: all, $p-amount: 39px 20px)
+    cursor: pointer
+    &:hover
+      background: $color-secondary
   &.view-2
     @include figure($width: 140px, $height: 88px)
     @include margin-padding($p-direction: all, $p-amount: 17px 13px 9px 16px)
