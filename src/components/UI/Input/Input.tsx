@@ -63,7 +63,7 @@ const Input = ({
       <input
         ref={ref}
         onChange={handleInput}
-        placeholder={isInputEmpty && focused ? placeholder : ''}
+        placeholder={(isInputEmpty && focused) || !label ? placeholder : ''}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         type={type}

@@ -19,7 +19,7 @@ const LayerCard = ({ title, layerType }: ILayerCard) => {
         <div className={`type-${layerType} layer-card-type`}>
           <img src={`/images/icons/layers/${layerType}.svg`} alt='' />
         </div>
-        <h5>{title}</h5>
+        <h6>{title}</h6>
       </div>
       <div className='layer-card-controls'>
         <img src='/images/icons/layers/target.svg' alt='' />

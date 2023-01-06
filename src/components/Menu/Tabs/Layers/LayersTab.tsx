@@ -10,11 +10,13 @@ const LayersTab = () => {
           <img src='/images/icons/plus.svg' alt='' />
         </Button>
       </div>
-      <ul className='tab-list'>
-        {['demos', '3d', 'demos', 'relief', '3d', 'relief'].map((i: any) => (
-          <LayerCard title={i} layerType={i} />
-        ))}
-      </ul>
+      <div className='tab-list-outer'>
+        <ul className='tab-list'>
+          {['demos', '3d', 'demos', 'relief', '3d', 'relief'].map((i: any) => (
+            <LayerCard title={i} layerType={i} />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
