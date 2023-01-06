@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './index.sass';
+import LayersTab from './Tabs/Layers/LayersTab';
 
 interface IMenu {
   title: string;
@@ -46,7 +47,7 @@ const Menu = ({ title }: IMenu) => {
       </ul>
       <div className='map-tabs'>
         {currentTab === 'layers' ? (
-          <div>Слои</div>
+          <LayersTab />
         ) : currentTab === 'data' ? (
           <div>Данные</div>
         ) : currentTab === 'maps' ? (
