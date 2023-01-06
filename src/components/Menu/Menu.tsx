@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './index.sass';
 import LayersTab from './Tabs/Layers/LayersTab';
 import DataTab from './Tabs/Data/DataTab';
+import PublicationTab from './Tabs/Publication/PublicationTab';
 
 interface IMenu {
   title: string;
@@ -21,7 +22,7 @@ const Menu = ({ title }: IMenu) => {
   const goToOtherProjects = () => {
     navigate('/projects');
   };
-  const [currentTab, setCurrentTab] = useState<string>(tabs[1].name);
+  const [currentTab, setCurrentTab] = useState<string>(tabs[3].name);
 
   return (
     <div className='map-menu'>
@@ -54,7 +55,7 @@ const Menu = ({ title }: IMenu) => {
         ) : currentTab === 'maps' ? (
           <div>Карты</div>
         ) : (
-          <div>Публикация</div>
+          <PublicationTab />
         )}
       </div>
     </div>

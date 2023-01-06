@@ -12,10 +12,15 @@ interface IInput {
   defaultValue?: string;
   onInput?: any;
   prevIcon?: string;
+  appendIcon?: string;
+  onAppendIconClick?: any;
+  readonly?: boolean;
 }
 
 const Input = ({
   prevIcon,
+  appendIcon,
+  onAppendIconClick,
   label,
   placeholder,
   styles,
@@ -23,6 +28,7 @@ const Input = ({
   className,
   name,
   defaultValue = '',
+  readonly = false,
   onInput = () => {},
 }: IInput) => {
   const ref = useRef<HTMLInputElement>(null);
@@ -71,8 +77,18 @@ const Input = ({
         value={value}
         className={classNames('form-input', {
           'icon-prev': prevIcon,
+          'icon-append': appendIcon,
         })}
+        readOnly={readonly}
       />
+      {appendIcon && (
+        <img
+          src={appendIcon}
+          alt=''
+          className='icon icon-append'
+          onClick={() => onAppendIconClick(ref.current)}
+        />
+      )}
       <label
         className={classNames({
           filled: !isInputEmpty,
