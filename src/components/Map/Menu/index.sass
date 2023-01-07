@@ -7,13 +7,21 @@
   @include margin-padding($p-direction: all, $p-amount: 24px 20px 37px 27px)
   @include border-radius($radius: 15px)
   background: $color-secondary-light
-  border: 2px solid red
-
+  border: 2px dashed $color-text-primary
+  &:not(.opened)
+    @include figure($width: 20px, $height: 20vh)
+    opacity: 0
+    visibility: hidden
   .map-menu-title
     @include flexbox($gap: 7px)
     @include align-items($value: center)
+    @include justify-content($value: space-between)
     img
       @include margin-padding($m-direction: top, $m-amount: 3px)
+  
+  .map-menu-controls
+    @include flexbox($gap: 7px)
+    @include position($position: absolute, $left: 96%, $top: 29px)
       
   .other-projects
     @include flexbox($gap: 15px)

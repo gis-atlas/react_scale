@@ -5,6 +5,7 @@ import './index.sass';
 import LayersTab from './Tabs/Layers/LayersTab';
 import DataTab from './Tabs/Data/DataTab';
 import PublicationTab from './Tabs/Publication/PublicationTab';
+import Button from '../../UI/Button/Button';
 
 interface IMapMenu {
   title: string;
@@ -24,42 +25,85 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
     navigate('/projects');
   };
   const [currentTab, setCurrentTab] = useState<string>(tabs[0].name);
+  const [opened, setOpened] = useState<boolean>(true);
 
   return (
-    <div className='map-menu'>
-      <div className='map-menu-title'>
-        <img src='/images/icons/logo.svg' alt='' />
-        <h3>{title}</h3>
-      </div>
-      <div className='other-projects'>
-        <img src='/images/icons/arrow.svg' alt='' onClick={goToOtherProjects} />
-        <span onClick={goToOtherProjects}>К другим проектам</span>
-      </div>
-      <ul className='map-tabs-control'>
-        {tabs.map((tab) => (
-          <li
-            key={tab.id}
-            onClick={() => setCurrentTab(tab.name)}
-            className={classNames({
-              active: currentTab === tab.name,
-            })}
+    <>
+      {!opened && (
+        <Button
+          variant='circle'
+          color='secondary'
+          styles={{
+            position: 'absolute',
+            top: '40px',
+            transform: 'rotate(180deg)',
+            left: '10px',
+          }}
+          onClick={() => setOpened(true)}
+        >
+          <img src='/images/icons/map/chevron.svg' alt='' />
+          <img src='/images/icons/map/chevron.svg' alt='' />
+        </Button>
+      )}
+      <div
+        className={classNames('map-menu', {
+          opened: opened,
+        })}
+      >
+        <div className='map-menu-controls'>
+          <Button
+            variant='circle'
+            color='secondary'
+            onClick={() => setOpened(false)}
           >
-            {tab.title}
-          </li>
-        ))}
-      </ul>
-      <div className='map-tabs'>
-        {currentTab === 'layers' ? (
-          <LayersTab layerGroups={layerGroups} />
-        ) : currentTab === 'data' ? (
-          <DataTab />
-        ) : currentTab === 'maps' ? (
-          <div>Карты</div>
-        ) : (
-          <PublicationTab />
-        )}
+            <img src='/images/icons/map/chevron.svg' alt='' />
+            <img src='/images/icons/map/chevron.svg' alt='' />
+          </Button>
+        </div>
+        <div className='map-menu-title'>
+          <div className='d-flex ai-c'>
+            <img src='/images/icons/logo.svg' alt='' />
+            <h3>{title || 'Без имени'}</h3>
+          </div>
+          <Button variant='circle' color='secondary'>
+            <img src='/images/icons/map/dots.svg' alt='' />
+          </Button>
+        </div>
+
+        <div className='other-projects'>
+          <img
+            src='/images/icons/arrow.svg'
+            alt=''
+            onClick={goToOtherProjects}
+          />
+          <span onClick={goToOtherProjects}>К другим проектам</span>
+        </div>
+        <ul className='map-tabs-control'>
+          {tabs.map((tab) => (
+            <li
+              key={tab.id}
+              onClick={() => setCurrentTab(tab.name)}
+              className={classNames({
+                active: currentTab === tab.name,
+              })}
+            >
+              {tab.title}
+            </li>
+          ))}
+        </ul>
+        <div className='map-tabs'>
+          {currentTab === 'layers' ? (
+            <LayersTab layerGroups={layerGroups} />
+          ) : currentTab === 'data' ? (
+            <DataTab />
+          ) : currentTab === 'maps' ? (
+            <div>Карты</div>
+          ) : (
+            <PublicationTab />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
