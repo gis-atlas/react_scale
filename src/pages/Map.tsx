@@ -8,6 +8,7 @@ import { getLayerGroups } from '../store/layer';
 import { IProject } from '../store/project/type';
 import { RootState } from '../store/reducer';
 import MapControls from '../components/Map/Controls/MapControls';
+import DeckMap from '../components/Map/Map/DeckMap';
 
 const Map = () => {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ const Map = () => {
     <div className='map'>
       <MapMenu title={project.name} layerGroups={layerGroups} />
       <MapControls />
+      <DeckMap />
     </div>
   );
 };
