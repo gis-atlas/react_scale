@@ -6,7 +6,7 @@ import LayersTab from './Tabs/Layers/LayersTab';
 import DataTab from './Tabs/Data/DataTab';
 import PublicationTab from './Tabs/Publication/PublicationTab';
 
-interface IMenu {
+interface IMapMenu {
   title: string;
   layerGroups: Array<any>;
 }
@@ -18,7 +18,7 @@ const tabs = [
   { id: 4, title: 'Публикация', name: 'publication' },
 ];
 
-const Menu = ({ title, layerGroups }: IMenu) => {
+const MapMenu = ({ title, layerGroups }: IMapMenu) => {
   const navigate = useNavigate();
   const goToOtherProjects = () => {
     navigate('/projects');
@@ -63,4 +63,4 @@ const Menu = ({ title, layerGroups }: IMenu) => {
   );
 };
 
-export default Menu;
+export default MapMenu;

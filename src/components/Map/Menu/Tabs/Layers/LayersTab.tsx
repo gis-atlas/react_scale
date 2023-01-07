@@ -1,6 +1,6 @@
-import LayerCard from '../../../Cards/Layers/LayerCard';
-import LayerGroupCard from '../../../Cards/Layers/LayerGroupCard';
-import Button from '../../../UI/Button/Button';
+import LayerCard from '../../../../Cards/Layers/LayerCard';
+import LayerGroupCard from '../../../../Cards/Layers/LayerGroupCard';
+import Button from '../../../../UI/Button/Button';
 
 interface ILayerCard {
   layerGroups: Array<any>;

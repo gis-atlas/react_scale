@@ -1,6 +1,6 @@
-import DataCard from '../../../Cards/Data/DataCard';
-import Button from '../../../UI/Button/Button';
-import Input from '../../../UI/Input/Input';
+import DataCard from '../../../../Cards/Data/DataCard';
+import Button from '../../../../UI/Button/Button';
+import Input from '../../../../UI/Input/Input';
 import './index.sass';
 
 const DataTab = () => {

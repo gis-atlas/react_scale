@@ -9,10 +9,12 @@ button.custom-button
   &.circle
     @include flexbox
     @include justify-content($value: center)
-    @include align-content($value: center)
+    @include align-items($value: center)
+    @include font($size: 12px, $weight: 700)
     
     &.small, &.medium
       @include figure($width: 30px, $height: 30px)
+      @include margin-padding($p-direction: all, $p-amount: 0)
 
   &.small
     @include margin-padding($p-direction: all, $p-amount: 3px 10px)
