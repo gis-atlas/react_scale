@@ -1,7 +1,13 @@
 import LayerCard from '../../../Cards/Layers/LayerCard';
+import LayerGroupCard from '../../../Cards/Layers/LayerGroupCard';
 import Button from '../../../UI/Button/Button';
 
-const LayersTab = () => {
+interface ILayerCard {
+  layerGroups: Array<any>;
+}
+
+const LayersTab = ({ layerGroups }: ILayerCard) => {
+  console.log(layerGroups);
   return (
     <div className='tab tab-layers'>
       <div className='d-flex jc-sb ai-c'>
@@ -12,9 +18,17 @@ const LayersTab = () => {
       </div>
       <div className='tab-list-outer'>
         <ul className='tab-list'>
-          {['demos', '3d', 'demos', 'relief', '3d', 'relief'].map((i: any) => (
-            <LayerCard title={i} layerType={i} />
-          ))}
+          {layerGroups?.map((layerGroup) =>
+            layerGroup.name === 'group' || layerGroup.layers.length !== 0 ? (
+              <LayerGroupCard layers={layerGroup.layers} />
+            ) : (
+              <LayerCard
+                key={layerGroup.id}
+                name={layerGroup.name}
+                layerType='relief'
+              />
+            )
+          )}
         </ul>
       </div>
     </div>

@@ -8,6 +8,7 @@ import PublicationTab from './Tabs/Publication/PublicationTab';
 
 interface IMenu {
   title: string;
+  layerGroups: Array<any>;
 }
 
 const tabs = [
@@ -17,12 +18,12 @@ const tabs = [
   { id: 4, title: 'Публикация', name: 'publication' },
 ];
 
-const Menu = ({ title }: IMenu) => {
+const Menu = ({ title, layerGroups }: IMenu) => {
   const navigate = useNavigate();
   const goToOtherProjects = () => {
     navigate('/projects');
   };
-  const [currentTab, setCurrentTab] = useState<string>(tabs[3].name);
+  const [currentTab, setCurrentTab] = useState<string>(tabs[0].name);
 
   return (
     <div className='map-menu'>
@@ -49,7 +50,7 @@ const Menu = ({ title }: IMenu) => {
       </ul>
       <div className='map-tabs'>
         {currentTab === 'layers' ? (
-          <LayersTab />
+          <LayersTab layerGroups={layerGroups} />
         ) : currentTab === 'data' ? (
           <DataTab />
         ) : currentTab === 'maps' ? (
