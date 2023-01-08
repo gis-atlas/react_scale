@@ -6,9 +6,10 @@ interface IButton {
   children?: ReactNode;
   color?: string;
   styles?: Object;
-  onClick?: ReactEventHandler;
+  onClick?: any;
   type?: 'submit' | 'reset' | 'button';
   size?: 'small' | 'medium' | 'large';
+  variant?: 'default' | 'circle';
 }
 
 const Button = ({
@@ -18,12 +19,14 @@ const Button = ({
   onClick,
   type = 'button',
   size = 'medium',
+  variant = 'default',
 }: IButton) => {
   return (
     <button
       className={classNames('custom-button', {
         [color]: color,
         [size]: size,
+        [variant]: variant,
       })}
       style={styles}
       onClick={onClick}

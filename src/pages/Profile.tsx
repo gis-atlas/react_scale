@@ -12,7 +12,7 @@ import UserImage from '../components/UI/Image/UserImage';
 const Profile = () => {
   const dispatch = useAppDispatch();
   const { name, telegram, birthday, city, photo } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user.user
   );
   const [isEditMode, setEditMode] = useState<boolean>(false);
   const onSaveChanges = (e: FormEvent) => {
