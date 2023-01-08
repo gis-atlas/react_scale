@@ -17,7 +17,7 @@ const UserImage = ({
   variant = 'default',
 }: IUserImage) => {
   const navigate = useNavigate();
-  const photo = useSelector((state: RootState) => state.user.photo);
+  const photo = useSelector((state: RootState) => state.user.user.photo);
   const goToProfile = () => navigate('/profile');
   return (
     <div

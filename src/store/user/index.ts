@@ -44,18 +44,19 @@ export const getPhoto = createAsyncThunk('user/getPhoto', async () => {
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    isLoggedIn: localStorage.getItem('isLoggedIn') || false,
     id: '',
-    role: '',
-    type: '',
-    access: '',
-    refresh: '',
-    email: '',
-    name: '',
-    birthday: '',
-    telegram: '',
-    city: '',
-    photo: '',
+    isLoggedIn: localStorage.getItem('isLoggedIn') || false,
+    accessToken: '',
+    refreshToken: '',
+    user: {
+      role: '',
+      email: '',
+      name: '',
+      birthday: '',
+      telegram: '',
+      city: '',
+      photo: '',
+    },
   },
   reducers: {},
   extraReducers(builder) {
@@ -64,10 +65,10 @@ export const userSlice = createSlice({
       console.log(action.payload);
       state.isLoggedIn = true;
       state.id = id;
-      state.access = accessToken;
-      state.refresh = refreshToken;
-      localStorage.setItem('token', accessToken);
-      localStorage.setItem('refresh', refreshToken);
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
       return state;
     });
     builder.addCase(getProfileData.fulfilled, (state, action) => {
@@ -78,8 +79,9 @@ export const userSlice = createSlice({
       console.log(action.payload);
     });
     builder.addCase(getPhoto.fulfilled, (state, action) => {
-      localStorage.setItem('photo', JSON.stringify(action.payload));
-      state.photo = action.payload ? URL.createObjectURL(action.payload) : '';
+      state.user.photo = action.payload
+        ? URL.createObjectURL(action.payload)
+        : '';
     });
   },
 });
