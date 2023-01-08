@@ -1,6 +1,7 @@
 import classNames from 'classnames';
-import { MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode, useRef } from 'react';
 import './index.sass';
+import Button from '../UI/Button/Button';
 
 interface IModal {
   children?: ReactNode;
@@ -11,18 +12,35 @@ interface IModal {
 }
 
 const Modal = ({ children, title, description, state, setState }: IModal) => {
-  const closeModal = (e: MouseEvent): void => {
-    setState(false);
-  };
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const closeModal = (e: MouseEvent) => setState(false);
+
   return (
     <div
+      ref={wrapperRef}
       className={classNames('modal-wrapper', { active: state })}
       onClick={closeModal}
     >
-      <div className='modal'>
+      <div className='modal' onClick={(e) => e.stopPropagation()}>
         <h2>{title}</h2>
         <p>{description}</p>
         {children}
+        <Button
+          variant='circle'
+          color='secondary'
+          className='close-button'
+          onClick={closeModal}
+        >
+          <img
+            src='/images/icons/plus.svg'
+            alt=''
+            style={{
+              transform: 'rotate(45deg)',
+              width: '12px',
+              height: '12px',
+            }}
+          />
+        </Button>
       </div>
     </div>
   );

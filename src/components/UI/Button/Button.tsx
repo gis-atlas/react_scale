@@ -4,8 +4,9 @@ import './index.sass';
 
 interface IButton {
   children?: ReactNode;
-  color?: string;
   styles?: Object;
+  color?: string;
+  className?: string;
   onClick?: any;
   type?: 'submit' | 'reset' | 'button';
   size?: 'small' | 'medium' | 'large';
@@ -14,9 +15,10 @@ interface IButton {
 
 const Button = ({
   children,
-  color = 'primary',
   styles,
   onClick,
+  className = '',
+  color = 'primary',
   type = 'button',
   size = 'medium',
   variant = 'default',
@@ -27,6 +29,7 @@ const Button = ({
         [color]: color,
         [size]: size,
         [variant]: variant,
+        [className]: className,
       })}
       style={styles}
       onClick={onClick}

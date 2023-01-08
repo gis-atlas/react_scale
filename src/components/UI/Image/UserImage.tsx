@@ -25,10 +25,11 @@ const UserImage = ({
         [size]: size,
         [figure]: figure,
         [variant]: variant,
+        'has-image': photo,
       })}
       onClick={goToProfile}
     >
-      <img src={photo} alt='' />
+      <img src={photo || '/images/icons/user.svg'} alt=' ' />
     </div>
   );
 };

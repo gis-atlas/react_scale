@@ -4,7 +4,7 @@ import Card from '../components/Cards/Card';
 import Button from '../components/UI/Button/Button';
 import Input from '../components/UI/Input/Input';
 import ImageUploader from '../components/Uploaders/Image/ImageUploader';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, ReactNode, useEffect, useState } from 'react';
 import { useAppDispatch } from '../store';
 import { getProfileData, updateProfileData } from '../store/user';
 import UserImage from '../components/UI/Image/UserImage';
@@ -33,7 +33,7 @@ const Profile = () => {
   };
   useEffect(() => {
     dispatch(getProfileData());
-  }, []);
+  }, [dispatch]);
   return (
     <div className='profile'>
       <h1>Профиль</h1>
@@ -72,10 +72,14 @@ const Profile = () => {
             <div className='d-flex' style={{ gap: '27px' }}>
               {photo ? <UserImage /> : <ImageUploader />}
               <div className='d-grid' style={{ flex: 1 }}>
-                <p>{name}</p>
-                <p>{telegram}</p>
-                <p>{birthday}</p>
-                <p>{city}</p>
+                <ProfileTextField fieldName='Имя'>{name}</ProfileTextField>
+                <ProfileTextField fieldName='Дата рождения'>
+                  {birthday}
+                </ProfileTextField>
+                <ProfileTextField fieldName='Телеграм'>
+                  {telegram}
+                </ProfileTextField>
+                <ProfileTextField fieldName='Город'>{city}</ProfileTextField>
               </div>
             </div>
             <div className='d-flex' style={{ justifyContent: 'end' }}>
@@ -104,6 +108,20 @@ const Profile = () => {
           <Button>Обновить</Button>
         </div>
       </Card>
+    </div>
+  );
+};
+
+interface IProfileTextField {
+  children?: ReactNode;
+  fieldName?: string;
+}
+
+const ProfileTextField = ({ children, fieldName }: IProfileTextField) => {
+  return (
+    <div className='profile-text-field'>
+      <span>{fieldName}</span>
+      <p>{children || '...'}</p>
     </div>
   );
 };
