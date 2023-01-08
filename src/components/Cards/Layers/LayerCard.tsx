@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import './index.sass';
 
-const LayerCard = ({ name, layerType }: ILayerCard) => {
+const LayerCard = ({ id, name, layerType }: ILayerCard) => {
   const [showed, setShowed] = useState<boolean>(false);
   return (
     <div

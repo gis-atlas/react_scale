@@ -1,4 +1,5 @@
 import DeckGL from '@deck.gl/react/typed';
+import { Map } from 'react-map-gl';
 import { ScatterplotLayer } from '@deck.gl/layers/typed';
 import testData from './testMapData.json';
 
@@ -10,7 +11,8 @@ const INITIAL_VIEW_STATE = {
   bearing: 0,
 };
 
-console.log(testData);
+const REACT_MAPBOX_ACCESS_TOKEN =
+  'pk.eyJ1IjoiamFnZXJpZCIsImEiOiJjbGNuamNmemowenhmM29xcTIxa29sczlsIn0.fRLOKtjyA2V1AaLGQj9TxQ';
 
 const scatterplotLayer = new ScatterplotLayer({
   id: 'scatterplot-layer',
@@ -31,15 +33,21 @@ const scatterplotLayer = new ScatterplotLayer({
   onClick: (d) => console.log(2),
 });
 
-const DeckMap = () => {
+interface IDeckMap {
+  mapStyle?: string;
+}
+
+const DeckMap = ({ mapStyle }: IDeckMap) => {
   return (
     <DeckGL
       width='100%'
       height='100%'
-      viewState={INITIAL_VIEW_STATE}
+      initialViewState={INITIAL_VIEW_STATE}
       layers={[scatterplotLayer]}
       controller
-    />
+    >
+      <Map mapboxAccessToken={REACT_MAPBOX_ACCESS_TOKEN} mapStyle={mapStyle} />
+    </DeckGL>
   );
 };
 

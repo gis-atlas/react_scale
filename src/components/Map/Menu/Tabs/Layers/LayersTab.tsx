@@ -20,10 +20,11 @@ const LayersTab = ({ layerGroups }: ILayerCard) => {
         <ul className='tab-list'>
           {layerGroups?.map((layerGroup) =>
             layerGroup.name === 'group' || layerGroup.layers.length !== 0 ? (
-              <LayerGroupCard layers={layerGroup.layers} />
+              <LayerGroupCard key={layerGroup.id} layers={layerGroup.layers} />
             ) : (
               <LayerCard
                 key={layerGroup.id}
+                id={layerGroup.id}
                 name={layerGroup.name}
                 layerType='relief'
               />

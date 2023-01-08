@@ -73,7 +73,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(getProfileData.fulfilled, (state, action) => {
       console.log(action.payload);
-      return { ...state, ...action.payload };
+      return { ...state, user: { ...action.payload } };
     });
     builder.addCase(updateProfileData.fulfilled, (state, action) => {
       console.log(action.payload);

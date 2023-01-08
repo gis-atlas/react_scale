@@ -6,6 +6,7 @@ import LayersTab from './Tabs/Layers/LayersTab';
 import DataTab from './Tabs/Data/DataTab';
 import PublicationTab from './Tabs/Publication/PublicationTab';
 import Button from '../../UI/Button/Button';
+import MapsTab from './Tabs/Maps/MapsTab';
 
 interface IMapMenu {
   title: string;
@@ -24,7 +25,7 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
   const goToOtherProjects = () => {
     navigate('/projects');
   };
-  const [currentTab, setCurrentTab] = useState<string>(tabs[0].name);
+  const [currentTab, setCurrentTab] = useState<string>(tabs[2].name);
   const [opened, setOpened] = useState<boolean>(true);
 
   return (
@@ -38,6 +39,7 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
             top: '40px',
             transform: 'rotate(180deg)',
             left: '10px',
+            zIndex: 2,
           }}
           onClick={() => setOpened(true)}
         >
@@ -97,7 +99,7 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
           ) : currentTab === 'data' ? (
             <DataTab />
           ) : currentTab === 'maps' ? (
-            <div>Карты</div>
+            <MapsTab />
           ) : (
             <PublicationTab />
           )}

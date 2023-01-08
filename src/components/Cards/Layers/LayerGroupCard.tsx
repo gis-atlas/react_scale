@@ -41,7 +41,12 @@ const LayerGroupCard = ({ layers }: ILayerGroupCard) => {
         })}
       >
         {layers?.map((layer) => (
-          <LayerCard name={layer.name} layerType='3d' />
+          <LayerCard
+            key={layer.id}
+            id={layer.id}
+            name={layer.name}
+            layerType='3d'
+          />
         ))}
       </div>
     </div>

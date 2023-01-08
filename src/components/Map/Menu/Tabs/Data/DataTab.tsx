@@ -20,14 +20,22 @@ const DataTab = () => {
       <div className='tab-list-outer'>
         <h4>Используемые в проекте</h4>
         <ul className='tab-list'>
-          {[true, true, true].map((i: any) => (
-            <DataCard title={'asdasd'} isUsed={i} />
+          {[
+            { id: 1, v: true },
+            { id: 2, v: true },
+            { id: 3, v: true },
+          ].map((i: any) => (
+            <DataCard key={i.id} title={'asdasd'} isUsed={i.v} />
           ))}
         </ul>
         <h4>Доступные наборы</h4>
         <ul className='tab-list'>
-          {[false, false, false].map((i: any) => (
-            <DataCard title={'asdasd'} isUsed={i} />
+          {[
+            { id: 1, v: false },
+            { id: 2, v: false },
+            { id: 3, v: false },
+          ].map((i: any) => (
+            <DataCard key={i.id} title={'asdasd'} isUsed={i.v} />
           ))}
         </ul>
       </div>

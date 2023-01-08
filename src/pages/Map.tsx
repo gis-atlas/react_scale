@@ -19,6 +19,7 @@ const Map = () => {
   const layerGroups: any = useSelector(
     (state: RootState) => state.layer.layerGroups
   );
+  const mapStyle = useSelector((state: RootState) => state.map.mapStyle);
 
   useEffect(() => {
     dispatch(getProject(Number(projectId)));
@@ -32,7 +33,7 @@ const Map = () => {
     <div className='map'>
       <MapMenu title={project.name} layerGroups={layerGroups} />
       <MapControls />
-      <DeckMap />
+      <DeckMap mapStyle={mapStyle} />
     </div>
   );
 };
