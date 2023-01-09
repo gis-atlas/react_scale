@@ -1,7 +1,8 @@
 import classNames from 'classnames';
-import { useState } from 'react';
-import './index.sass';
+import { useMemo, useState } from 'react';
 import LayerCard from './LayerCard';
+import { declOfNum } from '../../../utils';
+import './index.sass';
 
 interface ILayerGroupCard {
   layers: Array<ILayerCard>;
@@ -9,6 +10,7 @@ interface ILayerGroupCard {
 
 const LayerGroupCard = ({ layers }: ILayerGroupCard) => {
   const [opened, setOpened] = useState<boolean>(false);
+  const layerCountText = declOfNum(layers.length, ['слой', 'слоя', 'слоёв']);
 
   return (
     <div
@@ -23,7 +25,9 @@ const LayerGroupCard = ({ layers }: ILayerGroupCard) => {
         <div className='layer-group-card-title'>
           <img src={`/images/icons/layers/group.svg`} alt='' />
           <h6>Группа</h6>
-          <span>{layers.length} слоёв</span>
+          <span>
+            {layers.length} {layerCountText}
+          </span>
         </div>
         <div className='layer-group-card-controls'>
           {/* TODO: проверка, все ли слои открыты */}
