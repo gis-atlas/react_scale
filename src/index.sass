@@ -61,7 +61,14 @@ footer
 .profile
   h1
     @include margin-padding($m-direction: left, $m-amount: 25px)
-
+  .profile-text-field
+    @include flexbox($gap: 5px)
+    @include flex-direction($direction: column)
+    span
+      @include font($size: 12px, $weight: 700, $italic: true)
+    p
+      @include font($size: 16px, $weight: 400)
+      
 .projects
   .control
     @include flexbox($gap: 14px)
@@ -83,3 +90,8 @@ footer
       @include font($size: 14px, $weight: 500)
     .project-count
       @include font($size: 12px, $weight: 500)
+
+.map
+  width: 100vw
+  min-height: inherit
+  height: 100%

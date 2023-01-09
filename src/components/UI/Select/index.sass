@@ -1,0 +1,47 @@
+@import '../../../assets/styles/_mixins'
+@import '../../../assets/styles/_variables'
+  
+.custom-select
+  @include position($position: relative)
+  @include margin-padding($p-direction: all, $p-amount: 3px 7px)
+  display: inline-block
+  
+  &.opened
+    background: $color-light
+    @include border-radius($radius: 6px 6px 0 0)
+    .current-option
+      img
+        transform: rotate(180deg)
+    .options
+      @include border-radius($radius: 0 0 6px 6px)
+      background: $color-light
+      opacity: 1
+      visibility: visible
+      
+  .current-option
+    @include flexbox($gap: 6px)
+    @include align-items($value: center)
+    cursor: pointer
+    span
+      @include font($size: 14px, $weight: 700, $important: true)
+    img
+      @include margin-padding($m-direction: top, $m-amount: 3px)
+  
+  .options
+    @include position($position: absolute, $left: 0, $top: 100%)
+    @include flexbox($gap: 4px)
+    @include flex-direction($direction: column)
+    width: 100%
+    opacity: 0
+    visibility: hidden
+
+    li
+      @include font($size: 14px, $weight: 400)
+      @include margin-padding($p-direction: all, $p-amount: 3px 7px)
+      @include border-radius($radius: 6px)
+      cursor: pointer
+      &.current
+        display: none
+      &:hover
+        background: $color-primary
+    

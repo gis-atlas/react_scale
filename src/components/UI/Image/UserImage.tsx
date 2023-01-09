@@ -17,7 +17,7 @@ const UserImage = ({
   variant = 'default',
 }: IUserImage) => {
   const navigate = useNavigate();
-  const photo = useSelector((state: RootState) => state.user.photo);
+  const photo = useSelector((state: RootState) => state.user.user.photo);
   const goToProfile = () => navigate('/profile');
   return (
     <div
@@ -25,10 +25,11 @@ const UserImage = ({
         [size]: size,
         [figure]: figure,
         [variant]: variant,
+        'has-image': photo,
       })}
       onClick={goToProfile}
     >
-      <img src={photo} alt='' />
+      <img src={photo || '/images/icons/user.svg'} alt=' ' />
     </div>
   );
 };

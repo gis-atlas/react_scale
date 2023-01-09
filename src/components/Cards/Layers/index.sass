@@ -1,0 +1,87 @@
+@import '../../../assets/styles/_variables'
+@import '../../../assets/styles/_mixins'
+
+.layer-group-card .layer-group-card-header, .layer-card
+  @include flexbox($gap: 10px)
+  @include align-items($value: center)
+  @include justify-content($value: space-between)
+  @include border-radius($radius: 6px)
+  @include margin-padding($p-direction: all, $p-amount: 10px 10px 0 10px)
+  
+.layer-card
+  background: $color-light
+  box-shadow: 0px 4px 10px rgba(88, 104, 164, 0.25)
+  @include margin-padding($p-direction: all, $p-amount: 10px)
+  
+  &:not(.active)
+    -webkit-filter: opacity(.6)
+  
+  .layer-card-title
+    @include flexbox($gap: 5px)
+    @include align-items($value: center)
+    @include max-width($m-width: 75%, $center: false)
+
+    .layer-card-type
+      @include flexbox
+      @include figure($width: 20px, $height: 20px)
+      @include justify-content($value: center)
+      @include align-items($value: center)
+      @include border-radius($radius: 5px)
+
+      &.type-3d
+        background: $color-3d
+        img
+          @include figure($width: 13.5px, $height: 13.5px)
+      
+      &.type-relief
+        background: $color-relief
+        img
+          @include figure($width: 12px, $height: 12px)
+      
+      &.type-demos
+        background: $color-demos
+      
+  .layer-card-controls
+    @include flexbox($gap: 10px)
+    @include align-items($value: center)
+
+    img
+      @include figure($width: 19px, $height: 19px)
+      cursor: pointer
+      
+.layer-group-card
+  @include border-radius($radius: 6px)
+  @include flex-direction($direction: column)
+  @include flexbox
+  @include margin-padding($p-direction: bottom, $p-amount: 10px)
+  background: $color-light
+  box-shadow: 0px 4px 10px rgba(88, 104, 164, 0.25)
+  overflow: hidden
+  &.opened
+    @include margin-padding($p-direction: bottom, $p-amount: 15px)
+  .layer-group-card-title
+    @include flexbox($gap: 10px)
+    span
+      @include font($size: 12px, $weight: 400, $italic: true)
+      
+  .layer-group-card-controls
+    @include flexbox($gap: 10px)
+    @include align-items($value: center)
+    img
+      @include figure($width: 19px, $height: 19px)
+      cursor: pointer
+  
+  .layers-list
+    @include margin-padding($m-direction: top, $m-amount: 15px, $p-direction: all, $p-amount: 0 0 0 21px)
+    max-height: 150px
+    overflow-y: scroll
+    display: none
+    &.opened
+      @include flexbox($gap: 10px)
+      @include flex-direction($direction: column)
+    
+    .layer-card
+      @include margin-padding($p-direction: all, $p-amount: 10px 10px 0 10px)
+      box-shadow: none
+      
+      

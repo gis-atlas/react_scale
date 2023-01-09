@@ -11,22 +11,27 @@ div.form-input
 
   .icon
     @include position($position: absolute)
+    cursor: pointer
     &.icon-prev
       @include position($position: absolute, $left: 14px, $v-center: true)
+    &.icon-append
+      @include position($position: absolute, $left: -14px, $v-center: true)
 
   input
-    width: 100%
-    height: 100%
-    border: 2px solid $color-secondary-dark
     @include border-radius($radius: 4px)
     @include font($size: 14px, $weight: 700)
     @include margin-padding($p-direction: all, $p-amount: 10px 10px)
+    width: 100%
+    height: 100%
+    border: 2px solid $color-secondary-dark
+    text-overflow: ellipsis
     &.icon-prev
       @include margin-padding($p-direction: all, $p-amount: 10px 40px)
+    &.icon-append
+      @include margin-padding($p-direction: all, $p-amount: 10px 40px 10px 10px)
     &::placeholder
       color: $color-sedondary-darker
       border: 2px solid $color-sedondary-darker
-
     &:focus + label
       @include position($position: absolute, $left: 0, $top: 0)
       @include font($size: 12px, $weight: 600)

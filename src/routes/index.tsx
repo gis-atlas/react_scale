@@ -8,6 +8,7 @@ import Projects from '../pages/Projects';
 import Registration from '../pages/Registration';
 import Test from '../pages/Test';
 import Footer from '../components/Footer/Footer';
+import Map from '../pages/Map';
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: '/projects',
         element: <Projects />,
+      },
+      {
+        path: '/projects/:projectId',
+        element: <div>Project</div>,
       },
       {
         path: '/catalog',
@@ -67,5 +72,9 @@ export const router = createBrowserRouter([
         element: <Login />,
       },
     ],
+  },
+  {
+    path: '/map/:projectId',
+    element: <Map />,
   },
 ]);

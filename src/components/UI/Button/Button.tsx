@@ -4,26 +4,32 @@ import './index.sass';
 
 interface IButton {
   children?: ReactNode;
-  color?: string;
   styles?: Object;
-  onClick?: ReactEventHandler;
+  color?: string;
+  className?: string;
+  onClick?: any;
   type?: 'submit' | 'reset' | 'button';
   size?: 'small' | 'medium' | 'large';
+  variant?: 'default' | 'circle';
 }
 
 const Button = ({
   children,
-  color = 'primary',
   styles,
   onClick,
+  className = '',
+  color = 'primary',
   type = 'button',
   size = 'medium',
+  variant = 'default',
 }: IButton) => {
   return (
     <button
       className={classNames('custom-button', {
         [color]: color,
         [size]: size,
+        [variant]: variant,
+        [className]: className,
       })}
       style={styles}
       onClick={onClick}
