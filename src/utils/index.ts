@@ -18,6 +18,8 @@ export const sortProjectsBy = ({
   if (!array) return [];
   let result: Array<IProject> = [];
   if (by === 'date') {
+    console.log('Сортировано по дате');
+    result = [...array];
     // TODO: добавить поле lastChange (или с другим именем) на беке
     // result = array.sort((a: IProject, b: IProject) => {
     //   const [dayA, monthA, yearA] = a.lastChange.split('.');

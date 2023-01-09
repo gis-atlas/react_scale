@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { findMatch, sortProjectsBy } from '../utils';
 import { IProject } from '../store/project/type';
 import Button from '../components/UI/Button/Button';
+import Select from '../components/UI/Select/Select';
 
 const Projects = () => {
   const dispatch = useAppDispatch();
@@ -48,6 +49,7 @@ const Projects = () => {
 
   useEffect(() => {
     const sortedProjects = sortProjectsBy({ array: projectsAPI, by: sortBy });
+    console.log(sortBy);
     const resultProjects = sortedProjects.slice(
       5 * (currentPage - 1),
       5 * currentPage
@@ -58,7 +60,6 @@ const Projects = () => {
     const rightCountBorder = leftCountBorder + projects.length - 1;
     setCountBorders([leftCountBorder, rightCountBorder]);
   }, [currentPage, projects.length, projectsAPI, sortBy]);
-  console.log(1);
   return (
     <div className='projects'>
       <Card
@@ -96,8 +97,11 @@ const Projects = () => {
         <div className='control'>
           <div>
             <span>Сортировать по: </span>
-            {/* TODO: заменить на select */}
-            <span>дате изменения</span>
+            <Select
+              state={sortBy}
+              setState={setSortBy}
+              options={['name', 'date', 'option3', 'option4']}
+            />
           </div>
           <div className='project-count'>
             {countBorders[0]}-{countBorders[1]} из {projectsAPI.length} проектов

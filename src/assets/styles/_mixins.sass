@@ -6,9 +6,12 @@
   @else
     width: $width
 
-@mixin font($size: 1rem, $weight: 400, $italic: false)
+@mixin font($size: 1rem, $weight: 400, $italic: false, $important: false)
   font-size: $size
   font-weight: $weight
+  @if $important
+    font-size: $size !important
+    font-weight: $weight !important
   @if $italic
     font-style: italic
 
