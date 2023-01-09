@@ -25,7 +25,7 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
   const goToOtherProjects = () => {
     navigate('/projects');
   };
-  const [currentTab, setCurrentTab] = useState<string>(tabs[2].name);
+  const [currentTab, setCurrentTab] = useState<string>(tabs[0].name);
   const [opened, setOpened] = useState<boolean>(true);
 
   return (

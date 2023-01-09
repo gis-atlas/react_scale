@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import LayerCard from './LayerCard';
 import { declOfNum } from '../../../utils';
 import './index.sass';
