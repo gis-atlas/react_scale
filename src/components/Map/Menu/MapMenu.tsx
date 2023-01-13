@@ -36,7 +36,7 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
           color='secondary'
           styles={{
             position: 'absolute',
-            top: '40px',
+            top: '36px',
             transform: 'rotate(180deg)',
             left: '10px',
             zIndex: 2,
@@ -63,7 +63,7 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
           </Button>
         </div>
         <div className='map-menu-title'>
-          <div className='d-flex ai-c'>
+          <div className='d-flex ai-c' style={{ gap: '7px' }}>
             <img src='/images/icons/logo.svg' alt='' />
             <h3>{title || 'Без имени'}</h3>
           </div>

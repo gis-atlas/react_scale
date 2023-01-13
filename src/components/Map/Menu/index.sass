@@ -17,10 +17,11 @@
     @include justify-content($value: space-between)
     img
       @include margin-padding($m-direction: top, $m-amount: 3px)
+      -webkit-filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
   
   .map-menu-controls
     @include flexbox($gap: 7px)
-    @include position($position: absolute, $left: 96%, $top: 29px)
+    @include position($position: absolute, $left: 95.5%, $top: 26px)
       
   .other-projects
     @include flexbox($gap: 15px)
