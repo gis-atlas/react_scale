@@ -1,50 +1,77 @@
 @import '../../../assets/styles/_mixins'
 @import '../../../assets/styles/_variables'
-
-$padding: 10px 12px
-
-div.form-input
-  position: relative
-
-  &.password-repeat
-    @include margin-padding($m-direction: top, $m-amount: 16px)
-
-  .icon
-    @include position($position: absolute)
-    cursor: pointer
-    &.icon-prev
-      @include position($position: absolute, $left: 14px, $v-center: true)
-    &.icon-append
-      @include position($position: absolute, $left: -14px, $v-center: true)
-
-  input
-    @include border-radius($radius: 4px)
-    @include font($size: 14px, $weight: 700)
-    @include margin-padding($p-direction: all, $p-amount: 10px 10px)
-    width: 100%
-    height: 100%
-    border: 2px solid $color-secondary-dark
-    text-overflow: ellipsis
-    &.icon-prev
-      @include margin-padding($p-direction: all, $p-amount: 10px 40px)
-    &.icon-append
-      @include margin-padding($p-direction: all, $p-amount: 10px 40px 10px 10px)
-    &::placeholder
-      color: $color-sedondary-darker
-      border: 2px solid $color-sedondary-darker
-    &:focus + label
-      @include position($position: absolute, $left: 0, $top: 0)
-      @include font($size: 12px, $weight: 600)
-      @include margin-padding($p-direction: all, $p-amount: 10px 12px)
-
+  
+.custom-input
+  @include border-radius($radius: 6px)
+  @include flexbox($gap: 10px)
+  @include align-items($value: center)
+  width: 100%
+  height: 44px
+  border: 2px solid $color-secondary-dark
+  background: $color-light
   label
-    @include position($position: absolute, $left: 0, $top: 0, $v-center: true)
-    @include font($size: 14px, $weight: 700)
+    @include position($position: relative)
+    @include flexbox($gap: 10px)
+    @include align-items($value: center)
     @include margin-padding($p-direction: all, $p-amount: 10px 12px)
-    color: $color-sedondary-darker
+    max-width: inherit
+    width: 100%
     cursor: text
-    &.icon-prev:not(.filled)
-      @include margin-padding($p-direction: all, $p-amount: 10px 40px)
-    &.filled
-      @include position($position: absolute, $left: 0, $top: 0)
-      @include font($size: 12px, $weight: 600)
+    &.icon-prev
+      padding-left: 44px
+      img.icon-prev
+        @include position($position: absolute, $left: 12px, $v-center: true)
+      span
+        @include position($position: absolute, $left: 44px, $v-center: true)
+        @include font($size: 14px, $weight: 700)
+        color: $color-secondary-darker
+    &.icon-append
+      padding-right: 44px
+      img.icon-append
+        @include position($position: absolute, $left: -12px, $v-center: true)
+    &.focused
+      span
+        @include font($size: 12px, $weight: 600)
+        @include position($position: absolute, $left: 6px)
+        @include margin-padding($p-direction: all, $p-amount: 0 4px)
+        top: -2px
+        &.gradient
+          animation: onGradientFocus .3s forwards
+        &:not(.gradient)
+          animation: onFocus .3s forwards
+    input
+      @include font($size: 14px, $weight: 700)
+      text-overflow: ellipsis
+      width: inherit
+      background: inherit
+      &::placeholder
+        color: $color-secondary-darker
+    span
+      @include position($position: absolute, $left: 12px, $v-center: true)
+      @include font($size: 14px, $weight: 700)
+      color: $color-secondary-darker
+    img.icon
+      cursor: pointer
+
+
+@keyframes onGradientFocus
+  0%
+    @include border-radius($radius: 20px)
+    @include font($size: 12px, $weight: 600)
+    padding: 0
+  100%
+    @include border-radius($radius: 0px)
+    @include margin-padding($p-direction: all, $p-amount: 0 4px)
+    background: -moz-linear-gradient(top, $color-secondary-light 50%, $color-light 50%)
+    background: -webkit-linear-gradient(top, $color-secondary-light 50%,$color-light 50%)
+    background: linear-gradient(to bottom, $color-secondary-light 50%,$color-light 50%)
+    
+@keyframes onFocus
+  0%
+    @include border-radius($radius: 20px)
+    padding: 0
+
+  100%
+    @include border-radius($radius: 0px)
+    @include margin-padding($p-direction: all, $p-amount: 0 4px)
+    background: $color-light
