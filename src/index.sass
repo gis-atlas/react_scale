@@ -29,7 +29,7 @@ header, footer
 main
   @include flex($fg: 1)
   @include border-radius($radius: 30px)
-  @include margin-padding($p-direction: top, $p-amount: 35px)
+  @include margin-padding($p-direction: all, $p-amount: 35px 0px)
   background: $color-light
 
 footer
@@ -41,7 +41,8 @@ footer
   .log-reg-form
     // @include figure($width: 420px, $height: 350px)
     min-height: 250px
-    width: 420px
+    max-width: 420px
+    width: 100%
     @include margin-padding($m-direction: top, $m-amount: 19px, $p-direction: all, $p-amount: 25px)
     @include flexbox
     @include flex-direction($direction: column)
