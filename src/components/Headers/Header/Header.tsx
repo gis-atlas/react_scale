@@ -27,7 +27,7 @@ const Header = () => {
       <ul className='d-flex ai-c' style={{ gap: '19px' }}>
         <li className='lang'>RU</li>
         <li>
-          <UserImage size='small' variant='bordered' figure='circle' />
+          <UserImage size='small' variant='bordered' figure='circle' className='user-image-header' />
         </li>
       </ul>
     </header>

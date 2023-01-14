@@ -21,8 +21,13 @@
   &.bordered
     border: 4px solid $color-error
     &.has-image
+      @include figure($width: 15px, $height: 15px)
       border: 4px solid $color-user-secondary
   img
-    padding: 5px
     width: inherit
     height: inherit
+    &.pencil
+      @include figure($width: 20px, $height: 20px)
+      @include position($position: absolute, $h-center: true, $v-center: true)
+  .upload-image-modal
+    background: red !important

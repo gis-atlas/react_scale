@@ -6,7 +6,7 @@ import Input from '../components/UI/Input/Input';
 import ImageUploader from '../components/Uploaders/Image/ImageUploader';
 import { FormEvent, ReactNode, useEffect, useState } from 'react';
 import { useAppDispatch } from '../store';
-import { getProfileData, updateProfileData } from '../store/user';
+import { getPhoto, getProfileData, updateProfileData } from '../store/user';
 import UserImage from '../components/UI/Image/UserImage';
 
 const Profile = () => {
@@ -33,6 +33,7 @@ const Profile = () => {
   };
   useEffect(() => {
     dispatch(getProfileData());
+    dispatch(getPhoto());
   }, [dispatch]);
   return (
     <div className='profile'>
@@ -47,18 +48,18 @@ const Profile = () => {
             onSubmit={onSaveChanges}
           >
             <div className='d-flex' style={{ gap: '27px' }}>
-              <ImageUploader />
+              <UserImage canUpdate />
               <div className='d-grid' style={{ flex: 1 }}>
                 <Input label='Имя' name='username' defaultValue={name} />
                 <Input
                   label='Дата рождения'
                   name='telegram'
-                  defaultValue={telegram}
+                  defaultValue={birthday}
                 />
                 <Input
                   label='Ник в telegram'
                   name='birthday'
-                  defaultValue={birthday}
+                  defaultValue={telegram}
                 />
                 <Input label='Город' name='city' defaultValue={city} />
               </div>
@@ -70,7 +71,7 @@ const Profile = () => {
         ) : (
           <>
             <div className='d-flex' style={{ gap: '27px' }}>
-              {photo ? <UserImage /> : <ImageUploader />}
+              <UserImage />
               <div className='d-grid' style={{ flex: 1 }}>
                 <ProfileTextField fieldName='Имя'>{name}</ProfileTextField>
                 <ProfileTextField fieldName='Дата рождения'>

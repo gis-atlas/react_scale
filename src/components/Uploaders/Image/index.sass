@@ -1,17 +1,40 @@
 @import '../../../assets/styles/_mixins'
 
 .image-uploader
-  @include position($position: relative)
-  @include figure($width: 70px, $height: 70px)
-  @include border-radius($radius: 10px)
-  box-shadow: 0px 2px 2px rgba(169, 169, 169, 0.25)
-  cursor: pointer
-  overflow: hidden
-  &:hover
-    -webkit-filter: hue-rotate(15deg)
-  img
-    @include position($position: absolute, $h-center: true, $v-center: true)
-    &.photo
-      -webkit-filter: opacity(.7)
-      width: inherit
-      height: inherit
+  @include flexbox($gap: 20px)
+  @include flex-direction($direction: column)
+  width: 100%
+  height: 100%
+  .image-uploader-inner
+    @include position($position: relative)
+    @include flex($fg: 1, $fs: 0, $fb: auto)
+    label
+      @include position($position: absolute, $left: 0, $top: 0)
+      @include flexbox
+      @include align-items($value: center)
+      @include justify-content($value: center)
+      @include border-radius($radius: 6px)
+      overflow: hidden
+      height: 100%
+      width: 100%
+      h3
+        margin-left: 0 !important
+        text-align: center
+      input
+        @include position($position: absolute, $left: 0, $top: 0, $z-index: 2)
+        width: 100%
+        height: 100%
+        opacity: 0
+        cursor: pointer
+        
+      img
+        @include position($position: absolute, $left: 0, $top: 0, $z-index: 1)
+        width: 100%
+        height: 100%
+
+  .image-uploader-controls
+    @include flexbox($gap: 10px)
+    .custom-button
+      @include flex($fg: 1, $fs: 0, $fb: auto)
+      
+

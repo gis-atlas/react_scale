@@ -32,6 +32,7 @@ export const updateProfileData = createAsyncThunk(
   async (updateData: IProfileUpdate, thunkApi) => {
     const result = await UserAPI.updateProfileData(updateData);
     thunkApi.dispatch(getProfileData());
+    thunkApi.dispatch(getPhoto());
     return result.data;
   }
 );
@@ -40,6 +41,14 @@ export const getPhoto = createAsyncThunk('user/getPhoto', async () => {
   const result = await UserAPI.getPhoto();
   return result.data;
 });
+
+export const updatePhoto = createAsyncThunk(
+  'user/updatePhoto',
+  async (photo: any, thunkApi) => {
+    await UserAPI.updatePhoto(photo);
+    thunkApi.dispatch(getPhoto());
+  }
+);
 
 export const userSlice = createSlice({
   name: 'user',
