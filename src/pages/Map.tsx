@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import MapMenu from '../components/Map/Menu/MapMenu';
 import { useAppDispatch } from '../store';
 import { getProject } from '../store/project';
 import { getLayerGroups } from '../store/layer';
 import { IProject } from '../store/project/type';
 import { RootState } from '../store/reducer';
+import MapMenu from '../components/Map/Menu/MapMenu';
 import MapControls from '../components/Map/Controls/MapControls';
-import DeckMap from '../components/Map/Map/Deck/DeckMap';
 
 const Map = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +18,6 @@ const Map = () => {
   const layerGroups: any = useSelector(
     (state: RootState) => state.layer.layerGroups
   );
-  const mapStyle = useSelector((state: RootState) => state.map.mapStyle);
 
   useEffect(() => {
     dispatch(getProject(Number(projectId)));
@@ -33,7 +31,6 @@ const Map = () => {
     <div className='map'>
       <MapMenu title={project.name} layerGroups={layerGroups} />
       <MapControls />
-      <DeckMap mapStyle={mapStyle} />
     </div>
   );
 };
