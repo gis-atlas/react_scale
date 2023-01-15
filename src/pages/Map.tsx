@@ -8,6 +8,7 @@ import { IProject } from '../store/project/type';
 import { RootState } from '../store/reducer';
 import MapMenu from '../components/Map/Menu/MapMenu';
 import MapControls from '../components/Map/Controls/MapControls';
+import MapLibre from '../components/Map/Map/MapLibre/MapLibreGlMap';
 
 const Map = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +19,7 @@ const Map = () => {
   const layerGroups: any = useSelector(
     (state: RootState) => state.layer.layerGroups
   );
-
+  const mapStyle = useSelector((state: RootState) => state.map.mapData.style);
   useEffect(() => {
     dispatch(getProject(Number(projectId)));
   }, [projectId, dispatch]);
@@ -31,6 +32,7 @@ const Map = () => {
     <div className='map'>
       <MapMenu title={project.name} layerGroups={layerGroups} />
       <MapControls />
+      <MapLibre mapStyle={mapStyle} />
     </div>
   );
 };

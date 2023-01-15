@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { mapData } from '../../components/Map/Menu/Tabs/Maps/mapData';
 
 export const mapSlice = createSlice({
   name: 'user',
   initialState: {
-    mapStyle: 'mapbox://styles/mapbox/satellite-streets-v12',
+    mapData: mapData[0],
   },
   reducers: {
-    setMapStyle: (state, action) => {
-      state.mapStyle = action.payload;
+    setMapData: (state, action) => {
+      state.mapData = action.payload;
     },
   },
   extraReducers(builder) {},
 });
 
-export const { setMapStyle } = mapSlice.actions;
+export const { setMapData } = mapSlice.actions;
 export default mapSlice.reducer;
