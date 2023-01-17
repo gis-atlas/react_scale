@@ -1,21 +1,21 @@
 import classNames from 'classnames';
 import { useAppDispatch } from '../../../store';
-import { setMapData } from '../../../store/map';
+import { setLayer } from '../../../store/map';
 import './index.sass';
 
 interface IMapStyleCard {
   src?: string;
   style?: string;
   isActive?: boolean;
-  data?: any;
+  layer?: any;
 }
 
-const MapStyleCard = ({ src, isActive = false, data }: IMapStyleCard) => {
+const MapStyleCard = ({ src, isActive = false, layer }: IMapStyleCard) => {
   console.log(isActive);
   const dispatch = useAppDispatch();
 
   const onSetMapView = () => {
-    dispatch(setMapData(data));
+    dispatch(setLayer(layer));
   };
 
   return (
@@ -26,7 +26,7 @@ const MapStyleCard = ({ src, isActive = false, data }: IMapStyleCard) => {
       onClick={onSetMapView}
     >
       <img src={src || '/images/icons/plus.svg'} alt='' />
-      <h6>{data.title}</h6>
+      <h6>{layer.name}</h6>
     </div>
   );
 };

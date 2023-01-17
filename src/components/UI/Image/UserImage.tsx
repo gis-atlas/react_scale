@@ -11,8 +11,10 @@ interface IUserImage {
   size?: 'small' | 'default' | 'large';
   figure?: 'circle' | 'default';
   variant?: 'bordered' | 'default';
+  onHeader?: boolean;
   canUpdate?: boolean;
   className?: string;
+  onClick?: any;
 }
 
 const UserImage = ({
@@ -20,7 +22,9 @@ const UserImage = ({
   figure = 'default',
   variant = 'default',
   canUpdate = false,
+  onHeader = false,
   className = '',
+  onClick = () => {},
 }: IUserImage) => {
   const navigate = useNavigate();
   const [modalShowed, setModalShowed] = useState<boolean>(false);
@@ -37,7 +41,7 @@ const UserImage = ({
           'has-image': photo,
           [`${className}`]: className,
         })}
-        onClick={canUpdate ? openModal : goToProfile}
+        onClick={canUpdate ? openModal : onHeader ? onClick : goToProfile}
       >
         <img src={photo || '/images/icons/user.svg'} alt=' ' />
         {canUpdate && (

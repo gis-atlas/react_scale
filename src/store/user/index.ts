@@ -67,7 +67,24 @@ export const userSlice = createSlice({
       photo: '',
     },
   },
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      localStorage.clear();
+      state.accessToken = '';
+      state.isLoggedIn = '';
+      state.refreshToken = '';
+      state.user = {
+        role: '',
+        email: '',
+        name: '',
+        birthday: '',
+        telegram: '',
+        city: '',
+        photo: '',
+      };
+      state.id = '';
+    },
+  },
   extraReducers(builder) {
     builder.addCase(loginUser.fulfilled, (state, action) => {
       const { accessToken, refreshToken, id } = action.payload;
@@ -95,4 +112,5 @@ export const userSlice = createSlice({
   },
 });
 
+export const { logout } = userSlice.actions;
 export default userSlice.reducer;

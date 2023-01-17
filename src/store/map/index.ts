@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { mapData } from '../../components/Map/Menu/Tabs/Maps/mapData';
+import { layers } from '../../data/layers';
 
 export const mapSlice = createSlice({
   name: 'user',
   initialState: {
-    mapData: mapData[0],
+    layer: layers[0],
   },
   reducers: {
-    setMapData: (state, action) => {
-      state.mapData = action.payload;
+    setLayer: (state, action) => {
+      state.layer = action.payload;
     },
   },
   extraReducers(builder) {},
 });
 
-export const { setMapData } = mapSlice.actions;
+export const { setLayer } = mapSlice.actions;
 export default mapSlice.reducer;

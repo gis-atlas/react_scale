@@ -19,7 +19,7 @@ const Map = () => {
   const layerGroups: any = useSelector(
     (state: RootState) => state.layer.layerGroups
   );
-  const mapStyle = useSelector((state: RootState) => state.map.mapData.style);
+  const mapStyle = useSelector((state: RootState) => state.map.layer);
   useEffect(() => {
     dispatch(getProject(Number(projectId)));
   }, [projectId, dispatch]);
