@@ -1,17 +1,18 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { layers } from '../../data/layers';
 
 export const mapSlice = createSlice({
   name: 'user',
   initialState: {
-    mapStyle: 'mapbox://styles/mapbox/satellite-streets-v12',
+    layer: layers[0],
   },
   reducers: {
-    setMapStyle: (state, action) => {
-      state.mapStyle = action.payload;
+    setLayer: (state, action) => {
+      state.layer = action.payload;
     },
   },
   extraReducers(builder) {},
 });
 
-export const { setMapStyle } = mapSlice.actions;
+export const { setLayer } = mapSlice.actions;
 export default mapSlice.reducer;

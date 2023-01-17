@@ -32,6 +32,7 @@ export const updateProfileData = createAsyncThunk(
   async (updateData: IProfileUpdate, thunkApi) => {
     const result = await UserAPI.updateProfileData(updateData);
     thunkApi.dispatch(getProfileData());
+    thunkApi.dispatch(getPhoto());
     return result.data;
   }
 );
@@ -40,6 +41,14 @@ export const getPhoto = createAsyncThunk('user/getPhoto', async () => {
   const result = await UserAPI.getPhoto();
   return result.data;
 });
+
+export const updatePhoto = createAsyncThunk(
+  'user/updatePhoto',
+  async (photo: any, thunkApi) => {
+    await UserAPI.updatePhoto(photo);
+    thunkApi.dispatch(getPhoto());
+  }
+);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -58,7 +67,24 @@ export const userSlice = createSlice({
       photo: '',
     },
   },
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      localStorage.clear();
+      state.accessToken = '';
+      state.isLoggedIn = '';
+      state.refreshToken = '';
+      state.user = {
+        role: '',
+        email: '',
+        name: '',
+        birthday: '',
+        telegram: '',
+        city: '',
+        photo: '',
+      };
+      state.id = '';
+    },
+  },
   extraReducers(builder) {
     builder.addCase(loginUser.fulfilled, (state, action) => {
       const { accessToken, refreshToken, id } = action.payload;
@@ -86,4 +112,5 @@ export const userSlice = createSlice({
   },
 });
 
+export const { logout } = userSlice.actions;
 export default userSlice.reducer;

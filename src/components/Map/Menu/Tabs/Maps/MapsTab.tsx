@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../store/reducer';
 import MapViewCard from '../../../../Cards/MapStyle/MapStyleCard';
 import Button from '../../../../UI/Button/Button';
 import Input from '../../../../UI/Input/Input';
-import { mapStyles } from './mapStyles';
-import { RootState } from '../../../../../store/reducer';
+import { layers } from '../../../../../data/layers';
 import './index.sass';
 
 const MapsTab = () => {
-  const currentMapStyle = useSelector((state: RootState) => state.map.mapStyle);
+  const currentMapStyle = useSelector((state: RootState) => state.map.layer);
   return (
     <div className='tab tab-maps'>
       <div className='d-flex jc-sb ai-c'>
@@ -18,13 +18,11 @@ const MapsTab = () => {
       </div>
       <Input prevIcon='/images/icons/loupe.svg' placeholder='поиск по картам' />
       <ul className='tab-list'>
-        {mapStyles.map((mapStyle: any) => (
+        {layers.map((layer: any) => (
           <MapViewCard
-            key={mapStyle.id}
-            style={mapStyle.url}
-            src={mapStyle.src}
-            title={mapStyle.name}
-            isActive={mapStyle.url === currentMapStyle}
+            key={layer.id}
+            layer={layer}
+            isActive={layer === currentMapStyle}
           />
         ))}
       </ul>

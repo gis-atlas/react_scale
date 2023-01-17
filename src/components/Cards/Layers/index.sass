@@ -6,13 +6,15 @@
   @include align-items($value: center)
   @include justify-content($value: space-between)
   @include border-radius($radius: 6px)
-  @include margin-padding($p-direction: all, $p-amount: 10px 10px 0 10px)
+  @include margin-padding($p-direction: all, $p-amount: 10px 10px 0 10px)  
   
 .layer-card
   background: $color-light
   box-shadow: 0px 4px 10px rgba(88, 104, 164, 0.25)
   @include margin-padding($p-direction: all, $p-amount: 10px)
-  
+  &:hover
+    box-shadow: 0px 4px 10px rgba(88, 104, 164, 0.55)
+
   &:not(.active)
     -webkit-filter: opacity(.6)
   
@@ -57,6 +59,8 @@
   background: $color-light
   box-shadow: 0px 4px 10px rgba(88, 104, 164, 0.25)
   overflow: hidden
+  &:hover
+    box-shadow: 0px 4px 10px rgba(88, 104, 164, 0.55)
   &.opened
     @include margin-padding($p-direction: bottom, $p-amount: 15px)
   .layer-group-card-title

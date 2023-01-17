@@ -7,11 +7,21 @@ interface IModal {
   children?: ReactNode;
   title?: string;
   description?: string;
+  isNeededPadding?: boolean;
   state: boolean;
   setState: any;
+  className?: string;
 }
 
-const Modal = ({ children, title, description, state, setState }: IModal) => {
+const Modal = ({
+  children,
+  title,
+  description,
+  state,
+  setState,
+  className = '',
+  isNeededPadding = false,
+}: IModal) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const closeModal = (e: MouseEvent) => setState(false);
 
@@ -21,7 +31,13 @@ const Modal = ({ children, title, description, state, setState }: IModal) => {
       className={classNames('modal-wrapper', { active: state })}
       onClick={closeModal}
     >
-      <div className='modal' onClick={(e) => e.stopPropagation()}>
+      <div
+        className={classNames('modal', {
+          'with-padding': isNeededPadding,
+          [`${className}`]: className,
+        })}
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2>{title}</h2>
         <p>{description}</p>
         {children}
