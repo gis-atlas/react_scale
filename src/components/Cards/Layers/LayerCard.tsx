@@ -1,8 +1,10 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './index.sass';
+import { useAppDispatch } from '../../../store';
 
-const LayerCard = ({ id, name, layerType }: ILayerCard) => {
+const LayerCard = ({ id, name, layerType, layerGroupId }: ILayerCard) => {
+  const dispatch = useAppDispatch();
   const [showed, setShowed] = useState<boolean>(false);
   return (
     <div

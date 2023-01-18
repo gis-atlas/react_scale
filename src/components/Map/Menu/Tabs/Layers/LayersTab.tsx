@@ -3,10 +3,11 @@ import LayerGroupCard from '../../../../Cards/Layers/LayerGroupCard';
 import Button from '../../../../UI/Button/Button';
 
 interface ILayerCard {
-  layerGroups: Array<any>;
+  layerGroups?: Array<any>;
+  layers?: Array<any>;
 }
 
-const LayersTab = ({ layerGroups }: ILayerCard) => {
+const LayersTab = ({ layerGroups = [], layers = [] }: ILayerCard) => {
   console.log(layerGroups);
   return (
     <div className='tab tab-layers'>
@@ -20,11 +21,12 @@ const LayersTab = ({ layerGroups }: ILayerCard) => {
         <ul className='tab-list'>
           {layerGroups?.map((layerGroup) =>
             layerGroup.name === 'group' || layerGroup.layers.length !== 0 ? (
-              <LayerGroupCard key={layerGroup.id} layers={layerGroup.layers} />
+              <LayerGroupCard key={layerGroup.id} layerGroupId={layerGroup.id} layers={layerGroup.layers} />
             ) : (
               <LayerCard
                 key={layerGroup.id}
                 id={layerGroup.id}
+                layerGroupId={layerGroup.id}
                 name={layerGroup.name}
                 layerType='relief'
               />
