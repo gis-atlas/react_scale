@@ -5,7 +5,7 @@ export const mapSlice = createSlice({
   name: 'user',
   initialState: {
     mapInfo: {
-      ...mapBaseLayers[1],
+      ...mapBaseLayers[0],
     },
   },
   reducers: {

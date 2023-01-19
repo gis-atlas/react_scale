@@ -1,6 +1,7 @@
 interface ILayerCard {
   id: number;
   name?: string;
-  layerType: '3d' | 'demos' | 'relief';
+  layerType?: 'VECTOR' | string;
+  layerIconType: '3d' | 'demos' | 'relief';
   layerGroupId: number;
 }

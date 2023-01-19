@@ -50,7 +50,8 @@ const LayerGroupCard = ({ layers, layerGroupId }: ILayerGroupCard) => {
             id={layer.id}
             name={layer.name}
             layerGroupId={layerGroupId}
-            layerType='3d'
+            layerIconType='3d'
+            layerType={layer.layerType}
           />
         ))}
       </div>

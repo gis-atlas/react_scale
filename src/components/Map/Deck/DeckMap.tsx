@@ -1,5 +1,8 @@
 import DeckGL from '@deck.gl/react/typed';
-import { createTileLayer } from '../../../utils/deck';
+import { createTileLayer, createVectorLayer } from '../../../utils/deck';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+import { useEffect, useMemo, useState } from 'react';
 
 const INITIAL_VIEW_STATE = {
   longitude: 37.618423,
@@ -8,14 +11,38 @@ const INITIAL_VIEW_STATE = {
 };
 
 const DeckMap = ({ mapStyle }: any) => {
-  console.log(mapStyle);
-  const layers = createTileLayer(mapStyle);
+  const baseLayer = useMemo(() => createTileLayer(mapStyle), [mapStyle]);
+  const [layers, setLayers] = useState<Array<any>>([baseLayer]);
+  const [deckLayers, setDeckLayers] = useState<Array<any>>([]);
+
+  const openedLayersData = useSelector(
+    (state: RootState) => state.layer.openedLayers
+  );
+
+  useEffect(() => {
+    if (openedLayersData.length) {
+      const data = openedLayersData.map((openedLayerData: any) => {
+        if (openedLayerData.type === 'VECTOR') {
+          return createVectorLayer(openedLayerData.id, openedLayerData.layer);
+        }
+        return;
+      });
+      setDeckLayers(data);
+    } else {
+      setDeckLayers([]);
+    }
+  }, [openedLayersData]);
+
+  useEffect(() => {
+    if (deckLayers.length !== 0) {
+      setLayers([baseLayer, deckLayers]);
+    } else {
+      setLayers([baseLayer]);
+    }
+  }, [mapStyle, deckLayers]);
+
   return (
-    <DeckGL
-      initialViewState={INITIAL_VIEW_STATE}
-      layers={[layers]}
-      controller
-    />
+    <DeckGL initialViewState={INITIAL_VIEW_STATE} layers={layers} controller />
   );
 };
 

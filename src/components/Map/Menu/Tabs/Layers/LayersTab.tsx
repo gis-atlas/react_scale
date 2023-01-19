@@ -31,7 +31,8 @@ const LayersTab = ({ layerGroups = [] }: ILayerCard) => {
                 id={layerGroup.id}
                 layerGroupId={layerGroup.id}
                 name={layerGroup.name}
-                layerType='relief'
+                layerIconType='relief'
+                layerType={layerGroup.layerType}
               />
             )
           )}
