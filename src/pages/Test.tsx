@@ -1,6 +1,5 @@
 import Input from '../components/UI/Input/Input';
 import NewInput from '../components/UI/Input/Input';
-import Map from '../components/Map/Map/MapLibre/MapLibreGlMap';
 
 const Test = () => {
   return (
@@ -32,7 +31,6 @@ const Test = () => {
         useGradient
         readonly
       />
-      <Map />
     </div>
   );
 };

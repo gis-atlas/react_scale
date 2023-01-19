@@ -1,32 +1,29 @@
 import classNames from 'classnames';
 import { useAppDispatch } from '../../../store';
-import { setLayer } from '../../../store/map';
 import './index.sass';
+import { setMapInfo } from '../../../store/map';
 
 interface IMapStyleCard {
   src?: string;
   style?: string;
   isActive?: boolean;
-  layer?: any;
+  mapInfo?: any;
 }
 
-const MapStyleCard = ({ src, isActive = false, layer }: IMapStyleCard) => {
-  console.log(isActive);
+const MapStyleCard = ({ src, isActive = false, mapInfo }: IMapStyleCard) => {
   const dispatch = useAppDispatch();
-
-  const onSetMapView = () => {
-    dispatch(setLayer(layer));
+  const onChangeMapStyle = () => {
+    dispatch(setMapInfo(mapInfo));
   };
-
   return (
     <div
       className={classNames('map-view-card', {
         active: isActive,
       })}
-      onClick={onSetMapView}
+      onClick={onChangeMapStyle}
     >
       <img src={src || '/images/icons/plus.svg'} alt='' />
-      <h6>{layer.name}</h6>
+      <h6>{mapInfo.title}</h6>
     </div>
   );
 };

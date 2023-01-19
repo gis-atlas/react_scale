@@ -39,7 +39,7 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
             top: '36px',
             transform: 'rotate(180deg)',
             left: '10px',
-            zIndex: 2,
+            zIndex: 100,
           }}
           onClick={() => setOpened(true)}
         >
