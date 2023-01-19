@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@deck.gl/core": "^8.8.21",
+    "@deck.gl/geo-layers": "^8.8.23",
     "@deck.gl/layers": "^8.8.21",
     "@deck.gl/react": "^8.8.21",
     "@reduxjs/toolkit": "^1.9.1",

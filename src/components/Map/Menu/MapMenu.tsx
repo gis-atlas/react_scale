@@ -11,7 +11,6 @@ import MapsTab from './Tabs/Maps/MapsTab';
 interface IMapMenu {
   title: string;
   layerGroups: Array<any>;
-  layers?: Array<any>;
 }
 
 const tabs = [
@@ -21,7 +20,7 @@ const tabs = [
   { id: 4, title: 'Публикация', name: 'publication' },
 ];
 
-const MapMenu = ({ title, layerGroups, layers }: IMapMenu) => {
+const MapMenu = ({ title, layerGroups }: IMapMenu) => {
   const navigate = useNavigate();
   const goToOtherProjects = () => {
     navigate('/projects');
@@ -96,7 +95,7 @@ const MapMenu = ({ title, layerGroups, layers }: IMapMenu) => {
         </ul>
         <div className='map-tabs'>
           {currentTab === 'layers' ? (
-            <LayersTab layerGroups={layerGroups} layers={layers} />
+            <LayersTab layerGroups={layerGroups} />
           ) : currentTab === 'data' ? (
             <DataTab />
           ) : currentTab === 'maps' ? (

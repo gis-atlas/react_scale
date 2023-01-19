@@ -8,6 +8,7 @@ import { IProject } from '../store/project/type';
 import { RootState } from '../store/reducer';
 import MapMenu from '../components/Map/Menu/MapMenu';
 import MapControls from '../components/Map/Controls/MapControls';
+import DeckMap from '../components/Map/Deck/DeckMap';
 
 const Map = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +19,8 @@ const Map = () => {
   const layerGroups: any = useSelector(
     (state: RootState) => state.layer.layerGroups
   );
+  const mapInfo: any = useSelector((state: RootState) => state.map.mapInfo);
+
   useEffect(() => {
     dispatch(getProject(Number(projectId)));
     dispatch(getLayerGroups(Number(projectId)));
@@ -27,6 +30,7 @@ const Map = () => {
     <div className='map'>
       <MapMenu title={project.name} layerGroups={layerGroups} />
       <MapControls />
+      <DeckMap mapStyle={mapInfo.layer} />
     </div>
   );
 };
