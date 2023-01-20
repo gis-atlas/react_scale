@@ -10,6 +10,9 @@ const LayerAPI = {
   async getVectorLayer(layerId: number) {
     return client.get(`/api/vector/${layerId}`);
   },
+  async getRasterLayer(layerId: number) {
+    return client.get(`/api/TMS/${layerId}/metadata`);
+  },
 };
 
 export default LayerAPI;

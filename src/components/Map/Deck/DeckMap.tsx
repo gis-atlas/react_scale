@@ -1,5 +1,5 @@
 import DeckGL from '@deck.gl/react/typed';
-import { createTileLayer, createVectorLayer } from '../../../utils/deck';
+import { createTileLayer, createLayer } from '../../../utils/deck';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { useEffect, useMemo, useState } from 'react';
@@ -22,10 +22,12 @@ const DeckMap = ({ mapStyle }: any) => {
   useEffect(() => {
     if (openedLayersData.length) {
       const data = openedLayersData.map((openedLayerData: any) => {
-        if (openedLayerData.type === 'VECTOR') {
-          return createVectorLayer(openedLayerData.id, openedLayerData.layer);
-        }
-        return;
+        if (!openedLayerData) return;
+        return createLayer(
+          openedLayerData.id,
+          openedLayerData.type,
+          openedLayerData.layer
+        );
       });
       setDeckLayers(data);
     } else {

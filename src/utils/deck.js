@@ -21,6 +21,18 @@ export const createTileLayer = (mapStyle) => {
   });
 };
 
+export const createLayer = (id, type, data) => {
+  switch (type) {
+    case 'VECTOR':
+      return createVectorLayer(id, data);
+    case 'RASTER':
+      console.log('adsdasd', createRasterLayer(id, data));
+      return createRasterLayer(id, data);
+    default:
+      return null;
+  }
+};
+
 export const createVectorLayer = (id, data) => {
   console.log(id);
   return new GeoJsonLayer({
@@ -30,5 +42,13 @@ export const createVectorLayer = (id, data) => {
     stroked: true,
     filled: true,
     filledOpacity: 0.25,
+  });
+};
+
+export const createRasterLayer = (id, data) => {
+  return new BitmapLayer({
+    id: id,
+    bounds: data.bounds,
+    image: '/images/map/google-maps.jpg',
   });
 };

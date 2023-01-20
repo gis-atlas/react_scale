@@ -6,12 +6,12 @@ import './index.sass';
 
 interface ILayerGroupCard {
   layers: Array<ILayerCard>;
-  layerGroupId: number;
 }
 
-const LayerGroupCard = ({ layers, layerGroupId }: ILayerGroupCard) => {
+const LayerGroupCard = ({ layers }: ILayerGroupCard) => {
   const [opened, setOpened] = useState<boolean>(false);
   const layerCountText = declOfNum(layers.length, ['слой', 'слоя', 'слоёв']);
+  console.log('layers', layers);
   return (
     <div
       className={classNames('layer-group-card', {
@@ -49,7 +49,6 @@ const LayerGroupCard = ({ layers, layerGroupId }: ILayerGroupCard) => {
             key={layer.id}
             id={layer.id}
             name={layer.name}
-            layerGroupId={layerGroupId}
             layerIconType='3d'
             layerType={layer.layerType}
           />

@@ -1,23 +1,15 @@
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './index.sass';
 import { useAppDispatch } from '../../../store';
-import { removeLayer, getVectorLayer } from '../../../store/layer';
+import { removeLayer, getLayer } from '../../../store/layer';
 
-const LayerCard = ({
-  id,
-  name,
-  layerIconType,
-  layerType,
-  layerGroupId,
-}: ILayerCard) => {
+const LayerCard = ({ id, name, layerIconType, layerType }: ILayerCard) => {
   const dispatch = useAppDispatch();
   const [showed, setShowed] = useState<boolean>(false);
   const showLayer = () => {
     setShowed(true);
-    if (layerType === 'VECTOR') {
-      dispatch(getVectorLayer(id));
-    }
+    dispatch(getLayer({ type: layerType, id: id }));
   };
   const hideLayer = () => {
     setShowed(false);

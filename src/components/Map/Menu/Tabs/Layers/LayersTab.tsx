@@ -19,17 +19,12 @@ const LayersTab = ({ layerGroups = [] }: ILayerCard) => {
       <div className='tab-list-outer'>
         <ul className='tab-list'>
           {layerGroups?.map((layerGroup) =>
-            layerGroup.name === 'group' || layerGroup.layers.length !== 0 ? (
-              <LayerGroupCard
-                key={layerGroup.id}
-                layerGroupId={layerGroup.id}
-                layers={layerGroup.layers}
-              />
+            layerGroup.type === 'USER' || layerGroup.type === 'ROOT' || layerGroup.layers.length !== 0 ? (
+              <LayerGroupCard key={layerGroup.id} layers={layerGroup.layers} />
             ) : (
               <LayerCard
                 key={layerGroup.id}
                 id={layerGroup.id}
-                layerGroupId={layerGroup.id}
                 name={layerGroup.name}
                 layerIconType='relief'
                 layerType={layerGroup.layerType}
