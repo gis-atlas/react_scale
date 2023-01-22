@@ -1,5 +1,7 @@
+import { RootState } from './../reducer';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import LayerAPI from './api';
+import { findLayer } from '../../utils/deck';
 
 export const getLayerGroups = createAsyncThunk(
   'layer/getLayerGroup',
@@ -10,7 +12,7 @@ export const getLayerGroups = createAsyncThunk(
 );
 
 export const getLayers = createAsyncThunk(
-  'layer/getLayer',
+  'layer/getLayers',
   async (layerGroupId: number) => {
     const result = await LayerAPI.getLayers(layerGroupId);
     return result.data;
@@ -20,13 +22,22 @@ export const getLayers = createAsyncThunk(
 export const getLayer = createAsyncThunk(
   'layer/getLayer',
   async ({ type, id }: { id: number; type: string | undefined }, thunkApi) => {
-    if (type === 'VECTOR') {
-      thunkApi.dispatch(getVectorLayer(id));
-    } else if (type === 'RASTER') {
-      console.log('RASTER LAYER IN getLayer func');
-      thunkApi.dispatch(getRasterLayer(id));
+    const state = thunkApi.getState() as RootState;
+    const {
+      layer: { downloadedLayers },
+    } = state;
+    const cashedLayer = findLayer({ type, id }, downloadedLayers);
+    console.log(cashedLayer);
+    if (cashedLayer) {
+      thunkApi.dispatch(setLayer(cashedLayer));
     } else {
-      console.log('PIZDEZ LAYER IN getLayer func');
+      if (type === 'VECTOR') {
+        thunkApi.dispatch(getVectorLayer(id));
+      } else if (type === 'RASTER') {
+        thunkApi.dispatch(getRasterLayer(id));
+      } else {
+        console.log('not not not not');
+      }
     }
   }
 );
@@ -57,6 +68,7 @@ export const layerSlice = createSlice({
   name: 'user',
   initialState: {
     layerGroups: [],
+    downloadedLayers: [] as any,
     openedLayers: [] as any,
   },
   reducers: {
@@ -65,31 +77,34 @@ export const layerSlice = createSlice({
         (openedLayer: any) => openedLayer.id !== action.payload
       );
     },
+    setLayer: (state, action) => {
+      state.openedLayers.push(action.payload);
+    },
   },
   extraReducers(builder) {
     builder.addCase(getLayerGroups.fulfilled, (state, action) => {
       state.layerGroups = action.payload.list;
     });
     builder.addCase(getVectorLayer.fulfilled, (state, action) => {
-      const newLayer = action.payload.data;
-      state.openedLayers.push({
+      const layerData = {
         id: action.payload.id,
-        layer: newLayer,
+        layer: action.payload.data,
         type: 'VECTOR',
-      });
-      console.log(state.openedLayers);
+      };
+      state.openedLayers.push(layerData);
+      state.downloadedLayers.push(layerData);
     });
     builder.addCase(getRasterLayer.fulfilled, (state, action) => {
-      const newLayer = action.payload.data;
-      state.openedLayers.push({
+      const layerData = {
         id: action.payload.id,
-        layer: newLayer,
+        layer: action.payload.data,
         type: 'RASTER',
-      });
-      console.log(state.openedLayers);
+      };
+      state.openedLayers.push(layerData);
+      state.downloadedLayers.push(layerData);
     });
   },
 });
 
-export const { removeLayer } = layerSlice.actions;
+export const { removeLayer, setLayer } = layerSlice.actions;
 export default layerSlice.reducer;

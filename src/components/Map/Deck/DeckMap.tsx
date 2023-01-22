@@ -22,12 +22,14 @@ const DeckMap = ({ mapStyle }: any) => {
   useEffect(() => {
     if (openedLayersData.length) {
       const data = openedLayersData.map((openedLayerData: any) => {
-        if (!openedLayerData) return;
-        return createLayer(
-          openedLayerData.id,
-          openedLayerData.type,
-          openedLayerData.layer
-        );
+        if (openedLayerData) {
+          console.log('lafdsgd', openedLayerData.type);
+          return createLayer(
+            openedLayerData.id,
+            openedLayerData.type,
+            openedLayerData.layer
+          );
+        }
       });
       setDeckLayers(data);
     } else {
@@ -41,7 +43,7 @@ const DeckMap = ({ mapStyle }: any) => {
     } else {
       setLayers([baseLayer]);
     }
-  }, [mapStyle, deckLayers]);
+  }, [mapStyle, deckLayers, baseLayer]);
 
   return (
     <DeckGL initialViewState={INITIAL_VIEW_STATE} layers={layers} controller />

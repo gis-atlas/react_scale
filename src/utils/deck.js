@@ -21,12 +21,19 @@ export const createTileLayer = (mapStyle) => {
   });
 };
 
+export const findLayer = (layer, downloadedLayers) => {
+  console.log(downloadedLayers);
+  return downloadedLayers.filter(
+    (downloadedLayer) =>
+      downloadedLayer.id === layer.id && downloadedLayer.type === layer.type
+  )[0];
+};
+
 export const createLayer = (id, type, data) => {
   switch (type) {
     case 'VECTOR':
       return createVectorLayer(id, data);
     case 'RASTER':
-      console.log('adsdasd', createRasterLayer(id, data));
       return createRasterLayer(id, data);
     default:
       return null;
@@ -34,7 +41,6 @@ export const createLayer = (id, type, data) => {
 };
 
 export const createVectorLayer = (id, data) => {
-  console.log(id);
   return new GeoJsonLayer({
     id,
     data,
@@ -49,6 +55,7 @@ export const createRasterLayer = (id, data) => {
   return new BitmapLayer({
     id: id,
     bounds: data.bounds,
-    image: '/images/map/google-maps.jpg',
+    image: `/api/TMS/${id}/%7Bz%7D/%7By%7D/%7Bx%7D.png`,
+    // image: '/images/map/google-maps.jpg',
   });
 };

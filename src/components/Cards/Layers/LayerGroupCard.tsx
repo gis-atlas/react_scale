@@ -49,7 +49,13 @@ const LayerGroupCard = ({ layers }: ILayerGroupCard) => {
             key={layer.id}
             id={layer.id}
             name={layer.name}
-            layerIconType='3d'
+            layerIconType={
+              layer.layerType === 'VECTOR'
+                ? '3d'
+                : layer.layerType === 'RASTER'
+                ? 'relief'
+                : 'demos'
+            }
             layerType={layer.layerType}
           />
         ))}

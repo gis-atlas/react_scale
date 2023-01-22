@@ -22,7 +22,7 @@ const MapsTab = () => {
       <ul className='tab-list'>
         {mapBaseLayers?.map((mapInfo: any) => (
           <MapViewCard
-            key={mapInfo.id}
+            key={mapInfo.layer.id}
             mapInfo={mapInfo}
             isActive={currentMapInfo.layer.id === mapInfo.layer.id}
             src={mapInfo.imageSrc}

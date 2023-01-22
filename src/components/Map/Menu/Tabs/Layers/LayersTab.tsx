@@ -19,7 +19,8 @@ const LayersTab = ({ layerGroups = [] }: ILayerCard) => {
       <div className='tab-list-outer'>
         <ul className='tab-list'>
           {layerGroups?.map((layerGroup) =>
-            layerGroup.type === 'USER' || layerGroup.type === 'ROOT' || layerGroup.layers.length !== 0 ? (
+            (layerGroup.type === 'USER' || layerGroup.type === 'ROOT') &&
+            layerGroup.layers.length !== 0 ? (
               <LayerGroupCard key={layerGroup.id} layers={layerGroup.layers} />
             ) : (
               <LayerCard
