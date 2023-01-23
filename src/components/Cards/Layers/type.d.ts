@@ -3,4 +3,5 @@ interface ILayerCard {
   name?: string;
   layerType?: 'VECTOR' | string;
   layerIconType: '3d' | 'demos' | 'relief';
+  active?: boolean;
 }

@@ -3,12 +3,14 @@ import { useState } from 'react';
 import LayerCard from './LayerCard';
 import { declOfNum } from '../../../utils';
 import './index.sass';
+import { findLayer } from '../../../utils/deck';
 
 interface ILayerGroupCard {
   layers: Array<ILayerCard>;
+  openedLayers: Array<ILayerCard>;
 }
 
-const LayerGroupCard = ({ layers }: ILayerGroupCard) => {
+const LayerGroupCard = ({ layers, openedLayers }: ILayerGroupCard) => {
   const [opened, setOpened] = useState<boolean>(false);
   const layerCountText = declOfNum(layers.length, ['слой', 'слоя', 'слоёв']);
   console.log('layers', layers);
@@ -56,6 +58,7 @@ const LayerGroupCard = ({ layers }: ILayerGroupCard) => {
                 ? 'relief'
                 : 'demos'
             }
+            active={findLayer(layer, openedLayers)}
             layerType={layer.layerType}
           />
         ))}

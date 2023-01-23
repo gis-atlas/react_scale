@@ -4,9 +4,15 @@ import './index.sass';
 import { useAppDispatch } from '../../../store';
 import { removeLayer, getLayer } from '../../../store/layer';
 
-const LayerCard = ({ id, name, layerIconType, layerType }: ILayerCard) => {
+const LayerCard = ({
+  id,
+  name,
+  layerIconType,
+  layerType,
+  active = false,
+}: ILayerCard) => {
   const dispatch = useAppDispatch();
-  const [showed, setShowed] = useState<boolean>(false);
+  const [showed, setShowed] = useState<boolean>(active);
   const showLayer = () => {
     setShowed(true);
     dispatch(getLayer({ type: layerType, id: id }));

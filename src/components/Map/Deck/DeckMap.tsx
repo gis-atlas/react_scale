@@ -23,7 +23,6 @@ const DeckMap = ({ mapStyle }: any) => {
     if (openedLayersData.length) {
       const data = openedLayersData.map((openedLayerData: any) => {
         if (openedLayerData) {
-          console.log('lafdsgd', openedLayerData.type);
           return createLayer(
             openedLayerData.id,
             openedLayerData.type,
