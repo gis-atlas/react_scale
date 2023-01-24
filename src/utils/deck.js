@@ -51,11 +51,15 @@ export const createVectorLayer = (id, data) => {
 };
 
 export const createRasterLayer = (id, data) => {
+  const { minzoom, maxzoom } = data;
+  console.log('metadata', data.metadata);
+  console.log('data', data);
   return new TileLayer({
-    minZoom: 0,
-    maxZoom: 19,
+    id: id,
     tileSize: 256,
     data: `/api/TMS/${id}/{z}/{x}/{-y}.png`,
+    minZoom: minzoom,
+    maxZoom: maxzoom,
     loadOptions: {
       fetch: {
         headers: {
@@ -64,6 +68,7 @@ export const createRasterLayer = (id, data) => {
       },
     },
     renderSubLayers: (props) => {
+      console.log('props', props);
       const {
         bbox: { west, south, east, north },
       } = props.tile;
