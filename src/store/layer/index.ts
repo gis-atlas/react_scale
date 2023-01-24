@@ -29,6 +29,7 @@ export const getLayer = createAsyncThunk(
     const cashedLayer = findLayer({ type, id }, downloadedLayers);
     console.log(cashedLayer);
     if (cashedLayer) {
+      console.log('pizdez');
       thunkApi.dispatch(setLayer(cashedLayer));
     } else {
       if (type === 'VECTOR') {

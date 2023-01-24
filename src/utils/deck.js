@@ -51,10 +51,28 @@ export const createVectorLayer = (id, data) => {
 };
 
 export const createRasterLayer = (id, data) => {
-  return new BitmapLayer({
-    id: id,
-    bounds: data.bounds,
-    image: `/api/TMS/${id}/{z}/{y}/{x}.png`,
-    // image: '/images/map/google-maps.jpg',
+  return new TileLayer({
+    minZoom: 0,
+    maxZoom: 19,
+    tileSize: 256,
+    data: `/api/TMS/${id}/{z}/{x}/{-y}.png`,
+    loadOptions: {
+      fetch: {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      },
+    },
+    renderSubLayers: (props) => {
+      const {
+        bbox: { west, south, east, north },
+      } = props.tile;
+
+      return new BitmapLayer(props, {
+        data: null,
+        image: props.data,
+        bounds: [west, south, east, north],
+      });
+    },
   });
 };
