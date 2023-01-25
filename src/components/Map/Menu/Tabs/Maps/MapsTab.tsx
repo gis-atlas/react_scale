@@ -8,7 +8,7 @@ import './index.sass';
 
 const MapsTab = () => {
   const currentMapInfo: any = useSelector(
-    (state: RootState) => state.map.mapInfo
+    (state: RootState) => state.map.baseLayer
   );
   return (
     <div className='tab tab-maps'>
@@ -20,12 +20,12 @@ const MapsTab = () => {
       </div>
       <Input prevIcon='/images/icons/loupe.svg' placeholder='поиск по картам' />
       <ul className='tab-list'>
-        {mapBaseLayers?.map((mapInfo: any) => (
+        {mapBaseLayers?.map((baseLayer: any) => (
           <MapViewCard
-            key={mapInfo.layer.id}
-            mapInfo={mapInfo}
-            isActive={currentMapInfo.layer.id === mapInfo.layer.id}
-            src={mapInfo.imageSrc}
+            key={baseLayer.layer.id}
+            baseLayer={baseLayer}
+            isActive={currentMapInfo.layer.id === baseLayer.layer.id}
+            src={baseLayer.imageSrc}
           />
         ))}
       </ul>

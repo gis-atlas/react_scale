@@ -1,19 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { mapBaseLayers } from '../../data/baselayers';
 
+const INITIAL_VIEW_STATE = {
+  longitude: 37.618423,
+  latitude: 55.751244,
+  zoom: 9,
+};
+
 export const mapSlice = createSlice({
   name: 'user',
   initialState: {
-    mapInfo: {
-      ...mapBaseLayers[0],
-    },
+    baseLayer: mapBaseLayers[0],
+    viewState: INITIAL_VIEW_STATE,
   },
   reducers: {
-    setMapInfo: (state, action) => {
-      state.mapInfo = action.payload;
+    setBaseLayer: (state, action) => {
+      state.baseLayer = action.payload;
+    },
+    setViewState: (state, action) => {
+      state.viewState = action.payload;
     },
   },
 });
 
-export const { setMapInfo } = mapSlice.actions;
+export const { setBaseLayer, setViewState } = mapSlice.actions;
 export default mapSlice.reducer;

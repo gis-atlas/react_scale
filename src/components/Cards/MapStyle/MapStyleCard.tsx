@@ -1,19 +1,19 @@
 import classNames from 'classnames';
 import { useAppDispatch } from '../../../store';
 import './index.sass';
-import { setMapInfo } from '../../../store/map';
+import { setBaseLayer } from '../../../store/map';
 
 interface IMapStyleCard {
   src?: string;
   style?: string;
   isActive?: boolean;
-  mapInfo?: any;
+  baseLayer?: any;
 }
 
-const MapStyleCard = ({ src, isActive = false, mapInfo }: IMapStyleCard) => {
+const MapStyleCard = ({ src, isActive = false, baseLayer }: IMapStyleCard) => {
   const dispatch = useAppDispatch();
   const onChangeMapStyle = () => {
-    dispatch(setMapInfo(mapInfo));
+    dispatch(setBaseLayer(baseLayer));
   };
   return (
     <div
@@ -23,7 +23,7 @@ const MapStyleCard = ({ src, isActive = false, mapInfo }: IMapStyleCard) => {
       onClick={onChangeMapStyle}
     >
       <img src={src || '/images/icons/plus.svg'} alt='' />
-      <h6>{mapInfo.title}</h6>
+      <h6>{baseLayer.title}</h6>
     </div>
   );
 };

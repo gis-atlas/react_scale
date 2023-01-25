@@ -19,7 +19,10 @@ const Map = () => {
   const layerGroups: any = useSelector(
     (state: RootState) => state.layer.layerGroups
   );
-  const mapInfo: any = useSelector((state: RootState) => state.map.mapInfo);
+
+  const { baseLayer, viewState }: any = useSelector(
+    (state: RootState) => state.map
+  );
 
   useEffect(() => {
     dispatch(getProject(Number(projectId)));
@@ -30,7 +33,7 @@ const Map = () => {
     <div className='map'>
       <MapMenu title={project.name} layerGroups={layerGroups} />
       <MapControls />
-      <DeckMap mapStyle={mapInfo.layer} />
+      <DeckMap mapStyle={baseLayer.layer} viewState={viewState} />
     </div>
   );
 };
