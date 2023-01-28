@@ -4,13 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { useEffect, useMemo, useState } from 'react';
 
-const INITIAL_VIEW_STATE = {
-  longitude: 37.618423,
-  latitude: 55.751244,
-  zoom: 9,
-};
-
-const DeckMap = ({ mapStyle }: any) => {
+const DeckMap = ({ mapStyle, viewState }: any) => {
   const baseLayer = useMemo(() => createTileLayer(mapStyle), [mapStyle]);
   const [layers, setLayers] = useState<Array<any>>([baseLayer]);
   const [deckLayers, setDeckLayers] = useState<Array<any>>([]);
@@ -44,9 +38,7 @@ const DeckMap = ({ mapStyle }: any) => {
     }
   }, [mapStyle, deckLayers, baseLayer]);
 
-  return (
-    <DeckGL initialViewState={INITIAL_VIEW_STATE} layers={layers} controller />
-  );
+  return <DeckGL initialViewState={viewState} layers={layers} controller />;
 };
 
 export default DeckMap;
