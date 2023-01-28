@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../store';
 import { getProject } from '../store/project';
-import { getLayerGroups } from '../store/layer';
+import { loadLayerGroups } from '../store/layer';
 import { IProject } from '../store/project/type';
 import { RootState } from '../store/reducer';
 import MapMenu from '../components/Map/Menu/MapMenu';
@@ -26,7 +26,7 @@ const Map = () => {
 
   useEffect(() => {
     dispatch(getProject(Number(projectId)));
-    dispatch(getLayerGroups(Number(projectId)));
+    dispatch(loadLayerGroups(Number(projectId)));
   }, [projectId, dispatch]);
 
   return (
