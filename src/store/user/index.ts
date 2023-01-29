@@ -88,7 +88,6 @@ export const userSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(loginUser.fulfilled, (state, action) => {
       const { accessToken, refreshToken, id } = action.payload;
-      console.log(action.payload);
       state.isLoggedIn = true;
       state.id = id;
       state.accessToken = accessToken;
@@ -98,7 +97,6 @@ export const userSlice = createSlice({
       return state;
     });
     builder.addCase(getProfileData.fulfilled, (state, action) => {
-      console.log(action.payload);
       return { ...state, user: { ...action.payload } };
     });
     builder.addCase(updateProfileData.fulfilled, (state, action) => {

@@ -17,7 +17,6 @@ export const flyToLayer = createAsyncThunk(
     const {
       layer: { openedLayers },
     } = state;
-    console.log('opened ', id, ' ', openedLayers);
     const { layer } = findLayer({ id: id, type: layerType }, openedLayers);
     const centerOfLayer = getCenterOfLayer(layer.bounds);
     const dx = layer.bounds[2] - layer.bounds[0];

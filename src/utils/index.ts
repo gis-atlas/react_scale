@@ -18,7 +18,6 @@ export const sortProjectsBy = ({
   if (!array) return [];
   let result: Array<IProject> = [];
   if (by === 'date') {
-    console.log('Сортировано по дате');
     result = [...array];
     // TODO: добавить поле lastChange (или с другим именем) на беке
     // result = array.sort((a: IProject, b: IProject) => {
@@ -38,7 +37,6 @@ export const sortProjectsBy = ({
 };
 
 export const findMatch = (array: Array<IProject>, element: string) => {
-  console.log(array, element);
   if (!array) return [];
   return [...array].filter((arrItem) =>
     arrItem.name.toLowerCase().includes(element.toLowerCase())

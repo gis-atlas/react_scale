@@ -1,6 +1,5 @@
 import { TileLayer } from '@deck.gl/geo-layers';
 import { BitmapLayer, GeoJsonLayer } from '@deck.gl/layers';
-import bbox from '@turf/bbox';
 import bboxPolygon from '@turf/bbox-polygon';
 import center from '@turf/center';
 
@@ -25,10 +24,8 @@ export const createTileLayer = (mapStyle) => {
 };
 
 export const getCenterOfLayer = (bounds) => {
-  console.log('bounds', bounds);
-  const c = center(bboxPolygon(bounds));
-  console.log('c', c);
-  return c.geometry.coordinates;
+  const centerOfLayer = center(bboxPolygon(bounds));
+  return centerOfLayer.geometry.coordinates;
 };
 
 export const findLayer = (layer, layerList) => {
@@ -62,8 +59,6 @@ export const createVectorLayer = (id, data) => {
 
 export const createRasterLayer = (id, data) => {
   const { minzoom, maxzoom } = data;
-  console.log('metadata', data.metadata);
-  console.log('data', data);
   return new TileLayer({
     id: id,
     tileSize: 256,
@@ -78,7 +73,6 @@ export const createRasterLayer = (id, data) => {
       },
     },
     renderSubLayers: (props) => {
-      console.log('props', props);
       const {
         bbox: { west, south, east, north },
       } = props.tile;

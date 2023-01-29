@@ -49,7 +49,6 @@ const Projects = () => {
 
   useEffect(() => {
     const sortedProjects = sortProjectsBy({ array: projectsAPI, by: sortBy });
-    console.log(sortBy);
     const resultProjects = sortedProjects.slice(
       5 * (currentPage - 1),
       5 * currentPage

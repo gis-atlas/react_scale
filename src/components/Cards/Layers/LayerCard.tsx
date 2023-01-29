@@ -23,7 +23,6 @@ const LayerCard = ({
       await showLayer();
     }
     dispatch(flyToLayer({ id, layerType }));
-    console.log('the end');
   };
   const hideLayer = () => {
     setShowed(false);

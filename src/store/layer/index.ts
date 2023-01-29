@@ -95,7 +95,6 @@ export const layerSlice = createSlice({
         layer: action.payload.data,
         type: 'VECTOR',
       };
-      console.log('vector layer', layerData);
       state.openedLayers.push(layerData);
       state.downloadedLayers.push(layerData);
     });
@@ -105,7 +104,6 @@ export const layerSlice = createSlice({
         layer: action.payload.data,
         type: 'RASTER',
       };
-      console.log('raster layer', layerData);
       state.openedLayers.push(layerData);
       state.downloadedLayers.push(layerData);
     });
