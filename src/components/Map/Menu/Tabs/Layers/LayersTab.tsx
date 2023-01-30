@@ -26,7 +26,11 @@ const LayersTab = ({ layerGroups = [] }: ILayerCard) => {
           {layerGroups?.map((layerGroup) =>
             (layerGroup.type === 'USER' || layerGroup.type === 'ROOT') &&
             layerGroup.layers.length !== 0 ? (
-              <LayerGroupCard key={layerGroup.id} layers={layerGroup.layers} openedLayers={openedLayers} />
+              <LayerGroupCard
+                key={layerGroup.id}
+                layers={layerGroup.layers}
+                openedLayers={openedLayers}
+              />
             ) : (
               <LayerCard
                 key={layerGroup.id}
@@ -37,7 +41,9 @@ const LayersTab = ({ layerGroups = [] }: ILayerCard) => {
                     ? '3d'
                     : layerGroup.layerType === 'RASTER'
                     ? 'relief'
-                    : 'demos'
+                    : layerGroup.layerType === 'MODEL'
+                    ? 'demos'
+                    : ''
                 }
                 active={!!findLayer(layerGroup, openedLayers)}
                 layerType={layerGroup.layerType}

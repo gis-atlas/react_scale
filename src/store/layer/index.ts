@@ -3,50 +3,67 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import LayerAPI from './api';
 import { findLayer } from '../../utils/deck';
 
-export const getLayerGroups = createAsyncThunk(
-  'layer/getLayerGroup',
+export const loadLayerGroups = createAsyncThunk(
+  'layer/loadLayerGroups',
   async (projectId: number) => {
-    const result = await LayerAPI.getLayerGroups(projectId);
+    const result = await LayerAPI.loadLayerGroups(projectId);
     return result.data;
   }
 );
 
-export const getLayers = createAsyncThunk(
-  'layer/getLayers',
+export const loadLayers = createAsyncThunk(
+  'layer/loadLayers',
   async (layerGroupId: number) => {
-    const result = await LayerAPI.getLayers(layerGroupId);
+    const result = await LayerAPI.loadLayers(layerGroupId);
     return result.data;
   }
 );
 
-export const getLayer = createAsyncThunk(
-  'layer/getLayer',
+export const loadLayer = createAsyncThunk(
+  'layer/loadLayer',
   async ({ type, id }: { id: number; type: string | undefined }, thunkApi) => {
     const state = thunkApi.getState() as RootState;
     const {
       layer: { downloadedLayers },
     } = state;
+    console.log(type);
     const cashedLayer = findLayer({ type, id }, downloadedLayers);
-    console.log(cashedLayer);
     if (cashedLayer) {
-      console.log('pizdez');
       thunkApi.dispatch(setLayer(cashedLayer));
     } else {
       if (type === 'VECTOR') {
-        thunkApi.dispatch(getVectorLayer(id));
+        await thunkApi.dispatch(loadVectorLayer(id));
       } else if (type === 'RASTER') {
-        thunkApi.dispatch(getRasterLayer(id));
+        await thunkApi.dispatch(loadRasterLayer(id));
+      } else if (type === 'MODEL') {
+        await thunkApi.dispatch(loadModelLayer(id));
       } else {
-        console.log('not not not not');
+        console.log('!Vector !Raster !Model');
       }
     }
   }
 );
 
-export const getVectorLayer = createAsyncThunk(
-  'layer/getVectorLayer',
+export const loadVectorLayer = createAsyncThunk(
+  'layer/loadVectorLayer',
   async (layerId: number) => {
-    const result = await LayerAPI.getVectorLayer(layerId);
+    const result = await LayerAPI.loadVectorLayer(layerId);
+    const box = await LayerAPI.getVectorBounds(layerId);
+    const {
+      data: { ymin, ymax, xmin, xmax },
+    } = box;
+    const extent = [xmin, ymin, xmax, ymax];
+    return {
+      id: layerId,
+      data: { ...result.data, bounds: extent },
+    };
+  }
+);
+
+export const loadRasterLayer = createAsyncThunk(
+  'layer/loadRasterLayer',
+  async (layerId: number) => {
+    const result = await LayerAPI.loadRasterLayer(layerId);
     return {
       id: layerId,
       data: result.data,
@@ -54,13 +71,16 @@ export const getVectorLayer = createAsyncThunk(
   }
 );
 
-export const getRasterLayer = createAsyncThunk(
-  'layer/getRasterLayer',
+export const loadModelLayer = createAsyncThunk(
+  'layer/loadModelLayer',
   async (layerId: number) => {
-    const result = await LayerAPI.getRasterLayer(layerId);
+    const result = await LayerAPI.loadModelLayer(layerId);
+    const info = result.data.czml;
+    const modelName = result.data.czml[1].model.gltf.split('/').slice(-1)[0];
+    const { data: model } = await LayerAPI.loadGLTFModel(layerId, modelName);
     return {
       id: layerId,
-      data: result.data,
+      data: { info, model },
     };
   }
 );
@@ -83,10 +103,10 @@ export const layerSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(getLayerGroups.fulfilled, (state, action) => {
+    builder.addCase(loadLayerGroups.fulfilled, (state, action) => {
       state.layerGroups = action.payload.list;
     });
-    builder.addCase(getVectorLayer.fulfilled, (state, action) => {
+    builder.addCase(loadVectorLayer.fulfilled, (state, action) => {
       const layerData = {
         id: action.payload.id,
         layer: action.payload.data,
@@ -95,11 +115,20 @@ export const layerSlice = createSlice({
       state.openedLayers.push(layerData);
       state.downloadedLayers.push(layerData);
     });
-    builder.addCase(getRasterLayer.fulfilled, (state, action) => {
+    builder.addCase(loadRasterLayer.fulfilled, (state, action) => {
       const layerData = {
         id: action.payload.id,
         layer: action.payload.data,
         type: 'RASTER',
+      };
+      state.openedLayers.push(layerData);
+      state.downloadedLayers.push(layerData);
+    });
+    builder.addCase(loadModelLayer.fulfilled, (state, action) => {
+      const layerData = {
+        id: action.payload.id,
+        layer: action.payload.data,
+        type: 'MODEL',
       };
       state.openedLayers.push(layerData);
       state.downloadedLayers.push(layerData);

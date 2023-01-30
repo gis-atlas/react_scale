@@ -13,7 +13,6 @@ interface ILayerGroupCard {
 const LayerGroupCard = ({ layers, openedLayers }: ILayerGroupCard) => {
   const [opened, setOpened] = useState<boolean>(false);
   const layerCountText = declOfNum(layers.length, ['слой', 'слоя', 'слоёв']);
-  console.log('layers', layers);
   return (
     <div
       className={classNames('layer-group-card', {
