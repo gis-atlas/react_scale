@@ -24,6 +24,7 @@ const DeckMap = ({ mapStyle, viewState }: any) => {
           );
         }
       });
+      console.log('dataatatata', data);
       setDeckLayers(data);
     } else {
       setDeckLayers([]);

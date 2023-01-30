@@ -6,6 +6,7 @@
     "@deck.gl/core": "^8.8.21",
     "@deck.gl/geo-layers": "^8.8.23",
     "@deck.gl/layers": "^8.8.21",
+    "@deck.gl/mesh-layers": "^8.8.23",
     "@deck.gl/react": "^8.8.21",
     "@loaders.gl/core": "^3.2.13",
     "@loaders.gl/gltf": "^3.2.13",

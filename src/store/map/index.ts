@@ -4,6 +4,12 @@ import { mapBaseLayers } from '../../data/baselayers';
 import { findLayer, getCenterOfLayer, lat2Zoom } from '../../utils/deck';
 import { FlyToInterpolator } from '@deck.gl/core/typed';
 
+const TEST_INITIAL_VIEW_STATE = {
+  longitude: 37.5097025333,
+  latitude: 55.9520638334,
+  zoom: 13,
+} as any;
+
 const INITIAL_VIEW_STATE = {
   longitude: 37.618423,
   latitude: 55.751244,
@@ -30,7 +36,7 @@ export const mapSlice = createSlice({
   name: 'user',
   initialState: {
     baseLayer: mapBaseLayers[0],
-    viewState: INITIAL_VIEW_STATE,
+    viewState: TEST_INITIAL_VIEW_STATE,
   },
   reducers: {
     setBaseLayer: (state, action) => {

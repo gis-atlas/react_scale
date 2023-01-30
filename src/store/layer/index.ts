@@ -26,6 +26,7 @@ export const loadLayer = createAsyncThunk(
     const {
       layer: { downloadedLayers },
     } = state;
+    console.log(type);
     const cashedLayer = findLayer({ type, id }, downloadedLayers);
     if (cashedLayer) {
       thunkApi.dispatch(setLayer(cashedLayer));
@@ -34,8 +35,10 @@ export const loadLayer = createAsyncThunk(
         await thunkApi.dispatch(loadVectorLayer(id));
       } else if (type === 'RASTER') {
         await thunkApi.dispatch(loadRasterLayer(id));
+      } else if (type === 'MODEL') {
+        await thunkApi.dispatch(loadModelLayer(id));
       } else {
-        console.log('not VECTOR or RASTER');
+        console.log('!Vector !Raster !Model');
       }
     }
   }
@@ -64,6 +67,20 @@ export const loadRasterLayer = createAsyncThunk(
     return {
       id: layerId,
       data: result.data,
+    };
+  }
+);
+
+export const loadModelLayer = createAsyncThunk(
+  'layer/loadModelLayer',
+  async (layerId: number) => {
+    const result = await LayerAPI.loadModelLayer(layerId);
+    const info = result.data.czml;
+    const modelName = result.data.czml[1].model.gltf.split('/').slice(-1)[0];
+    const { data: model } = await LayerAPI.loadGLTFModel(layerId, modelName);
+    return {
+      id: layerId,
+      data: { info, model },
     };
   }
 );
@@ -103,6 +120,15 @@ export const layerSlice = createSlice({
         id: action.payload.id,
         layer: action.payload.data,
         type: 'RASTER',
+      };
+      state.openedLayers.push(layerData);
+      state.downloadedLayers.push(layerData);
+    });
+    builder.addCase(loadModelLayer.fulfilled, (state, action) => {
+      const layerData = {
+        id: action.payload.id,
+        layer: action.payload.data,
+        type: 'MODEL',
       };
       state.openedLayers.push(layerData);
       state.downloadedLayers.push(layerData);

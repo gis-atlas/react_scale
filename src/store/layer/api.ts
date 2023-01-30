@@ -13,9 +13,15 @@ const LayerAPI = {
   async loadRasterLayer(layerId: number) {
     return client.get(`/api/TMS/${layerId}/metadata`);
   },
+  async loadModelLayer(layerId: number) {
+    return client.get(`/api/model/${layerId}/czml`);
+  },
   async getVectorBounds(layerId: number) {
     return client.get(`/api/vector/${layerId}/box`);
-  }
+  },
+  async loadGLTFModel(layerId: number, modelName: string) {
+    return client.get(`/api/model/${layerId}/${modelName}`);
+  },
 };
 
 export default LayerAPI;

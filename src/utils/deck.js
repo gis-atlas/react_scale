@@ -1,7 +1,12 @@
 import { TileLayer } from '@deck.gl/geo-layers';
 import { BitmapLayer, GeoJsonLayer } from '@deck.gl/layers';
+import { ScenegraphLayer } from '@deck.gl/mesh-layers';
+import { load } from '@loaders.gl/core';
+import { GLTFLoader } from '@loaders.gl/gltf';
 import bboxPolygon from '@turf/bbox-polygon';
 import center from '@turf/center';
+
+// layers
 
 export const createTileLayer = (mapStyle) => {
   return new TileLayer({
@@ -23,24 +28,14 @@ export const createTileLayer = (mapStyle) => {
   });
 };
 
-export const getCenterOfLayer = (bounds) => {
-  const centerOfLayer = center(bboxPolygon(bounds));
-  return centerOfLayer.geometry.coordinates;
-};
-
-export const findLayer = (layer, layerList) => {
-  return layerList.filter(
-    (layerListItem) =>
-      layerListItem.id === layer.id && layerListItem.type === layer.type
-  )[0];
-};
-
 export const createLayer = (id, type, data) => {
   switch (type) {
     case 'VECTOR':
       return createVectorLayer(id, data);
     case 'RASTER':
       return createRasterLayer(id, data);
+    case 'MODEL':
+      return createModelLayer(id, data);
     default:
       return null;
   }
@@ -48,7 +43,7 @@ export const createLayer = (id, type, data) => {
 
 export const createVectorLayer = (id, data) => {
   return new GeoJsonLayer({
-    id,
+    id: `vector-${id}`,
     data,
     opacity: 0.75,
     stroked: true,
@@ -60,7 +55,7 @@ export const createVectorLayer = (id, data) => {
 export const createRasterLayer = (id, data) => {
   const { minzoom, maxzoom } = data;
   return new TileLayer({
-    id: id,
+    id: `raster-${id}`,
     tileSize: 256,
     data: `/api/TMS/${id}/{z}/{x}/{-y}.png`,
     minZoom: minzoom,
@@ -86,6 +81,29 @@ export const createRasterLayer = (id, data) => {
   });
 };
 
+export const createModelLayer = (id, data) => {
+  console.error(data);
+  const { name, position, orientation } = data.info[1];
+  console.log('pos & orient: ', position, ' ', orientation);
+  const { model } = data;
+  return new ScenegraphLayer({
+    id: `model-${id}`,
+    data: {
+      name,
+      coordinates: position.cartographicDegrees,
+      orientation,
+    },
+    scenegraph: model,
+    pickable: true,
+    getPosition: (d) => d.coordinates,
+    getOrientation: (d) => [0, Math.random() * 180, 90],
+    sizeScale: 500,
+    _lighting: 'pbr',
+  });
+};
+
+// ----------------------------------------------------------------
+
 const ZOOM_AREA = [
   357.989981115706, 178.9949905578533, 89.49749527892665, 44.74874763946327,
   22.37437381973166, 11.187186909865837, 5.5935934549329, 2.796796727466522,
@@ -103,4 +121,16 @@ export const lat2Zoom = (lat) => {
   while (lat < ZOOM_AREA[res]) res++;
 
   return res + 1;
+};
+
+export const getCenterOfLayer = (bounds) => {
+  const centerOfLayer = center(bboxPolygon(bounds));
+  return centerOfLayer.geometry.coordinates;
+};
+
+export const findLayer = (layer, layerList) => {
+  return layerList.filter(
+    (layerListItem) =>
+      layerListItem.id === layer.id && layerListItem.type === layer.type
+  )[0];
 };
