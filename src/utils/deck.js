@@ -120,7 +120,7 @@ export const lat2Zoom = (lat) => {
 
   while (lat < ZOOM_AREA[res]) res++;
 
-  return res + 1;
+  return res;
 };
 
 export const getCenterOfLayer = (bounds) => {

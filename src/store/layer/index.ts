@@ -2,6 +2,7 @@ import { RootState } from './../reducer';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import LayerAPI from './api';
 import { findLayer } from '../../utils/deck';
+import bbox from '@turf/bbox';
 
 export const loadLayerGroups = createAsyncThunk(
   'layer/loadLayerGroups',
@@ -48,11 +49,7 @@ export const loadVectorLayer = createAsyncThunk(
   'layer/loadVectorLayer',
   async (layerId: number) => {
     const result = await LayerAPI.loadVectorLayer(layerId);
-    const box = await LayerAPI.getVectorBounds(layerId);
-    const {
-      data: { ymin, ymax, xmin, xmax },
-    } = box;
-    const extent = [xmin, ymin, xmax, ymax];
+    const extent = bbox(result.data);
     return {
       id: layerId,
       data: { ...result.data, bounds: extent },
