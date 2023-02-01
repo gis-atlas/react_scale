@@ -13,19 +13,21 @@ const DeckMap = ({ mapStyle, viewState }: any) => {
     (state: RootState) => state.layer.openedLayers
   );
 
+  const renderLayers = async (layers: any) => {
+    const data = await Promise.all(
+      layers.map(async (layer: any) => {
+        if (layer) {
+          return await createLayer(layer.id, layer.type, layer.layer);
+        }
+      })
+    );
+    console.log('dataatatata', data);
+    setDeckLayers(data);
+  };
+
   useEffect(() => {
     if (openedLayersData.length) {
-      const data = openedLayersData.map((openedLayerData: any) => {
-        if (openedLayerData) {
-          return createLayer(
-            openedLayerData.id,
-            openedLayerData.type,
-            openedLayerData.layer
-          );
-        }
-      });
-      console.log('dataatatata', data);
-      setDeckLayers(data);
+      renderLayers(openedLayersData);
     } else {
       setDeckLayers([]);
     }

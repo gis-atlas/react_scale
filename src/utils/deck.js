@@ -28,14 +28,14 @@ export const createTileLayer = (mapStyle) => {
   });
 };
 
-export const createLayer = (id, type, data) => {
+export const createLayer = async (id, type, data) => {
   switch (type) {
     case 'VECTOR':
-      return createVectorLayer(id, data);
+      return await createVectorLayer(id, data);
     case 'RASTER':
-      return createRasterLayer(id, data);
+      return await createRasterLayer(id, data);
     case 'MODEL':
-      return createModelLayer(id, data);
+      return await createModelLayer(id, data);
     default:
       return null;
   }
@@ -81,23 +81,31 @@ export const createRasterLayer = (id, data) => {
   });
 };
 
-export const createModelLayer = (id, data) => {
-  console.error(data);
-  const { name, position, orientation } = data.info[1];
-  console.log('pos & orient: ', position, ' ', orientation);
-  const { model } = data;
-  return new ScenegraphLayer({
-    id: `model-${id}`,
-    data: {
-      name,
-      coordinates: position.cartographicDegrees,
-      orientation,
+export const createModelLayer = async (id, data) => {
+  console.log(data);
+  const urlToModel = data.info[1].model.gltf;
+  const model = await load(`/api${urlToModel}`, GLTFLoader, {
+    fetch: {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
     },
-    scenegraph: model,
+  });
+  return new ScenegraphLayer({
+    id,
+    data: [
+      {
+        name: 'Colma (COLM)',
+        address: '365 D Street, Colma CA 94014',
+        exits: 4214,
+        coordinates: [-122.466233, 37.684638],
+      },
+    ],
     pickable: true,
     getPosition: (d) => d.coordinates,
     getOrientation: (d) => [0, Math.random() * 180, 90],
     sizeScale: 500,
+    scenegraph: model,
     _lighting: 'pbr',
   });
 };
