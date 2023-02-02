@@ -83,7 +83,12 @@ export const createRasterLayer = (id, data) => {
 
 export const createModelLayer = async (id, data) => {
   console.log(data);
+
   const urlToModel = data.info[1].model.gltf;
+  const coordinates = data.info[1].position.cartographicDegrees;
+  const sizeScale = data.info[1].model.scale || 500;
+  const { heading, tilt, roll } = data.info[1].orientation;
+
   const model = await load(`/api${urlToModel}`, GLTFLoader, {
     fetch: {
       headers: {
@@ -93,20 +98,13 @@ export const createModelLayer = async (id, data) => {
   });
   return new ScenegraphLayer({
     id,
-    data: [
-      {
-        name: 'Colma (COLM)',
-        address: '365 D Street, Colma CA 94014',
-        exits: 4214,
-        coordinates: [-122.466233, 37.684638],
-      },
-    ],
-    pickable: true,
-    getPosition: (d) => d.coordinates,
-    getOrientation: (d) => [0, Math.random() * 180, 90],
-    sizeScale: 500,
+    sizeScale,
     scenegraph: model,
+    data: [{ coordinates }],
+    pickable: true,
     _lighting: 'pbr',
+    getPosition: (d) => d.coordinates,
+    getOrientation: (d) => [heading, tilt, roll + 90],
   });
 };
 
