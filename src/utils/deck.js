@@ -28,14 +28,14 @@ export const createTileLayer = (mapStyle) => {
   });
 };
 
-export const createLayer = (id, type, data) => {
+export const createLayer = async (id, type, data) => {
   switch (type) {
     case 'VECTOR':
-      return createVectorLayer(id, data);
+      return await createVectorLayer(id, data);
     case 'RASTER':
-      return createRasterLayer(id, data);
+      return await createRasterLayer(id, data);
     case 'MODEL':
-      return createModelLayer(id, data);
+      return await createModelLayer(id, data);
     default:
       return null;
   }
@@ -81,24 +81,30 @@ export const createRasterLayer = (id, data) => {
   });
 };
 
-export const createModelLayer = (id, data) => {
-  console.error(data);
-  const { name, position, orientation } = data.info[1];
-  console.log('pos & orient: ', position, ' ', orientation);
-  const { model } = data;
-  return new ScenegraphLayer({
-    id: `model-${id}`,
-    data: {
-      name,
-      coordinates: position.cartographicDegrees,
-      orientation,
+export const createModelLayer = async (id, data) => {
+  console.log(data);
+
+  const urlToModel = data.info[1].model.gltf;
+  const coordinates = data.info[1].position.cartographicDegrees;
+  const sizeScale = data.info[1].model.scale || 500;
+  const { heading, tilt, roll } = data.info[1].orientation;
+
+  const model = await load(`/api${urlToModel}`, GLTFLoader, {
+    fetch: {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
     },
+  });
+  return new ScenegraphLayer({
+    id,
+    sizeScale,
     scenegraph: model,
+    data: [{ coordinates }],
     pickable: true,
-    getPosition: (d) => d.coordinates,
-    getOrientation: (d) => [0, Math.random() * 180, 90],
-    sizeScale: 500,
     _lighting: 'pbr',
+    getPosition: (d) => d.coordinates,
+    getOrientation: (d) => [heading, tilt, roll + 90],
   });
 };
 

@@ -24,10 +24,22 @@ export const flyToLayer = createAsyncThunk(
       layer: { openedLayers },
     } = state;
     const { layer } = findLayer({ id: id, type: layerType }, openedLayers);
-    const centerOfLayer = getCenterOfLayer(layer.bounds);
-    const dx = layer.bounds[2] - layer.bounds[0];
-    const dy = layer.bounds[3] - layer.bounds[1];
-    const maxDiff = dx > dy ? dx : dy;
+
+    let centerOfLayer;
+    let maxDiff;
+
+    if (layerType === 'MODEL') {
+      const [dx, dy] = layer.info[1].position.cartographicDegrees.slice(0, 2);
+      centerOfLayer = [dx, dy];
+      maxDiff = 0.02;
+    } else {
+      console.log('pizdez2');
+      centerOfLayer = getCenterOfLayer(layer.bounds);
+      const dx = layer.bounds[2] - layer.bounds[0];
+      const dy = layer.bounds[3] - layer.bounds[1];
+      maxDiff = Math.max(dx, dy);
+    }
+
     return { centerOfLayer, maxDiff };
   }
 );
