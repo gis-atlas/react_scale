@@ -1,14 +1,24 @@
 import classNames from 'classnames';
 import './index.sass';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ISelect {
   state?: string;
   options?: Array<string>;
   setState?: any;
+  getSelectStatus?: any;
+  size?: 'small' | 'medium' | 'large';
+  variant?: 'text' | 'contained';
 }
 
-const Select = ({ state = '', options = [], setState }: ISelect) => {
+const Select = ({
+  variant = 'text',
+  size = 'medium',
+  state = '',
+  options = [],
+  setState,
+  getSelectStatus = () => {},
+}: ISelect) => {
   const [opened, setOpened] = useState<boolean>(false);
 
   const onOptionChange = (option: string) => {
@@ -16,14 +26,23 @@ const Select = ({ state = '', options = [], setState }: ISelect) => {
     setOpened(false);
   };
 
+  useEffect(() => {
+    getSelectStatus(opened);
+  }, [opened, getSelectStatus]);
+
   return (
     <div
       className={classNames('custom-select', {
         opened: opened,
+        empty: options.length === 0,
+        [`${variant}`]: variant,
+        [`${size}`]: size,
       })}
     >
       <div
-        className='current-option'
+        className={classNames('current-option', {
+          [`${size}`]: size,
+        })}
         onClick={() => setOpened((prev) => !prev)}
       >
         <span>{state}</span>

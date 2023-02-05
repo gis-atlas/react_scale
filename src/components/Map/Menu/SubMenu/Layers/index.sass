@@ -1,0 +1,19 @@
+@import '../../../../../assets/styles/_mixins'
+@import '../../../../../assets/styles/_variables'
+  
+.sub-menu-layers
+  @include flexbox($gap: 30px)
+  @include flex-direction($direction: column)
+
+  h3, h5
+    @include margin-padding($m-direction: left, $m-amount: 12px)
+    
+
+  .layer-parameters, .data-source
+    @include flexbox($gap: 15px)
+    @include flex-direction($direction: column)
+
+    .data-source-list
+      @include flexbox($gap: 10px)
+      @include flex-direction($direction: column)
+      

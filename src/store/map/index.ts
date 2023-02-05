@@ -49,6 +49,7 @@ export const mapSlice = createSlice({
   initialState: {
     baseLayer: mapBaseLayers[0],
     viewState: TEST_INITIAL_VIEW_STATE,
+    subMenuName: '',
   },
   reducers: {
     setBaseLayer: (state, action) => {
@@ -56,6 +57,12 @@ export const mapSlice = createSlice({
     },
     setViewState: (state, action) => {
       state.viewState = action.payload;
+    },
+    openSubMenu: (state, action) => {
+      state.subMenuName = action.payload;
+    },
+    closeSubMenu: (state) => {
+      state.subMenuName = '';
     },
   },
   extraReducers(builder) {
@@ -76,5 +83,6 @@ export const mapSlice = createSlice({
   },
 });
 
-export const { setBaseLayer, setViewState } = mapSlice.actions;
+export const { setBaseLayer, setViewState, openSubMenu, closeSubMenu } =
+  mapSlice.actions;
 export default mapSlice.reducer;

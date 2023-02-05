@@ -7,9 +7,10 @@ import { findLayer } from '../../../../../utils/deck';
 
 interface ILayerCard {
   layerGroups?: Array<any>;
+  setSubMenuName: (name: string) => void;
 }
 
-const LayersTab = ({ layerGroups = [] }: ILayerCard) => {
+const LayersTab = ({ layerGroups = [], setSubMenuName }: ILayerCard) => {
   const openedLayers = useSelector(
     (state: RootState) => state.layer.openedLayers
   );
@@ -17,7 +18,12 @@ const LayersTab = ({ layerGroups = [] }: ILayerCard) => {
     <div className='tab tab-layers'>
       <div className='d-flex jc-sb ai-c'>
         <h4>Добавить новый слой</h4>
-        <Button color='secondary' variant='circle' size='small'>
+        <Button
+          color='secondary'
+          variant='circle'
+          size='small'
+          onClick={() => setSubMenuName('layers')}
+        >
           <img src='/images/icons/plus.svg' alt='' />
         </Button>
       </div>

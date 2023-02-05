@@ -21,7 +21,7 @@
   
   .map-menu-controls
     @include flexbox($gap: 7px)
-    @include position($position: absolute, $left: 95.5%, $top: 26px)
+    @include position($position: absolute, $left: 95.5%, $top: 26px, $z-index: 2)
       
   .other-projects
     @include flexbox($gap: 15px)
@@ -60,5 +60,14 @@
     @include margin-padding($m-direction: top, $m-amount: 25px)
     @include flexbox($gap: 10px)
     @include flex-direction($direction: column)
-    
-    
+  
+  .map-tabs-submenu
+    @include position($position: absolute, $left: 102%, $top: 0)
+    @include max-width($m-width: 280px)
+    background: inherit
+    border-radius: inherit
+    height: inherit
+    padding: inherit
+
+    .close-button
+      @include position($position: absolute, $left: -15px, $top: 23px)

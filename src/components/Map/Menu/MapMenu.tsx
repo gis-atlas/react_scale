@@ -7,6 +7,11 @@ import DataTab from './Tabs/Data/DataTab';
 import PublicationTab from './Tabs/Publication/PublicationTab';
 import Button from '../../UI/Button/Button';
 import MapsTab from './Tabs/Maps/MapsTab';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+import AddLayer from './SubMenu/Layers/AddLayer';
+import { useAppDispatch } from '../../../store';
+import { closeSubMenu, openSubMenu } from '../../../store/map';
 
 interface IMapMenu {
   title: string;
@@ -22,11 +27,16 @@ const tabs = [
 
 const MapMenu = ({ title, layerGroups }: IMapMenu) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const goToOtherProjects = () => {
     navigate('/projects');
   };
   const [currentTab, setCurrentTab] = useState<string>(tabs[0].name);
   const [opened, setOpened] = useState<boolean>(true);
+  const subMenuName = useSelector((state: RootState) => state.map.subMenuName);
+  const setSubMenuName = (name: string) => {
+    dispatch(openSubMenu(name));
+  };
 
   return (
     <>
@@ -95,7 +105,10 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
         </ul>
         <div className='map-tabs'>
           {currentTab === 'layers' ? (
-            <LayersTab layerGroups={layerGroups} />
+            <LayersTab
+              layerGroups={layerGroups}
+              setSubMenuName={setSubMenuName}
+            />
           ) : currentTab === 'data' ? (
             <DataTab />
           ) : currentTab === 'maps' ? (
@@ -104,6 +117,29 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
             <PublicationTab />
           )}
         </div>
+        {subMenuName && (
+          <div className='map-tabs-submenu'>
+            {subMenuName === 'layers' ? <AddLayer /> : <></>}
+            <Button
+              variant='circle'
+              color='secondary'
+              className='close-button'
+              onClick={() => {
+                dispatch(closeSubMenu());
+              }}
+            >
+              <img
+                src='/images/icons/plus.svg'
+                alt=''
+                style={{
+                  transform: 'rotate(45deg)',
+                  width: '14px',
+                  height: '14px',
+                }}
+              />
+            </Button>
+          </div>
+        )}
       </div>
     </>
   );

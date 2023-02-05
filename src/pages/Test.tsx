@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import Input from '../components/UI/Input/Input';
 import NewInput from '../components/UI/Input/Input';
+import Select from '../components/UI/Select/Select';
 
 const Test = () => {
+  const [state, setState] = useState('Hello');
   return (
     <div
       style={{
@@ -11,26 +14,19 @@ const Test = () => {
         background: '#F2F7FD',
       }}
     >
-      <Input label='test input' placeholder='test placeholder' />
-      <Input
-        type='password'
-        label='test input'
-        placeholder='test placeholder'
-      />
-      <NewInput
-        prevIcon='/images/icons/plus.svg'
-        appendIcon='/images/icons/copy.svg'
-        placeholder='Руслан'
-        useGradient
-        defaultValue='Приветик'
-      />
-      <NewInput
-        label='Пароль'
-        placeholder='qwerty123456'
-        defaultValue='Приветик'
-        useGradient
-        readonly
-      />
+      <div
+        style={{
+          padding: '20px',
+          background: 'red',
+        }}
+      >
+        <Select
+          options={['one', 'two', 'three']}
+          state={state}
+          setState={setState}
+        />
+      </div>
+      <h1>{state}</h1>
     </div>
   );
 };
