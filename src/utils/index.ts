@@ -52,3 +52,13 @@ export const declOfNum = (n: number, text_variables: Array<string>): string => {
   if (n1 === 1) return text_variables[0];
   return text_variables[2];
 };
+
+export const formatFileSize = (bytes: number) => {
+  const sufixes = ['B', 'kB', 'MB', 'GB', 'TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sufixes[i]}`;
+};
+
+export const formatFileType = (type: string) => {
+  return type.split('/').reverse()[0];
+};

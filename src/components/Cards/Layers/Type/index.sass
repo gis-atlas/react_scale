@@ -1,0 +1,19 @@
+@import '../../../../assets/styles/_variables'
+@import '../../../../assets/styles/_mixins'
+  
+.layer-type-card
+  @include flexbox($gap: 7px)
+  @include align-items($value: center)
+  @include flex($fg: 1, $fs: 0, $fb: auto)
+  @include margin-padding($p-direction: all, $p-amount: 7px 15px 7px 12px)
+  @include border-radius($radius: 6px)
+  background: $color-light
+  box-shadow: 0px 4px 15px rgba(72, 107, 160, 0.25)
+  cursor: pointer
+
+  &.selected
+    background: $color-selected-card
+    
+  
+  
+  

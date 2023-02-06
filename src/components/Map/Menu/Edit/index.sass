@@ -1,0 +1,28 @@
+@import '../../../../assets/styles/_mixins'
+@import '../../../../assets/styles/_variables'
+
+.edit-menu
+  @include flexbox($gap: 20px)
+  @include flex-direction($direction: column)
+
+  .map-menu-title
+    img
+      @include figure($width: 14px, $height: 14px)
+      transform: rotate(180deg)
+      box-shadow: none
+      cursor: pointer
+  
+  .dataset-name
+    @include margin-padding($m-direction: top, $m-amount: 10px)
+        
+  .layer-type-choise
+    @include flexbox($gap: 9px)
+    @include flex-direction($direction: column)
+    
+    h5
+      @include margin-padding($m-direction: left, $m-amount: 6px)
+    
+    .layer-type-choise-list
+      @include flexbox($gap: 5px)
+
+    

@@ -64,6 +64,9 @@
   .map-tabs-submenu
     @include position($position: absolute, $left: 102%, $top: 0)
     @include max-width($m-width: 280px)
+    @include flexbox($gap: 40px)
+    @include flex-direction($direction: column)
+    @include justify-content($value: space-between)
     background: inherit
     border-radius: inherit
     height: inherit

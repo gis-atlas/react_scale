@@ -9,6 +9,7 @@ import { RootState } from '../store/reducer';
 import MapMenu from '../components/Map/Menu/MapMenu';
 import MapControls from '../components/Map/Controls/MapControls';
 import DeckMap from '../components/Map/Deck/DeckMap';
+import EditMapMenu from '../components/Map/Menu/Edit/EditMapMenu';
 
 const Map = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ const Map = () => {
     (state: RootState) => state.layer.layerGroups
   );
 
-  const { baseLayer, viewState }: any = useSelector(
+  const { baseLayer, viewState, mode }: any = useSelector(
     (state: RootState) => state.map
   );
 
@@ -31,7 +32,11 @@ const Map = () => {
 
   return (
     <div className='map'>
-      <MapMenu title={project.name} layerGroups={layerGroups} />
+      {mode === 'editing' ? (
+        <EditMapMenu />
+      ) : (
+        <MapMenu title={project.name} layerGroups={layerGroups} />
+      )}
       <MapControls />
       <DeckMap mapStyle={baseLayer.layer} viewState={viewState} />
     </div>

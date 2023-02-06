@@ -3,10 +3,15 @@ import Input from '../../../../UI/Input/Input';
 import Select from '../../../../UI/Select/Select';
 import DataUploader from '../../../../Uploaders/Data/DataUploader';
 import './index.sass';
+import { useAppDispatch } from '../../../../../store';
+import { enableEditMode } from '../../../../../store/map';
 
 const AddLayer = () => {
+  const dispatch = useAppDispatch();
   const [isDataUploaderOpened, setIsDataUploaderOpened] = useState(false);
-
+  const enableEditing = () => {
+    dispatch(enableEditMode());
+  };
   return (
     <div className='sub-menu sub-menu-layers'>
       <h3>Новый слой</h3>
@@ -29,6 +34,19 @@ const AddLayer = () => {
             getSelectStatus={setIsDataUploaderOpened}
           />
           {isDataUploaderOpened && <DataUploader />}
+          <Select
+            state='Создать новый'
+            variant='contained'
+            size='large'
+            options={[
+              {
+                id: 1,
+                name: 'Перейти в режим редактирования',
+                icon: '/images/icons/pencil-filled.svg',
+                onClick: enableEditing,
+              },
+            ]}
+          />
         </div>
       </div>
     </div>

@@ -5,11 +5,19 @@
   @include position($position: relative)
   @include margin-padding($p-direction: all, $p-amount: 3px 7px)
   display: inline-block
+  &.without-background
+    background: inherit !important
   &.contained
     @include margin-padding($p-direction: all, $p-amount: 7px 12px)
     @include border-radius($radius: 6px 6px 6px 6px)
     box-shadow: 0px 2px 2px rgba(169, 169, 169, 0.25)
     background: $color-light
+    .options
+      li
+        @include font($size: 12px, $weight: 600)
+        @include margin-padding($p-direction: all, $p-amount: 7px 12px)
+        @include border-radius($radius: 0)
+          
   &.large
     width: 100%    
   &.opened
@@ -32,6 +40,9 @@
     @include align-items($value: center)
     @include justify-content($value: space-between)
     cursor: pointer
+    &.closely
+      @include justify-content($value: flex-start)
+      
     span
       @include font($size: 14px, $weight: 700, $important: true)
     img
@@ -49,7 +60,14 @@
       @include font($size: 14px, $weight: 400)
       @include margin-padding($p-direction: all, $p-amount: 3px 7px)
       @include border-radius($radius: 6px)
+      @include flexbox($gap: 5px)
+      @include justify-content($value: space-between)
+      @include align-items($value: center)
       cursor: pointer
+      span
+        white-space: nowrap
+        font-size: inherit
+        font-weight: inherit
       &.current
         display: none
       &:hover

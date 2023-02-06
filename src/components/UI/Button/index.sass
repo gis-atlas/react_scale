@@ -15,13 +15,17 @@ button.custom-button
     &.small, &.medium
       @include figure($width: 30px, $height: 30px)
       @include margin-padding($p-direction: all, $p-amount: 0)
-
+    
   &.small
     @include margin-padding($p-direction: all, $p-amount: 3px 10px)
     @include font($size: 10px, $weight: 700)
 
   &.medium
     @include margin-padding($p-direction: all, $p-amount: 10px 30px)
+
+  &.large
+    @include margin-padding($p-direction: all, $p-amount: 10px 30px)
+    width: 100%
 
   &:hover
     -webkit-filter: brightness(97%)

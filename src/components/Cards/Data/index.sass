@@ -2,13 +2,14 @@
 @import '../../../assets/styles/_mixins'
   
 .data-card
-  @include flexbox($gap: 10px)
+  @include display-grid($row-gap: 10px)
+  @include grid-template-columns($columns: 1fr 10px)
   @include align-items($value: center)
-  @include justify-content($value: space-between)
   @include margin-padding($p-direction: all, $p-amount: 10px 13px 10px 7px)
   @include border-radius($radius: 6px)
   box-shadow: 0px 4px 10px rgba(88, 104, 164, 0.25)
   background: $color-light
+
   &:hover
     box-shadow: 0px 4px 10px rgba(88, 104, 164, 0.55)
   &:not(.used)
@@ -17,8 +18,17 @@
   .data-card-content
     @include flexbox($gap: 7px)
     @include align-items($value: center)
-    
-    
+    .data-card-about
+      @include max-width($m-width: 80%)
+      overflow: hidden
     .data-card-info
       @include font($size: 10px, $weight: 600)
-      
+      .dot-divider
+        @include figure($width: 2px, $height: 2px)
+        @include border-radius($radius: 50%)
+        background: $color-text-primary
+        display: inline-block
+        margin: 2px 4px
+        
+  img
+    cursor: pointer

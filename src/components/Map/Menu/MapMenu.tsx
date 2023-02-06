@@ -38,6 +38,10 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
     dispatch(openSubMenu(name));
   };
 
+  const onSave = () => {
+    dispatch(closeSubMenu());
+  };
+
   return (
     <>
       {!opened && (
@@ -137,6 +141,14 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
                   height: '14px',
                 }}
               />
+            </Button>
+            <Button
+              color='primary'
+              size='large'
+              styles={{ marginTop: '40px' }}
+              onClick={onSave}
+            >
+              Сохранить
             </Button>
           </div>
         )}
