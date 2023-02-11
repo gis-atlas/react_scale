@@ -96,6 +96,7 @@ export const createModelLayer = async (id, data) => {
       },
     },
   });
+  console.log(data);
   return new ScenegraphLayer({
     id,
     sizeScale,
@@ -105,6 +106,7 @@ export const createModelLayer = async (id, data) => {
     _lighting: 'pbr',
     getPosition: (d) => d.coordinates,
     getOrientation: (d) => [heading, tilt, roll + 90],
+    getTranslation: [0, 0, 10 * coordinates[2]],
   });
 };
 

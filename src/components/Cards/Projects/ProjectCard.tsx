@@ -43,6 +43,9 @@ const ProjectCard = ({
     const {
       newProjectName: { value: name },
     } = form;
+    if (!name.length) {
+      return;
+    }
     dispatch(createProject(name));
     setCreate(false);
   };
@@ -80,6 +83,7 @@ const ProjectCard = ({
               style={
                 isNewProjectCard
                   ? {
+                      maxWidth: 'inherit',
                       textAlign: 'center',
                       fontSize: '14px',
                       whiteSpace: 'nowrap',
