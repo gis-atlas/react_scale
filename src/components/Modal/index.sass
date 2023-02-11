@@ -13,7 +13,9 @@
     visibility: visible
 
   .modal
-    @include figure($width: 410px, $height: 360px)
+    // @include figure($width: 410px, $height: 360px)
+    max-width: max-content
+    height: max-content
     @include position($position: absolute, $h-center: true, $v-center: true, $z-index: 2)
     @include border-radius($radius: 20px)
     @include margin-padding($p-direction: all, $p-amount: 33px 38px)

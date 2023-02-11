@@ -15,6 +15,14 @@ export const getProject = createAsyncThunk(
   }
 );
 
+export const createProject = createAsyncThunk(
+  'project/createProject',
+  async (projectName: string) => {
+    const result = await ProjectAPI.createProject(projectName);
+    return result.data;
+  }
+);
+
 export const projectSlice = createSlice({
   name: 'user',
   initialState: {
@@ -28,6 +36,9 @@ export const projectSlice = createSlice({
     });
     builder.addCase(getProject.fulfilled, (state, action) => {
       state.project = action.payload;
+    });
+    builder.addCase(createProject.fulfilled, (state, action) => {
+      state.projects.push(action.payload.newProject);
     });
   },
 });
