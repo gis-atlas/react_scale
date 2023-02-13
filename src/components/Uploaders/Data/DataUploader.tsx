@@ -1,10 +1,10 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import './index.sass';
 import classNames from 'classnames';
 import { formatFileSize, formatFileType } from '../../../utils';
 import DataCard from '../../Cards/Data/DataCard';
 
-const DataUploader = () => {
+const DataUploader = ({ getUploadedData }: any) => {
   const [uploadedFile, setUplodedFile] = useState<File | null>(null);
 
   const onUploadFile = (e: SyntheticEvent) => {
@@ -17,6 +17,14 @@ const DataUploader = () => {
     setUplodedFile(null);
   };
 
+  useEffect(() => {
+    if (uploadedFile) {
+      getUploadedData(uploadedFile.name.split('.')[0]);
+    } else {
+      getUploadedData('');
+    }
+  }, [uploadedFile]);
+
   return (
     <div
       className={classNames('data-uploader', {
@@ -24,12 +32,14 @@ const DataUploader = () => {
       })}
     >
       {uploadedFile ? (
-        <DataCard
-          title={uploadedFile.name}
-          fileSize={formatFileSize(uploadedFile.size)}
-          fileType={formatFileType(uploadedFile.type)}
-          onDelete={onDelete}
-        />
+        <>
+          <DataCard
+            title={uploadedFile.name}
+            fileSize={formatFileSize(uploadedFile.size)}
+            fileType={formatFileType(uploadedFile.type)}
+            onDelete={onDelete}
+          />
+        </>
       ) : (
         <div className='data-uploader-inner'>
           <label>

@@ -9,16 +9,26 @@ import { enableEditMode } from '../../../../../store/map';
 const AddLayer = () => {
   const dispatch = useAppDispatch();
   const [isDataUploaderOpened, setIsDataUploaderOpened] = useState(false);
+  const [uploadedFileName, setUploadedFileName] = useState('');
   const enableEditing = () => {
     dispatch(enableEditMode());
+  };
+  const getUploadedFileName = (name: string) => {
+    setUploadedFileName(name);
   };
   return (
     <div className='sub-menu sub-menu-layers'>
       <h3>Новый слой</h3>
-      <div className='layer-parameters'>
-        <h5>Параметры слоя</h5>
-        <Input label='Имя слоя' name='layerName' />
-      </div>
+      {uploadedFileName && (
+        <div className='layer-parameters'>
+          <h5>Параметры слоя</h5>
+          <Input
+            label='Имя слоя'
+            name='layerName'
+            defaultValue={uploadedFileName}
+          />
+        </div>
+      )}
       <div className='data-source'>
         <h5>Источник данных</h5>
         <div className='data-source-list'>
@@ -33,7 +43,9 @@ const AddLayer = () => {
             size='large'
             getSelectStatus={setIsDataUploaderOpened}
           />
-          {isDataUploaderOpened && <DataUploader />}
+          {isDataUploaderOpened && (
+            <DataUploader getUploadedData={getUploadedFileName} />
+          )}
           <Select
             state='Создать новый'
             variant='contained'
