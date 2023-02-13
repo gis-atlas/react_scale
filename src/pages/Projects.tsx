@@ -66,6 +66,7 @@ const Projects = () => {
         variant='comfortable'
         styles={{ display: 'flex', gap: '29px' }}
       >
+        <ProjectCard view={2} isNewProjectCard id={1} />
         <ProjectCard view={2} title='Крымский проект' isMyProject id={1} />
         <ProjectCard view={2} title='Проект по уралу' id={1} />
       </Card>

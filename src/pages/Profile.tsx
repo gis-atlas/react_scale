@@ -3,7 +3,6 @@ import { RootState } from '../store/reducer';
 import Card from '../components/Cards/Card';
 import Button from '../components/UI/Button/Button';
 import Input from '../components/UI/Input/Input';
-import ImageUploader from '../components/Uploaders/Image/ImageUploader';
 import { FormEvent, ReactNode, useEffect, useState } from 'react';
 import { useAppDispatch } from '../store';
 import { getPhoto, getProfileData, updateProfileData } from '../store/user';
@@ -11,7 +10,7 @@ import UserImage from '../components/UI/Image/UserImage';
 
 const Profile = () => {
   const dispatch = useAppDispatch();
-  const { name, telegram, birthday, city, photo } = useSelector(
+  const { name, telegram, birthday, city } = useSelector(
     (state: RootState) => state.user.user
   );
   const [isEditMode, setEditMode] = useState<boolean>(false);
@@ -19,8 +18,7 @@ const Profile = () => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     // TODO: изменить на беке / разобраться, почему firstname lastname
-    const lastName = form.username.value;
-    const firstName = '';
+    const [firstName, lastName] = form.username.value.split(' ');
     const updateData = {
       firstName,
       lastName,
@@ -35,6 +33,7 @@ const Profile = () => {
     dispatch(getProfileData());
     dispatch(getPhoto());
   }, [dispatch]);
+
   return (
     <div className='profile'>
       <h1>Профиль</h1>
@@ -54,12 +53,12 @@ const Profile = () => {
                 <Input
                   label='Дата рождения'
                   name='telegram'
-                  defaultValue={birthday}
+                  defaultValue={telegram}
                 />
                 <Input
                   label='Ник в telegram'
                   name='birthday'
-                  defaultValue={telegram}
+                  defaultValue={birthday}
                 />
                 <Input label='Город' name='city' defaultValue={city} />
               </div>

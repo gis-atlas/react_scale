@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Input from '../components/UI/Input/Input';
 import NewInput from '../components/UI/Input/Input';
 import Select from '../components/UI/Select/Select';
+import ConfigModel from '../components/Model/Config/ConfigModel';
 
 const Test = () => {
   const [state, setState] = useState('Hello');
@@ -11,22 +12,20 @@ const Test = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: '20px',
-        background: '#F2F7FD',
+        // background: '#F2F7FD',
+        marginLeft: '50px',
+        marginTop: '50px',
       }}
     >
-      <div
+      {/* <div
         style={{
           padding: '20px',
           background: 'red',
         }}
-      >
-        <Select
-          options={['one', 'two', 'three']}
-          state={state}
-          setState={setState}
-        />
-      </div>
-      <h1>{state}</h1>
+      > */}
+      <ConfigModel />
+      {/* </div> */}
+      {/* <h1>{state}</h1> */}
     </div>
   );
 };
