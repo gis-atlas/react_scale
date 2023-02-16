@@ -54,6 +54,7 @@ export const declOfNum = (n: number, text_variables: Array<string>): string => {
 };
 
 export const formatFileSize = (bytes: number) => {
+  if (bytes < 0) return '0 B';
   const sufixes = ['B', 'kB', 'MB', 'GB', 'TB'];
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
   return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sufixes[i]}`;
