@@ -89,7 +89,7 @@ const Input = ({
           type={type}
           value={inputValue}
           readOnly={readonly}
-          autoComplete='off'
+          autoComplete='new-password'
         />
         {!readonly && (
           <span
