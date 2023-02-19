@@ -54,7 +54,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
     id: '',
-    isLoggedIn: localStorage.getItem('isLoggedIn') || false,
+    isLoggedIn: Boolean(localStorage.getItem('isLoggedIn')) || false,
     accessToken: '',
     refreshToken: '',
     user: {
@@ -71,7 +71,7 @@ export const userSlice = createSlice({
     logout: (state) => {
       localStorage.clear();
       state.accessToken = '';
-      state.isLoggedIn = '';
+      state.isLoggedIn = false;
       state.refreshToken = '';
       state.user = {
         role: '',
