@@ -1,0 +1,53 @@
+@import '../../../assets/styles/_mixins'
+@import '../../../assets/styles/_variables'
+  
+.coordinates-3d-picker
+  @include figure($width: 70px, $height: 23px)
+  background: $color-platform
+  transform: skew(-60deg)
+  &:before, &:after
+    content: ''
+    display: block
+    position: absolute
+  &:before
+    @include figure($width: 100%, $height: 6px)
+    background: $color-platform-light
+    transform: skew(60deg)
+    left: 6px
+    top: 100%
+  &:after
+    @include figure($width: 10.5px, $height: 100%)
+    background: $color-platform-dark
+    left: 100%
+    top: 2.9px
+    transform: skewY(30deg)
+  .axis
+    position: absolute
+    background: $color-axis
+    border-radius: 10px
+  .axis-x
+    @include figure($width: 4px, $height: calc(100% + 12px))
+    left: -1.5px
+    top: 0
+    transform: skewY(20deg)
+  .axis-y
+    @include figure($width: calc(100% + 12px), $height: 2px)
+    left: 20px
+    top: 0
+    transform: skew(60deg)
+    &.axis-y-helper
+      @include figure($width: calc(100% + 12px), $height: 2px)
+      left: 0
+      top: 0
+  .axis-z-top
+    @include figure($width: 2px, $height: 40px)
+    left: calc(-33.7px)
+    bottom: calc(100% - 2px)
+    transform: skewX(60deg)
+  .axis-z-bottom
+    @include figure($width: 2px, $height: 40px)
+    transform: skewX(60deg)
+    left: calc(32.1px * 2.56)
+    top: calc(100% + 6px)
+    border-radius: 0 0 10px 10px
+    

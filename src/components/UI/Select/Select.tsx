@@ -11,6 +11,7 @@ interface ISelect {
   variant?: 'text' | 'contained';
   triangle?: 'closely' | 'default';
   withoutBackground?: boolean;
+  disabled?: boolean;
 }
 
 const Select = ({
@@ -22,6 +23,7 @@ const Select = ({
   getSelectStatus = () => {},
   triangle = 'default',
   withoutBackground = false,
+  disabled = false,
 }: ISelect) => {
   const [opened, setOpened] = useState<boolean>(false);
 
@@ -49,7 +51,7 @@ const Select = ({
           [`${size}`]: size,
           [`${triangle}`]: triangle,
         })}
-        onClick={() => setOpened((prev) => !prev)}
+        onClick={() => !disabled && setOpened((prev) => !prev)}
       >
         <span>{state}</span>
         <img src='/images/icons/triangle.svg' alt='' />
@@ -61,7 +63,7 @@ const Select = ({
               <li
                 className={classNames({ current: option === state })}
                 key={option.id}
-                onClick={option.onClick}
+                onClick={() => option.onClick}
               >
                 <span>{option.name}</span>
                 <img src={option.icon} alt=' ' />

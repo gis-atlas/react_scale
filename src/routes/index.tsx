@@ -45,10 +45,6 @@ export const router = createBrowserRouter([
         path: '/catalog',
         element: <div>Каталог</div>,
       },
-      {
-        path: '/test',
-        element: <Test />,
-      },
     ],
   },
   {
@@ -71,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
+      },
+      {
+        path: '/test',
+        element: <Test />,
       },
     ],
   },

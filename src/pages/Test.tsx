@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Input from '../components/UI/Input/Input';
 import NewInput from '../components/UI/Input/Input';
 import Select from '../components/UI/Select/Select';
-import ConfigModel from '../components/Model/Config/ConfigModel';
+import Coordinates3d from '../components/Map/Coordinates/Coordinates3d';
 
 const Test = () => {
   const [state, setState] = useState('Hello');
@@ -23,7 +23,7 @@ const Test = () => {
           background: 'red',
         }}
       > */}
-      <ConfigModel />
+      <Coordinates3d />
       {/* </div> */}
       {/* <h1>{state}</h1> */}
     </div>

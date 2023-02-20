@@ -35,7 +35,11 @@ const Map = () => {
       {mode === 'editing' ? (
         <EditMapMenu />
       ) : (
-        <MapMenu title={project.name} layerGroups={layerGroups} />
+        <MapMenu
+          projectId={projectId}
+          title={project.name}
+          layerGroups={layerGroups}
+        />
       )}
       <MapControls />
       <DeckMap mapStyle={baseLayer.layer} viewState={viewState} />
