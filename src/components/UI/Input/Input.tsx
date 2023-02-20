@@ -17,6 +17,7 @@ interface IInput {
 
   useGradient?: boolean;
   readonly?: boolean;
+  withLabel?: boolean;
 
   prevIcon?: string;
   onPrevIconClick?: any;
@@ -39,6 +40,7 @@ const Input = ({
   onPrevIconClick,
   appendIcon,
   onAppendIconClick,
+  withLabel = false,
 }: IInput) => {
   const [focused, setFocused] = useState<boolean>(false);
   const [filled, setFilled] = useState<boolean>(false);
@@ -63,7 +65,7 @@ const Input = ({
 
   useEffect(() => {
     inputValue.length !== 0 && setFilled(true);
-  }, []);
+  }, [inputValue.length]);
   return (
     <div
       className={classNames('custom-input', {
@@ -89,9 +91,9 @@ const Input = ({
           type={type}
           value={inputValue}
           readOnly={readonly}
-          autoComplete='off'
+          autoComplete='new-password'
         />
-        {!readonly && (
+        {(!readonly || withLabel) && (
           <span
             className={classNames({
               gradient: useGradient,

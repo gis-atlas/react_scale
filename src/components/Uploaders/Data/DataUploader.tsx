@@ -19,9 +19,14 @@ const DataUploader = ({ getUploadedData }: any) => {
 
   useEffect(() => {
     if (uploadedFile) {
-      getUploadedData(uploadedFile.name.split('.')[0]);
+      getUploadedData({
+        name: uploadedFile.name.split('.')[0],
+        file: uploadedFile,
+        fileSize: formatFileSize(uploadedFile.size),
+        fileType: formatFileType(uploadedFile.type),
+      });
     } else {
-      getUploadedData('');
+      getUploadedData(null);
     }
   }, [uploadedFile]);
 

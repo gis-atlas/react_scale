@@ -12,8 +12,10 @@ import { RootState } from '../../../store/reducer';
 import AddLayer from './SubMenu/Layers/AddLayer';
 import { useAppDispatch } from '../../../store';
 import { closeSubMenu, openSubMenu } from '../../../store/map';
+import UploadAPI from '../../../store/upload/api';
 
 interface IMapMenu {
+  projectId: string | undefined;
   title: string;
   layerGroups: Array<any>;
 }
@@ -25,7 +27,7 @@ const tabs = [
   { id: 4, title: 'Публикация', name: 'publication' },
 ];
 
-const MapMenu = ({ title, layerGroups }: IMapMenu) => {
+const MapMenu = ({ projectId, title, layerGroups }: IMapMenu) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const goToOtherProjects = () => {
@@ -37,9 +39,13 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
   const setSubMenuName = (name: string) => {
     dispatch(openSubMenu(name));
   };
-
-  const onSave = () => {
-    dispatch(closeSubMenu());
+  const uploadData = useSelector((state: RootState) => state.upload);
+  const onSave = async () => {
+    console.log(uploadData);
+    await UploadAPI.publish(uploadData).then((response) => {
+      dispatch(closeSubMenu());
+      console.log(response.data);
+    });
   };
 
   return (
@@ -123,7 +129,11 @@ const MapMenu = ({ title, layerGroups }: IMapMenu) => {
         </div>
         {subMenuName && (
           <div className='map-tabs-submenu'>
-            {subMenuName === 'layers' ? <AddLayer /> : <></>}
+            {subMenuName === 'layers' ? (
+              <AddLayer projectId={projectId} layerGroups={layerGroups} />
+            ) : (
+              <></>
+            )}
             <Button
               variant='circle'
               color='secondary'

@@ -9,11 +9,12 @@ import Registration from '../pages/Registration';
 import Test from '../pages/Test';
 import Footer from '../components/Footer/Footer';
 import Map from '../pages/Map';
+import AuthWrapper from '../components/Auth/AuthWrapper';
 
 export const router = createBrowserRouter([
   {
     element: (
-      <>
+      <AuthWrapper>
         <Header />
         <main>
           <div className='content'>
@@ -21,7 +22,7 @@ export const router = createBrowserRouter([
           </div>
         </main>
         <Footer />
-      </>
+      </AuthWrapper>
     ),
     children: [
       {
@@ -43,10 +44,6 @@ export const router = createBrowserRouter([
       {
         path: '/catalog',
         element: <div>Каталог</div>,
-      },
-      {
-        path: '/test',
-        element: <Test />,
       },
     ],
   },
@@ -70,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
+      },
+      {
+        path: '/test',
+        element: <Test />,
       },
     ],
   },
