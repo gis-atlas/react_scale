@@ -36,37 +36,26 @@ const DataUploader = ({ getUploadedData }: any) => {
         uploaded: uploadedFile,
       })}
     >
-      {uploadedFile ? (
-        <>
-          <DataCard
-            title={uploadedFile.name}
-            fileSize={formatFileSize(uploadedFile.size)}
-            fileType={formatFileType(uploadedFile.type)}
-            onDelete={onDelete}
+      <div className='data-uploader-inner'>
+        <label>
+          <span>
+            Перетащите файл сюда
+            <br />
+            или
+            <br />
+            <b>
+              Выберите из файлов
+              <br />
+              на компьютере
+            </b>
+          </span>
+          <input
+            type='file'
+            onChange={onUploadFile}
+            accept='.geojson, .json, .csv'
           />
-        </>
-      ) : (
-        <div className='data-uploader-inner'>
-          <label>
-            <span>
-              Перетащите файл сюда
-              <br />
-              или
-              <br />
-              <b>
-                Выберите из файлов
-                <br />
-                на компьютере
-              </b>
-            </span>
-            <input
-              type='file'
-              onChange={onUploadFile}
-              accept='.geojson, .json, .csv'
-            />
-          </label>
-        </div>
-      )}
+        </label>
+      </div>
     </div>
   );
 };

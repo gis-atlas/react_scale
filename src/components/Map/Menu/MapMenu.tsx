@@ -9,10 +9,10 @@ import Button from '../../UI/Button/Button';
 import MapsTab from './Tabs/Maps/MapsTab';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
-import AddLayer from './SubMenu/Layers/AddLayer';
 import { useAppDispatch } from '../../../store';
 import { closeSubMenu, openSubMenu } from '../../../store/map';
 import UploadAPI from '../../../store/upload/api';
+import AddLayer from './SubMenu/Layers/AddLayer';
 
 interface IMapMenu {
   projectId: string | undefined;
@@ -130,7 +130,10 @@ const MapMenu = ({ projectId, title, layerGroups }: IMapMenu) => {
         {subMenuName && (
           <div className='map-tabs-submenu'>
             {subMenuName === 'layers' ? (
-              <AddLayer projectId={projectId} layerGroups={layerGroups} />
+              <AddLayer
+                projectId={Number(projectId)}
+                layerGroups={layerGroups}
+              />
             ) : (
               <></>
             )}

@@ -61,5 +61,5 @@ export const formatFileSize = (bytes: number) => {
 };
 
 export const formatFileType = (type: string) => {
-  return type.split('/').reverse()[0];
+  return type.split('/').reverse()[0].split('+').join('');
 };

@@ -6,6 +6,7 @@ interface ISelect {
   state?: string;
   options?: Array<string> | Array<any>;
   setState?: any;
+  selectStatus?: boolean;
   getSelectStatus?: any;
   size?: 'small' | 'medium' | 'large';
   variant?: 'text' | 'contained';
@@ -20,12 +21,13 @@ const Select = ({
   state = '',
   options = [],
   setState = () => {},
+  selectStatus = false,
   getSelectStatus = () => {},
   triangle = 'default',
   withoutBackground = false,
   disabled = false,
 }: ISelect) => {
-  const [opened, setOpened] = useState<boolean>(false);
+  const [opened, setOpened] = useState<boolean>(selectStatus);
 
   const onOptionChange = (option: string) => {
     setState(option);
@@ -58,26 +60,13 @@ const Select = ({
       </div>
       <ul className='options'>
         {options?.map((option) => (
-          <Fragment key={option.id}>
-            {option.id ? (
-              <li
-                className={classNames({ current: option === state })}
-                key={option.id}
-                onClick={() => option.onClick}
-              >
-                <span>{option.name}</span>
-                <img src={option.icon} alt=' ' />
-              </li>
-            ) : (
-              <li
-                className={classNames({ current: option === state })}
-                key={option}
-                onClick={() => onOptionChange(option)}
-              >
-                {option}
-              </li>
-            )}
-          </Fragment>
+          <li
+            className={classNames({ current: option === state })}
+            key={option || 'Без названия'}
+            onClick={() => onOptionChange(option)}
+          >
+            {option}
+          </li>
         ))}
       </ul>
     </div>
