@@ -1,8 +1,8 @@
-import { RootState } from './../reducer';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import LayerAPI from './api';
-import { findLayer } from '../../utils/deck';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import bbox from '@turf/bbox';
+import { findLayer } from '../../utils/deck';
+import { RootState } from './../reducer';
+import LayerAPI from './api';
 
 export const loadLayerGroups = createAsyncThunk(
   'layer/loadLayerGroups',

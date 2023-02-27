@@ -1,4 +1,4 @@
-import { lat2Zoom, findLayer } from './deck';
+import { findLayer, lat2Zoom } from './deck';
 
 describe('lat2Zoom testing', () => {
   test('Крайнее значение lat = 360', () => {

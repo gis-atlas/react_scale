@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import Button from '../../../UI/Button/Button';
 import classNames from 'classnames';
-import Input from '../../../UI/Input/Input';
-import LayerTypeCard from '../../../Cards/Layers/Type/LayerTypeCard';
-import '../index.sass';
-import './index.sass';
-import Select from '../../../UI/Select/Select';
+import { useState } from 'react';
 import { useAppDispatch } from '../../../../store';
 import { disableEditMode } from '../../../../store/map';
+import LayerTypeCard from '../../../Cards/Layers/Type/LayerTypeCard';
+import Button from '../../../UI/Button/Button';
+import Input from '../../../UI/Input/Input';
+import Select from '../../../UI/Select/Select';
+import '../index.sass';
+import './index.sass';
 
 const layerTypes = [
   {
@@ -85,7 +85,7 @@ const EditMapMenu = () => {
         <div className='layer-type-choise'>
           <h5>Создать</h5>
           <div className='layer-type-choise-list'>
-            {layerTypes.map((layerType) => (
+            {layerTypes.map(layerType => (
               <LayerTypeCard
                 icon={layerType.icon}
                 name={layerType.name}

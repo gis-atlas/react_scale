@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import './index.sass';
 import { Fragment, useEffect, useState } from 'react';
+import './index.sass';
 
 interface ISelect {
   state?: string;
@@ -53,13 +53,13 @@ const Select = ({
           [`${size}`]: size,
           [`${triangle}`]: triangle,
         })}
-        onClick={() => !disabled && setOpened((prev) => !prev)}
+        onClick={() => !disabled && setOpened(prev => !prev)}
       >
         <span>{state}</span>
         <img src='/images/icons/triangle.svg' alt='' />
       </div>
       <ul className='options'>
-        {options?.map((option) => (
+        {options?.map(option => (
           <li
             className={classNames({ current: option === state })}
             key={option || 'Без названия'}

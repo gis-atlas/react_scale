@@ -1,8 +1,8 @@
-import { SyntheticEvent, useEffect, useState } from 'react';
-import './index.sass';
 import classNames from 'classnames';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { formatFileSize, formatFileType } from '../../../utils';
 import DataCard from '../../Cards/Data/DataCard';
+import './index.sass';
 
 const DataUploader = ({ getUploadedData }: any) => {
   const [uploadedFile, setUplodedFile] = useState<File | null>(null);

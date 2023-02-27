@@ -1,8 +1,8 @@
 import DeckGL from '@deck.gl/react/typed';
-import { createTileLayer, createLayer } from '../../../utils/deck';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
-import { useEffect, useMemo, useState } from 'react';
+import { createLayer, createTileLayer } from '../../../utils/deck';
 
 const DeckMap = ({ mapStyle, viewState }: any) => {
   const baseLayer = useMemo(() => createTileLayer(mapStyle), [mapStyle]);

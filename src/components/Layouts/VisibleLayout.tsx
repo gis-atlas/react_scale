@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import './index.sass';
 import { ReactNode } from 'react';
+import './index.sass';
 
 interface IVisibleLayout {
   isVisible: boolean;

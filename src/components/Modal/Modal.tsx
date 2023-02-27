@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { MouseEvent, ReactNode, useRef } from 'react';
-import './index.sass';
 import Button from '../UI/Button/Button';
+import './index.sass';
 
 interface IModal {
   children?: ReactNode;
@@ -36,7 +36,7 @@ const Modal = ({
           'with-padding': isNeededPadding,
           [`${className}`]: className,
         })}
-        onClick={(e) => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
       >
         <h2>{title}</h2>
         <p>{description}</p>

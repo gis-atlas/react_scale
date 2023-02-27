@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../store/reducer';
+import { findLayer } from '../../../../../utils/deck';
 import LayerCard from '../../../../Cards/Layers/LayerCard';
 import LayerGroupCard from '../../../../Cards/Layers/LayerGroupCard';
 import Button from '../../../../UI/Button/Button';
-import { RootState } from '../../../../../store/reducer';
-import { findLayer } from '../../../../../utils/deck';
 
 interface ILayerCard {
   layerGroups?: Array<any>;
@@ -29,7 +29,7 @@ const LayersTab = ({ layerGroups = [], setSubMenuName }: ILayerCard) => {
       </div>
       <div className='tab-list-outer'>
         <ul className='tab-list'>
-          {layerGroups?.map((layerGroup) =>
+          {layerGroups?.map(layerGroup =>
             (layerGroup.type === 'USER' || layerGroup.type === 'ROOT') &&
             layerGroup.layers.length !== 0 ? (
               <LayerGroupCard

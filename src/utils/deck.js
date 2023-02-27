@@ -8,13 +8,13 @@ import center from '@turf/center';
 
 // layers
 
-export const createTileLayer = (mapStyle) => {
+export const createTileLayer = mapStyle => {
   return new TileLayer({
     minZoom: 0,
     maxZoom: 19,
     tileSize: 256,
     ...mapStyle,
-    renderSubLayers: (props) => {
+    renderSubLayers: props => {
       const {
         bbox: { west, south, east, north },
       } = props.tile;
@@ -67,7 +67,7 @@ export const createRasterLayer = (id, data) => {
         },
       },
     },
-    renderSubLayers: (props) => {
+    renderSubLayers: props => {
       const {
         bbox: { west, south, east, north },
       } = props.tile;
@@ -104,8 +104,8 @@ export const createModelLayer = async (id, data) => {
     data: [{ coordinates }],
     pickable: true,
     _lighting: 'pbr',
-    getPosition: (d) => d.coordinates,
-    getOrientation: (d) => [heading, tilt, roll + 90],
+    getPosition: d => d.coordinates,
+    getOrientation: d => [heading, tilt, roll + 90],
     getTranslation: [0, 0, 10 * coordinates[2]],
   });
 };
@@ -123,7 +123,7 @@ const ZOOM_AREA = [
   0.00004267746555976466, 0.00002133873277988233,
 ];
 
-export const lat2Zoom = (lat) => {
+export const lat2Zoom = lat => {
   var res = 0;
 
   while (lat < ZOOM_AREA[res]) res++;
@@ -131,14 +131,14 @@ export const lat2Zoom = (lat) => {
   return res;
 };
 
-export const getCenterOfLayer = (bounds) => {
+export const getCenterOfLayer = bounds => {
   const centerOfLayer = center(bboxPolygon(bounds));
   return centerOfLayer.geometry.coordinates;
 };
 
 export const findLayer = (layer, layerList) => {
   return layerList.filter(
-    (layerListItem) =>
+    layerListItem =>
       layerListItem.id === layer.id && layerListItem.type === layer.type
   )[0];
 };

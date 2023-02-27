@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useAppDispatch } from '../../../store';
-import './index.sass';
 import { setBaseLayer } from '../../../store/map';
+import './index.sass';
 
 interface IMapStyleCard {
   src?: string;

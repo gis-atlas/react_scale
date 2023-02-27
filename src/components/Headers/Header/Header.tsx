@@ -1,10 +1,10 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import UserImage from '../../UI/Image/UserImage';
-import '../index.sass';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { logout } from '../../../store/user';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../store';
+import { logout } from '../../../store/user';
+import UserImage from '../../UI/Image/UserImage';
+import '../index.sass';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ const Header = () => {
             figure='circle'
             className='user-image-header'
             onHeader
-            onClick={() => setOpened((prev) => !prev)}
+            onClick={() => setOpened(prev => !prev)}
           />
           <ul>
             <li onClick={goToProfile}>Профиль</li>

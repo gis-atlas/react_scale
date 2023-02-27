@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
+import { useAppDispatch } from '../../../../../store';
+import UploadAPI from '../../../../../store/upload/api';
+import Button from '../../../../UI/Button/Button';
 import Input from '../../../../UI/Input/Input';
 import Select from '../../../../UI/Select/Select';
 import DataUploader from '../../../../Uploaders/Data/DataUploader';
-import Button from '../../../../UI/Button/Button';
-import { useAppDispatch } from '../../../../../store';
-import UploadAPI from '../../../../../store/upload/api';
 
 interface IAddLayer {
   projectId: number;
@@ -23,7 +23,7 @@ const AddLayer: FC<IAddLayer> = ({ projectId, layerGroups }) => {
     const { fileType, name, file } = data;
     setLoading(true);
     UploadAPI.upload(projectId, file)
-      .then((res) => {
+      .then(res => {
         setFileData({ ...res.data, layerName: name, fileType: fileType });
       })
       .catch(() => setFileData(null));

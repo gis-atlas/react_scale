@@ -1,8 +1,8 @@
-import { RootState } from './../reducer';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { FlyToInterpolator } from '@deck.gl/core/typed';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { mapBaseLayers } from '../../data/baselayers';
 import { findLayer, getCenterOfLayer, lat2Zoom } from '../../utils/deck';
-import { FlyToInterpolator } from '@deck.gl/core/typed';
+import { RootState } from './../reducer';
 
 const TEST_INITIAL_VIEW_STATE = {
   longitude: 37.5097025333,
@@ -62,13 +62,13 @@ export const mapSlice = createSlice({
     openSubMenu: (state, action) => {
       state.subMenuName = action.payload;
     },
-    closeSubMenu: (state) => {
+    closeSubMenu: state => {
       state.subMenuName = '';
     },
-    enableEditMode: (state) => {
+    enableEditMode: state => {
       state.mode = 'editing';
     },
-    disableEditMode: (state) => {
+    disableEditMode: state => {
       state.mode = '';
     },
   },

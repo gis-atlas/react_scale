@@ -1,13 +1,13 @@
 import classNames from 'classnames';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../UI/Button/Button';
-import './index.sass';
-import Modal from '../../Modal/Modal';
 import { SyntheticEvent, useRef, useState } from 'react';
-import Input from '../../UI/Input/Input';
-import Form from '../../Forms/Form';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../store';
 import { createProject } from '../../../store/project';
+import Form from '../../Forms/Form';
+import Modal from '../../Modal/Modal';
+import Button from '../../UI/Button/Button';
+import Input from '../../UI/Input/Input';
+import './index.sass';
 
 interface IProjectCard {
   id: number;

@@ -1,10 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import user from './user';
-import project from './project';
 import layer from './layer';
 import map from './map';
+import project from './project';
 import upload from './upload';
+import user from './user';
 
 export const rootReducer = combineReducers({
   user,

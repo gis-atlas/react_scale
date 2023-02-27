@@ -1,8 +1,8 @@
 import { SyntheticEvent, useState } from 'react';
-import './index.sass';
-import Button from '../../UI/Button/Button';
 import { useAppDispatch } from '../../../store';
 import { updatePhoto } from '../../../store/user';
+import Button from '../../UI/Button/Button';
+import './index.sass';
 
 const ImageUploader = () => {
   const dispatch = useAppDispatch();

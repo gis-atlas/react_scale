@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch } from '../store';
-import { getProject } from '../store/project';
-import { loadLayerGroups } from '../store/layer';
-import { IProject } from '../store/project/type';
-import { RootState } from '../store/reducer';
-import MapMenu from '../components/Map/Menu/MapMenu';
 import MapControls from '../components/Map/Controls/MapControls';
 import DeckMap from '../components/Map/Deck/DeckMap';
 import EditMapMenu from '../components/Map/Menu/Edit/EditMapMenu';
+import MapMenu from '../components/Map/Menu/MapMenu';
+import { useAppDispatch } from '../store';
+import { loadLayerGroups } from '../store/layer';
+import { getProject } from '../store/project';
+import { IProject } from '../store/project/type';
+import { RootState } from '../store/reducer';
 
 const Map = () => {
   const dispatch = useAppDispatch();

@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import Input from '../components/UI/Input/Input';
-import NewInput from '../components/UI/Input/Input';
-import Select from '../components/UI/Select/Select';
 import Coordinates3d from '../components/Map/Coordinates/Coordinates3d';
+import {
+  default as Input,
+  default as NewInput,
+} from '../components/UI/Input/Input';
+import Select from '../components/UI/Select/Select';
 
 const Test = () => {
   const [state, setState] = useState('Hello');

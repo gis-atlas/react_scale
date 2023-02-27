@@ -38,7 +38,7 @@ export const sortProjectsBy = ({
 
 export const findMatch = (array: Array<IProject>, element: string) => {
   if (!array) return [];
-  return [...array].filter((arrItem) =>
+  return [...array].filter(arrItem =>
     arrItem.name.toLowerCase().includes(element.toLowerCase())
   );
 };
