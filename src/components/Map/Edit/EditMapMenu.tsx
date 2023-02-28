@@ -1,38 +1,15 @@
 import classNames from 'classnames';
-import { DrawPointMode } from 'nebula.gl';
-import { useEffect, useId, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useAppDispatch } from '../../../../store';
-import { clearLayers, setLayer } from '../../../../store/layer';
-import { disableEditMode, setDrawMode } from '../../../../store/map';
-import { RootState } from '../../../../store/reducer';
-import LayerTypeCard from '../../../Cards/Layers/Type/LayerTypeCard';
-import Button from '../../../UI/Button/Button';
-import Input from '../../../UI/Input/Input';
-import Select from '../../../UI/Select/Select';
-import '../index.sass';
+import { useAppDispatch } from '../../../store';
+import { disableEditMode, setDrawMode } from '../../../store/map';
+import { RootState } from '../../../store/reducer';
+import LayerTypeCard from '../../Cards/Layers/Type/LayerTypeCard';
+import Button from '../../UI/Button/Button';
+import Input from '../../UI/Input/Input';
+import Select from '../../UI/Select/Select';
+import { drawModes } from './drawModes';
 import './index.sass';
-
-const drawModes = [
-  {
-    id: 1,
-    name: 'drawPoint',
-    title: 'Точки',
-    icon: '/images/icons/layers/dots.svg',
-  },
-  {
-    id: 2,
-    name: 'drawLine',
-    title: 'Линии',
-    icon: '/images/icons/layers/lines.svg',
-  },
-  {
-    id: 3,
-    name: 'drawPolygon',
-    title: 'Полигоны',
-    icon: '/images/icons/layers/polygons.svg',
-  },
-];
 
 const EditMapMenu = () => {
   const dispatch = useAppDispatch();
@@ -40,12 +17,18 @@ const EditMapMenu = () => {
   const selectedDrawMode = useSelector(
     (state: RootState) => state.map.drawMode
   );
+
   const closeEditMenu = () => {
     dispatch(disableEditMode());
   };
   const changeDrawMode = (name: string) => {
-    dispatch(setDrawMode(name));
+    if (selectedDrawMode === name) {
+      dispatch(setDrawMode(''));
+    } else {
+      dispatch(setDrawMode(name));
+    }
   };
+
   return (
     <>
       {!opened && (
@@ -96,6 +79,7 @@ const EditMapMenu = () => {
           <div className='layer-type-choise-list'>
             {drawModes.map(drawMode => (
               <LayerTypeCard
+                key={drawMode.id}
                 icon={drawMode.icon}
                 name={drawMode.name}
                 title={drawMode.title}
