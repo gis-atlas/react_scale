@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../store';
 import { disableEditMode, setDrawMode } from '../../../store/map';
 import { RootState } from '../../../store/reducer';
+import { formatDatasetType } from '../../../utils';
 import LayerTypeCard from '../../Cards/Layers/Type/LayerTypeCard';
 import Button from '../../UI/Button/Button';
 import Input from '../../UI/Input/Input';
@@ -17,6 +18,10 @@ const EditMapMenu = () => {
   const selectedDrawMode = useSelector(
     (state: RootState) => state.map.drawMode
   );
+
+  const dataset = useSelector((state: RootState) => state.map.newDataset);
+  const [isDatasetObjectsOpened, setDatasetObjectsOpened] =
+    useState<boolean>(false);
 
   const closeEditMenu = () => {
     dispatch(disableEditMode());
@@ -90,11 +95,21 @@ const EditMapMenu = () => {
           </div>
         </div>
         <Select
-          state='Объекты датасета'
+          state={`Объекты датасета (${dataset?.features?.length})`}
           variant='text'
           triangle='closely'
           withoutBackground
+          getSelectStatus={setDatasetObjectsOpened}
         />
+        {isDatasetObjectsOpened && (
+          <ul className='flex flex-col gap-2 ml-2'>
+            {dataset?.features?.map((datasetItem: any) => (
+              <>
+                <li>{formatDatasetType(datasetItem.geometry.type)}</li>
+              </>
+            ))}
+          </ul>
+        )}
         <Select
           state='Слои'
           variant='text'

@@ -4,12 +4,6 @@ import { mapBaseLayers } from '../../data/baselayers';
 import { findLayer, getCenterOfLayer, lat2Zoom } from '../../utils/deck';
 import { RootState } from './../reducer';
 
-const TEST_INITIAL_VIEW_STATE = {
-  longitude: 37.5097025333,
-  latitude: 55.9520638334,
-  zoom: 13,
-} as any;
-
 const INITIAL_VIEW_STATE = {
   longitude: 37.618423,
   latitude: 55.751244,
@@ -44,6 +38,11 @@ export const flyToLayer = createAsyncThunk(
   }
 );
 
+// TODO: flyto
+// export const flyToDatasetObject = (coordinates: Array<number>) {
+
+// }
+
 export const mapSlice = createSlice({
   name: 'user',
   initialState: {
@@ -52,6 +51,7 @@ export const mapSlice = createSlice({
     subMenuName: '',
     mode: '',
     drawMode: 'drawPoint',
+    newDataset: {} as any,
   },
   reducers: {
     setBaseLayer: (state, action) => {
@@ -74,6 +74,14 @@ export const mapSlice = createSlice({
     },
     setDrawMode: (state, action) => {
       state.drawMode = action.payload;
+    },
+    setDataset: (state, action) => {
+      state.newDataset = action.payload;
+    },
+    removeFeatureFromDataset: (state, action) => {
+      state.newDataset.features.filter(
+        (datasetFeature: any) => datasetFeature.id !== action.payload
+      );
     },
   },
   extraReducers(builder) {
@@ -102,5 +110,7 @@ export const {
   enableEditMode,
   disableEditMode,
   setDrawMode,
+  setDataset,
+  removeFeatureFromDataset,
 } = mapSlice.actions;
 export default mapSlice.reducer;
