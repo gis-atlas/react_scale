@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './index.sass';
 
 interface ISelect {
@@ -10,7 +10,8 @@ interface ISelect {
   getSelectStatus?: any;
   size?: 'small' | 'medium' | 'large';
   variant?: 'text' | 'contained';
-  triangle?: 'closely' | 'default';
+  type?: 'default' | 'list';
+  triangle?: 'default' | 'closely';
   withoutBackground?: boolean;
   disabled?: boolean;
 }
@@ -26,6 +27,7 @@ const Select = ({
   triangle = 'default',
   withoutBackground = false,
   disabled = false,
+  type = 'default',
 }: ISelect) => {
   const [opened, setOpened] = useState<boolean>(selectStatus);
 
@@ -59,15 +61,21 @@ const Select = ({
         <img src='/images/icons/triangle.svg' alt='' />
       </div>
       <ul className='options'>
-        {options?.map(option => (
-          <li
-            className={classNames({ current: option === state })}
-            key={option || 'Без названия'}
-            onClick={() => onOptionChange(option)}
-          >
-            {option}
-          </li>
-        ))}
+        {type === 'default'
+          ? options?.map(option => (
+              <li
+                className={classNames({ current: option === state })}
+                key={option}
+                onClick={() => onOptionChange(option)}
+              >
+                {option || 'Без названия'}
+              </li>
+            ))
+          : options?.map(option => (
+              <li key={option.id} onClick={option.onClick}>
+                {option.name}
+              </li>
+            ))}
       </ul>
     </div>
   );

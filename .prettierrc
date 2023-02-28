@@ -10,8 +10,8 @@
     "prettier-plugin-organize-imports"
   ],
   "importOrder": [
-    "^@server/(.*)$",
-    "^@ui/(.*)$",
+    "^@/components/(.*)$",
+    "^@/ui/(.*)$",
     "^[./]",
     "(.sass)",
     "<THIRD_PARTY_MODULES>"

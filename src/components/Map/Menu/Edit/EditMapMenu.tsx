@@ -1,7 +1,11 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import { DrawPointMode } from 'nebula.gl';
+import { useEffect, useId, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../../store';
-import { disableEditMode } from '../../../../store/map';
+import { clearLayers, setLayer } from '../../../../store/layer';
+import { disableEditMode, setDrawMode } from '../../../../store/map';
+import { RootState } from '../../../../store/reducer';
 import LayerTypeCard from '../../../Cards/Layers/Type/LayerTypeCard';
 import Button from '../../../UI/Button/Button';
 import Input from '../../../UI/Input/Input';
@@ -9,22 +13,22 @@ import Select from '../../../UI/Select/Select';
 import '../index.sass';
 import './index.sass';
 
-const layerTypes = [
+const drawModes = [
   {
     id: 1,
-    name: 'dots',
+    name: 'drawPoint',
     title: 'Точки',
     icon: '/images/icons/layers/dots.svg',
   },
   {
     id: 2,
-    name: 'lines',
+    name: 'drawLine',
     title: 'Линии',
     icon: '/images/icons/layers/lines.svg',
   },
   {
     id: 3,
-    name: 'polygons',
+    name: 'drawPolygon',
     title: 'Полигоны',
     icon: '/images/icons/layers/polygons.svg',
   },
@@ -33,9 +37,14 @@ const layerTypes = [
 const EditMapMenu = () => {
   const dispatch = useAppDispatch();
   const [opened, setOpened] = useState<boolean>(true);
-  const [selectedType, setSelectedType] = useState<string>('');
+  const selectedDrawMode = useSelector(
+    (state: RootState) => state.map.drawMode
+  );
   const closeEditMenu = () => {
     dispatch(disableEditMode());
+  };
+  const changeDrawMode = (name: string) => {
+    dispatch(setDrawMode(name));
   };
   return (
     <>
@@ -85,13 +94,13 @@ const EditMapMenu = () => {
         <div className='layer-type-choise'>
           <h5>Создать</h5>
           <div className='layer-type-choise-list'>
-            {layerTypes.map(layerType => (
+            {drawModes.map(drawMode => (
               <LayerTypeCard
-                icon={layerType.icon}
-                name={layerType.name}
-                title={layerType.title}
-                selected={selectedType === layerType.name}
-                setSelected={setSelectedType}
+                icon={drawMode.icon}
+                name={drawMode.name}
+                title={drawMode.title}
+                selected={selectedDrawMode === drawMode.name}
+                setSelected={changeDrawMode}
               />
             ))}
           </div>

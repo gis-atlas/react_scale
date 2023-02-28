@@ -90,6 +90,9 @@ export const layerSlice = createSlice({
     openedLayers: [] as any,
   },
   reducers: {
+    clearLayers: state => {
+      state.openedLayers = [];
+    },
     removeLayer: (state, action) => {
       state.openedLayers = state.openedLayers.filter(
         (openedLayer: any) => openedLayer.id !== action.payload
@@ -133,5 +136,5 @@ export const layerSlice = createSlice({
   },
 });
 
-export const { removeLayer, setLayer } = layerSlice.actions;
+export const { removeLayer, setLayer, clearLayers } = layerSlice.actions;
 export default layerSlice.reducer;

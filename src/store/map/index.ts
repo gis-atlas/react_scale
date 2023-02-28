@@ -48,9 +48,10 @@ export const mapSlice = createSlice({
   name: 'user',
   initialState: {
     baseLayer: mapBaseLayers[0],
-    viewState: TEST_INITIAL_VIEW_STATE,
+    viewState: INITIAL_VIEW_STATE,
     subMenuName: '',
     mode: '',
+    drawMode: 'drawPoint',
   },
   reducers: {
     setBaseLayer: (state, action) => {
@@ -70,6 +71,9 @@ export const mapSlice = createSlice({
     },
     disableEditMode: state => {
       state.mode = '';
+    },
+    setDrawMode: (state, action) => {
+      state.drawMode = action.payload;
     },
   },
   extraReducers(builder) {
@@ -97,5 +101,6 @@ export const {
   closeSubMenu,
   enableEditMode,
   disableEditMode,
+  setDrawMode,
 } = mapSlice.actions;
 export default mapSlice.reducer;

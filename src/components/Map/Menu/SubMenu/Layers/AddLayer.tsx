@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import { useAppDispatch } from '../../../../../store';
+import { enableEditMode } from '../../../../../store/map';
 import UploadAPI from '../../../../../store/upload/api';
 import Button from '../../../../UI/Button/Button';
 import Input from '../../../../UI/Input/Input';
@@ -12,11 +13,16 @@ interface IAddLayer {
 }
 
 const AddLayer: FC<IAddLayer> = ({ projectId, layerGroups }) => {
+  const dispatch = useAppDispatch();
   const [fromPC, setFromPC] = useState<boolean>(false);
   const [fileData, setFileData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
 
   console.log('groups', layerGroups);
+
+  const editModeOn = () => {
+    dispatch(enableEditMode());
+  };
 
   const getUploadedData = (data: any) => {
     if (!data) return;
@@ -66,7 +72,18 @@ const AddLayer: FC<IAddLayer> = ({ projectId, layerGroups }) => {
             {fromPC && !fileData && !loading && (
               <DataUploader getUploadedData={getUploadedData} />
             )}
-            <Select state='Создать новый' variant='contained' />
+            <Select
+              state='Создать новый'
+              variant='contained'
+              type='list'
+              options={[
+                {
+                  id: 1,
+                  name: 'Перейти в режим редактирования',
+                  onClick: editModeOn,
+                },
+              ]}
+            />
           </>
         )}
       </div>

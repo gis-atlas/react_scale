@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import MapControls from '../components/Map/Controls/MapControls';
 import DeckMap from '../components/Map/Deck/DeckMap';
+import EditDeckMap from '../components/Map/Deck/EditMap';
 import EditMapMenu from '../components/Map/Menu/Edit/EditMapMenu';
 import MapMenu from '../components/Map/Menu/MapMenu';
 import { useAppDispatch } from '../store';
@@ -33,16 +34,21 @@ const Map = () => {
   return (
     <div className='map'>
       {mode === 'editing' ? (
-        <EditMapMenu />
+        <>
+          <EditMapMenu />
+          <EditDeckMap mapStyle={baseLayer.layer} viewState={viewState} />
+        </>
       ) : (
-        <MapMenu
-          projectId={projectId}
-          title={project.name}
-          layerGroups={layerGroups}
-        />
+        <>
+          <MapMenu
+            projectId={projectId}
+            title={project.name}
+            layerGroups={layerGroups}
+          />
+          <DeckMap mapStyle={baseLayer.layer} viewState={viewState} />
+        </>
       )}
       <MapControls />
-      <DeckMap mapStyle={baseLayer.layer} viewState={viewState} />
     </div>
   );
 };
