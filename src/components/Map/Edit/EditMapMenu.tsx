@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../store';
-import { disableEditMode, setDrawMode } from '../../../store/map';
+import { disableMode, setDrawMode } from '../../../store/map';
 import { RootState } from '../../../store/reducer';
 import { formatDatasetType } from '../../../utils';
 import LayerTypeCard from '../../Cards/Layers/Type/LayerTypeCard';
@@ -24,7 +24,7 @@ const EditMapMenu = () => {
     useState<boolean>(false);
 
   const closeEditMenu = () => {
-    dispatch(disableEditMode());
+    dispatch(disableMode());
   };
   const changeDrawMode = (name: string) => {
     if (selectedDrawMode === name) {

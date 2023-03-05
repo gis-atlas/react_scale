@@ -38,6 +38,16 @@ const Map = () => {
           <EditMapMenu />
           <EditDeckMap mapStyle={baseLayer.layer} viewState={viewState} />
         </>
+      ) : mode === 'measuring' ? (
+        <>
+          <MapMenu
+            projectId={projectId}
+            title={project.name}
+            layerGroups={layerGroups}
+          />
+          <EditDeckMap mapStyle={baseLayer.layer} viewState={viewState} />
+          <MapControls />
+        </>
       ) : (
         <>
           <MapMenu
@@ -46,9 +56,9 @@ const Map = () => {
             layerGroups={layerGroups}
           />
           <DeckMap mapStyle={baseLayer.layer} viewState={viewState} />
+          <MapControls />
         </>
       )}
-      <MapControls />
     </div>
   );
 };

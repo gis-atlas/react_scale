@@ -50,8 +50,14 @@ export const mapSlice = createSlice({
     viewState: INITIAL_VIEW_STATE,
     subMenuName: '',
     mode: '',
-    drawMode: 'drawPoint',
+    drawMode: '',
     newDataset: {} as any,
+    controls: {
+      ruler: {
+        state: false,
+        type: 'distance',
+      },
+    },
   },
   reducers: {
     setBaseLayer: (state, action) => {
@@ -66,10 +72,13 @@ export const mapSlice = createSlice({
     closeSubMenu: state => {
       state.subMenuName = '';
     },
+    enableMeasureMode: state => {
+      state.mode = 'measuring';
+    },
     enableEditMode: state => {
       state.mode = 'editing';
     },
-    disableEditMode: state => {
+    disableMode: state => {
       state.mode = '';
     },
     setDrawMode: (state, action) => {
@@ -82,6 +91,12 @@ export const mapSlice = createSlice({
       state.newDataset.features.filter(
         (datasetFeature: any) => datasetFeature.id !== action.payload
       );
+    },
+    toggleRuler: state => {
+      state.controls.ruler.state = !state.controls.ruler.state;
+    },
+    setRulerType: (state, action) => {
+      state.controls.ruler.type = action.payload;
     },
   },
   extraReducers(builder) {
@@ -108,9 +123,12 @@ export const {
   openSubMenu,
   closeSubMenu,
   enableEditMode,
-  disableEditMode,
+  disableMode,
   setDrawMode,
   setDataset,
   removeFeatureFromDataset,
+  toggleRuler,
+  setRulerType,
+  enableMeasureMode,
 } = mapSlice.actions;
 export default mapSlice.reducer;

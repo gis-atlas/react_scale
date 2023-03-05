@@ -87,3 +87,12 @@ export const formatDatasetType = (datasetType: string) => {
       return 'Неизвестно';
   }
 };
+
+export const formatDistance = (distance: string) => {
+  const dist = Number(distance);
+  if (dist < 1) {
+    return dist * 1000 + 'm';
+  } else {
+    return dist + 'km';
+  }
+};
