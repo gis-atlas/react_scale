@@ -91,8 +91,8 @@ export const formatDatasetType = (datasetType: string) => {
 export const formatDistance = (distance: string) => {
   const dist = Number(distance);
   if (dist < 1) {
-    return dist * 1000 + 'm';
+    return dist * 1000 + ' m';
   } else {
-    return dist + 'km';
+    return dist + ' km';
   }
 };

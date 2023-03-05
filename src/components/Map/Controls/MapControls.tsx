@@ -6,7 +6,9 @@ import {
   disableMode,
   enableMeasureMode,
   setRulerType,
+  setViewMode,
   toggleRuler,
+  toggleView,
 } from '../../../store/map';
 import { RootState } from '../../../store/reducer';
 import Button from '../../UI/Button/Button';
@@ -15,10 +17,20 @@ import './index.sass';
 const MapControls = () => {
   const dispatch = useAppDispatch();
 
-  const { ruler } = useSelector((state: RootState) => state.map.controls);
+  const { ruler, view } = useSelector((state: RootState) => state.map.controls);
+
   const changeRulerType = (e: SyntheticEvent, type: string) => {
     e.stopPropagation();
     dispatch(setRulerType(type));
+  };
+
+  const changeViewMode = (
+    e: SyntheticEvent,
+    type: '2D' | '3D' | 'TERRAIN' | 'GLOBE'
+  ) => {
+    e.stopPropagation();
+    console.log(type);
+    dispatch(setViewMode(type));
   };
 
   useEffect(() => {
@@ -64,8 +76,41 @@ const MapControls = () => {
       <Button variant='circle' color='secondary'>
         <img src='/images/icons/map/pencil.svg' alt='' />
       </Button>
-      <Button variant='circle' color='secondary'>
-        2D
+      <Button
+        variant='circle'
+        color='secondary'
+        className={classNames('view relative', { active: view.state })}
+        onClick={() => dispatch(toggleView())}
+      >
+        {view.text ? view.text : <img src={view.icon} alt=' ' />}
+        {view.state && (
+          <ul className='views flex flex-col gap-1 absolute center top-10'>
+            <li
+              className={classNames({ active: view.text === '2D' })}
+              onClick={(e: SyntheticEvent) => changeViewMode(e, '2D')}
+            >
+              2D
+            </li>
+            <li
+              className={classNames({ active: view.text === '3D' })}
+              onClick={(e: SyntheticEvent) => changeViewMode(e, '3D')}
+            >
+              3D
+            </li>
+            <li
+              className={classNames({ active: view.text === 'T' })}
+              onClick={(e: SyntheticEvent) => changeViewMode(e, 'TERRAIN')}
+            >
+              Terrain
+            </li>
+            <li
+              className={classNames({ active: view.text === 'G' })}
+              onClick={(e: SyntheticEvent) => changeViewMode(e, 'GLOBE')}
+            >
+              Глобус
+            </li>
+          </ul>
+        )}
       </Button>
       <Button variant='circle' color='secondary'>
         <img src='/images/icons/map/notification.svg' alt='' />

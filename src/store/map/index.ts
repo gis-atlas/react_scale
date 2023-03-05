@@ -1,14 +1,15 @@
-import { FlyToInterpolator } from '@deck.gl/core/typed';
+import {
+  FlyToInterpolator,
+  MapView,
+  OrbitView,
+  OrthographicView,
+  _GlobeView,
+} from '@deck.gl/core/typed';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { mapBaseLayers } from '../../data/baselayers';
 import { findLayer, getCenterOfLayer, lat2Zoom } from '../../utils/deck';
 import { RootState } from './../reducer';
-
-const INITIAL_VIEW_STATE = {
-  longitude: 37.618423,
-  latitude: 55.751244,
-  zoom: 9,
-} as any;
+import { INITIAL_VIEW_STATE, views } from './mapConfig';
 
 export const flyToLayer = createAsyncThunk(
   'map/flyToLayer',
@@ -38,24 +39,25 @@ export const flyToLayer = createAsyncThunk(
   }
 );
 
-// TODO: flyto
-// export const flyToDatasetObject = (coordinates: Array<number>) {
-
-// }
-
 export const mapSlice = createSlice({
   name: 'user',
   initialState: {
-    baseLayer: mapBaseLayers[0],
-    viewState: INITIAL_VIEW_STATE,
-    subMenuName: '',
+    view: new MapView({}) as any,
     mode: '',
     drawMode: '',
+    subMenuName: '',
+    baseLayer: mapBaseLayers[0],
+    viewState: INITIAL_VIEW_STATE,
     newDataset: {} as any,
     controls: {
       ruler: {
         state: false,
         type: 'distance',
+      },
+      view: {
+        state: false,
+        text: '2D',
+        icon: '',
       },
     },
   },
@@ -98,6 +100,19 @@ export const mapSlice = createSlice({
     setRulerType: (state, action) => {
       state.controls.ruler.type = action.payload;
     },
+    setViewMode: (
+      state,
+      action: { payload: '2D' | '3D' | 'GLOBE' | 'TERRAIN' }
+    ) => {
+      const { view, ...viewControl } = views[action.payload] as any;
+      state.view = view;
+      state.controls.view = viewControl;
+
+      // state.controls.view.text = text;
+    },
+    toggleView: state => {
+      state.controls.view.state = !state.controls.view.state;
+    },
   },
   extraReducers(builder) {
     builder.addCase(flyToLayer.fulfilled, (state, action) => {
@@ -130,5 +145,7 @@ export const {
   toggleRuler,
   setRulerType,
   enableMeasureMode,
+  setViewMode,
+  toggleView,
 } = mapSlice.actions;
 export default mapSlice.reducer;

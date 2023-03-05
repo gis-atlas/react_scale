@@ -13,6 +13,8 @@ const DeckMap = ({ mapStyle, viewState }: any) => {
     (state: RootState) => state.layer.openedLayers
   );
 
+  const { view } = useSelector((state: RootState) => state.map);
+
   const renderLayers = async (layers: any) => {
     const data = await Promise.all(
       layers.map(async (layer: any) => {
@@ -41,7 +43,14 @@ const DeckMap = ({ mapStyle, viewState }: any) => {
     }
   }, [mapStyle, deckLayers, baseLayer]);
 
-  return <DeckGL initialViewState={viewState} layers={layers} controller />;
+  return (
+    <DeckGL
+      initialViewState={viewState}
+      layers={layers}
+      controller
+      views={view}
+    />
+  );
 };
 
 export default DeckMap;

@@ -29,6 +29,7 @@ const EditMap: FC<EditMapProps> = ({ mapStyle, viewState }) => {
     type: 'FeatureCollection',
     features: [],
   });
+  const { view } = useSelector((state: RootState) => state.map);
 
   const {
     drawMode,
@@ -110,6 +111,7 @@ const EditMap: FC<EditMapProps> = ({ mapStyle, viewState }) => {
         mode === 'editing' &&
         `coordinates: ${JSON.stringify(color, null, 2)}`
       }
+      views={view}
     />
   );
 };
