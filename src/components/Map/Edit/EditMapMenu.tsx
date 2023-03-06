@@ -1,42 +1,39 @@
-import { useState } from 'react';
-import Button from '../../../UI/Button/Button';
 import classNames from 'classnames';
-import Input from '../../../UI/Input/Input';
-import LayerTypeCard from '../../../Cards/Layers/Type/LayerTypeCard';
-import '../index.sass';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../../store';
+import { disableMode, setDrawMode } from '../../../store/map';
+import { RootState } from '../../../store/reducer';
+import { formatDatasetType } from '../../../utils';
+import LayerTypeCard from '../../Cards/Layers/Type/LayerTypeCard';
+import Button from '../../UI/Button/Button';
+import Input from '../../UI/Input/Input';
+import Select from '../../UI/Select/Select';
+import { drawModes } from './drawModes';
 import './index.sass';
-import Select from '../../../UI/Select/Select';
-import { useAppDispatch } from '../../../../store';
-import { disableEditMode } from '../../../../store/map';
-
-const layerTypes = [
-  {
-    id: 1,
-    name: 'dots',
-    title: 'Точки',
-    icon: '/images/icons/layers/dots.svg',
-  },
-  {
-    id: 2,
-    name: 'lines',
-    title: 'Линии',
-    icon: '/images/icons/layers/lines.svg',
-  },
-  {
-    id: 3,
-    name: 'polygons',
-    title: 'Полигоны',
-    icon: '/images/icons/layers/polygons.svg',
-  },
-];
 
 const EditMapMenu = () => {
   const dispatch = useAppDispatch();
   const [opened, setOpened] = useState<boolean>(true);
-  const [selectedType, setSelectedType] = useState<string>('');
+  const selectedDrawMode = useSelector(
+    (state: RootState) => state.map.drawMode
+  );
+
+  const dataset = useSelector((state: RootState) => state.map.newDataset);
+  const [isDatasetObjectsOpened, setDatasetObjectsOpened] =
+    useState<boolean>(false);
+
   const closeEditMenu = () => {
-    dispatch(disableEditMode());
+    dispatch(disableMode());
   };
+  const changeDrawMode = (name: string) => {
+    if (selectedDrawMode === name) {
+      dispatch(setDrawMode(''));
+    } else {
+      dispatch(setDrawMode(name));
+    }
+  };
+
   return (
     <>
       {!opened && (
@@ -85,23 +82,34 @@ const EditMapMenu = () => {
         <div className='layer-type-choise'>
           <h5>Создать</h5>
           <div className='layer-type-choise-list'>
-            {layerTypes.map((layerType) => (
+            {drawModes.map(drawMode => (
               <LayerTypeCard
-                icon={layerType.icon}
-                name={layerType.name}
-                title={layerType.title}
-                selected={selectedType === layerType.name}
-                setSelected={setSelectedType}
+                key={drawMode.id}
+                icon={drawMode.icon}
+                name={drawMode.name}
+                title={drawMode.title}
+                selected={selectedDrawMode === drawMode.name}
+                setSelected={changeDrawMode}
               />
             ))}
           </div>
         </div>
         <Select
-          state='Объекты датасета'
+          state={`Объекты датасета (${dataset?.features?.length})`}
           variant='text'
           triangle='closely'
           withoutBackground
+          getSelectStatus={setDatasetObjectsOpened}
         />
+        {isDatasetObjectsOpened && (
+          <ul className='flex flex-col gap-2 ml-2'>
+            {dataset?.features?.map((datasetItem: any) => (
+              <>
+                <li>{formatDatasetType(datasetItem.geometry.type)}</li>
+              </>
+            ))}
+          </ul>
+        )}
         <Select
           state='Слои'
           variant='text'

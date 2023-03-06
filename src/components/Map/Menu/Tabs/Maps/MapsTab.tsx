@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../store/reducer';
 import { mapBaseLayers } from '../../../../../data/baselayers';
+import { RootState } from '../../../../../store/reducer';
 import MapViewCard from '../../../../Cards/MapStyle/MapStyleCard';
 import Button from '../../../../UI/Button/Button';
 import Input from '../../../../UI/Input/Input';

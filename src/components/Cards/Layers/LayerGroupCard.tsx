@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import LayerCard from './LayerCard';
 import { declOfNum } from '../../../utils';
-import './index.sass';
 import { findLayer } from '../../../utils/deck';
+import './index.sass';
+import LayerCard from './LayerCard';
 
 interface ILayerGroupCard {
   layers: Array<ILayerCard>;
@@ -21,7 +21,7 @@ const LayerGroupCard = ({ layers, openedLayers }: ILayerGroupCard) => {
     >
       <div
         className='layer-group-card-header'
-        onClick={() => setOpened((prev) => !prev)}
+        onClick={() => setOpened(prev => !prev)}
       >
         <div className='layer-group-card-title'>
           <img src={`/images/icons/layers/group.svg`} alt='' />
@@ -45,7 +45,7 @@ const LayerGroupCard = ({ layers, openedLayers }: ILayerGroupCard) => {
           opened: opened,
         })}
       >
-        {layers?.map((layer) => (
+        {layers?.map(layer => (
           <LayerCard
             key={layer.id}
             id={layer.id}

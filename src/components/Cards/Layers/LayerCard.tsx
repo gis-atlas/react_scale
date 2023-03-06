@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import './index.sass';
 import { useAppDispatch } from '../../../store';
-import { removeLayer, loadLayer } from '../../../store/layer';
+import { loadLayer, removeLayer } from '../../../store/layer';
 import { flyToLayer } from '../../../store/map';
+import './index.sass';
 
 const LayerCard = ({
   id,

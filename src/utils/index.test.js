@@ -1,4 +1,4 @@
-import { formatFileSize, declOfNum, findMatch } from '.';
+import { declOfNum, findMatch, formatFileSize } from '.';
 
 describe('formatFileSize testing', () => {
   test('file size = 1551859712 bytes', () => {

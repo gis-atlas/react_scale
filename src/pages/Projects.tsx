@@ -1,15 +1,15 @@
-import Card from '../components/Cards/Card';
-import Input from '../components/UI/Input/Input';
-import ProjectCard from '../components/Cards/Projects/ProjectCard';
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../store';
-import { RootState } from '../store/reducer';
-import { getProjects } from '../store/project';
 import { useSelector } from 'react-redux';
-import { findMatch, sortProjectsBy } from '../utils';
-import { IProject } from '../store/project/type';
+import Card from '../components/Cards/Card';
+import ProjectCard from '../components/Cards/Projects/ProjectCard';
 import Button from '../components/UI/Button/Button';
+import Input from '../components/UI/Input/Input';
 import Select from '../components/UI/Select/Select';
+import { useAppDispatch } from '../store';
+import { getProjects } from '../store/project';
+import { IProject } from '../store/project/type';
+import { RootState } from '../store/reducer';
+import { findMatch, sortProjectsBy } from '../utils';
 
 const Projects = () => {
   const dispatch = useAppDispatch();
@@ -27,14 +27,14 @@ const Projects = () => {
     if (currentPage >= pages) {
       setCurrentPage(1);
     } else {
-      setCurrentPage((prev) => prev + 1);
+      setCurrentPage(prev => prev + 1);
     }
   };
   const goToPrevPage = () => {
     if (currentPage <= 1) {
       setCurrentPage(pages);
     } else {
-      setCurrentPage((prev) => prev - 1);
+      setCurrentPage(prev => prev - 1);
     }
   };
   const onSearchProject = (name: string) => {

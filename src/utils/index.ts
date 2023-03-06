@@ -1,3 +1,5 @@
+import { RGBAColor } from 'deck.gl';
+
 interface IProject {
   id: number;
   name: string;
@@ -38,7 +40,7 @@ export const sortProjectsBy = ({
 
 export const findMatch = (array: Array<IProject>, element: string) => {
   if (!array) return [];
-  return [...array].filter((arrItem) =>
+  return [...array].filter(arrItem =>
     arrItem.name.toLowerCase().includes(element.toLowerCase())
   );
 };
@@ -61,5 +63,36 @@ export const formatFileSize = (bytes: number) => {
 };
 
 export const formatFileType = (type: string) => {
-  return type.split('/').reverse()[0];
+  return type.split('/').reverse()[0].split('+').join('');
+};
+
+export const randomRGBA = () => {
+  const coef = 255;
+  const r = Math.round(Math.random() * coef);
+  const g = Math.round(Math.random() * coef);
+  const b = Math.round(Math.random() * coef);
+  console.log(r, g, b);
+  return [r, g, b] as RGBAColor;
+};
+
+export const formatDatasetType = (datasetType: string) => {
+  switch (datasetType) {
+    case 'LineString':
+      return 'Линия';
+    case 'Point':
+      return 'Точка';
+    case 'Polygon':
+      return 'Полигон';
+    default:
+      return 'Неизвестно';
+  }
+};
+
+export const formatDistance = (distance: string) => {
+  const dist = Number(distance);
+  if (dist < 1) {
+    return dist * 1000 + ' m';
+  } else {
+    return dist + ' km';
+  }
 };

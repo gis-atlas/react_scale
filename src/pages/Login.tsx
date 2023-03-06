@@ -1,12 +1,12 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Form from '../components/Forms/Form';
 import Button from '../components/UI/Button/Button';
 import Input from '../components/UI/Input/Input';
 import { useAppDispatch } from '../store';
-import { loginUser } from '../store/user';
 import { RootState } from '../store/reducer';
-import { useEffect } from 'react';
+import { loginUser } from '../store/user';
 
 const Login = () => {
   const navigate = useNavigate();

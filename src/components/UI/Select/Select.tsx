@@ -1,15 +1,17 @@
 import classNames from 'classnames';
+import { useEffect, useState } from 'react';
 import './index.sass';
-import { Fragment, useEffect, useState } from 'react';
 
 interface ISelect {
   state?: string;
   options?: Array<string> | Array<any>;
   setState?: any;
+  selectStatus?: boolean;
   getSelectStatus?: any;
   size?: 'small' | 'medium' | 'large';
   variant?: 'text' | 'contained';
-  triangle?: 'closely' | 'default';
+  type?: 'default' | 'list';
+  triangle?: 'default' | 'closely';
   withoutBackground?: boolean;
   disabled?: boolean;
 }
@@ -20,12 +22,14 @@ const Select = ({
   state = '',
   options = [],
   setState = () => {},
+  selectStatus = false,
   getSelectStatus = () => {},
   triangle = 'default',
   withoutBackground = false,
   disabled = false,
+  type = 'default',
 }: ISelect) => {
-  const [opened, setOpened] = useState<boolean>(false);
+  const [opened, setOpened] = useState<boolean>(selectStatus);
 
   const onOptionChange = (option: string) => {
     setState(option);
@@ -51,34 +55,27 @@ const Select = ({
           [`${size}`]: size,
           [`${triangle}`]: triangle,
         })}
-        onClick={() => !disabled && setOpened((prev) => !prev)}
+        onClick={() => !disabled && setOpened(prev => !prev)}
       >
         <span>{state}</span>
         <img src='/images/icons/triangle.svg' alt='' />
       </div>
       <ul className='options'>
-        {options?.map((option) => (
-          <Fragment key={option.id}>
-            {option.id ? (
-              <li
-                className={classNames({ current: option === state })}
-                key={option.id}
-                onClick={() => option.onClick}
-              >
-                <span>{option.name}</span>
-                <img src={option.icon} alt=' ' />
-              </li>
-            ) : (
+        {type === 'default'
+          ? options?.map(option => (
               <li
                 className={classNames({ current: option === state })}
                 key={option}
                 onClick={() => onOptionChange(option)}
               >
-                {option}
+                {option || 'Без названия'}
               </li>
-            )}
-          </Fragment>
-        ))}
+            ))
+          : options?.map(option => (
+              <li key={option.id} onClick={option.onClick}>
+                {option.name}
+              </li>
+            ))}
       </ul>
     </div>
   );

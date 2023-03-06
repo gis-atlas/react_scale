@@ -1,8 +1,8 @@
-import { RootState } from './../reducer';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import LayerAPI from './api';
-import { findLayer } from '../../utils/deck';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import bbox from '@turf/bbox';
+import { findLayer } from '../../utils/deck';
+import { RootState } from './../reducer';
+import LayerAPI from './api';
 
 export const loadLayerGroups = createAsyncThunk(
   'layer/loadLayerGroups',
@@ -90,6 +90,9 @@ export const layerSlice = createSlice({
     openedLayers: [] as any,
   },
   reducers: {
+    clearLayers: state => {
+      state.openedLayers = [];
+    },
     removeLayer: (state, action) => {
       state.openedLayers = state.openedLayers.filter(
         (openedLayer: any) => openedLayer.id !== action.payload
@@ -133,5 +136,5 @@ export const layerSlice = createSlice({
   },
 });
 
-export const { removeLayer, setLayer } = layerSlice.actions;
+export const { removeLayer, setLayer, clearLayers } = layerSlice.actions;
 export default layerSlice.reducer;

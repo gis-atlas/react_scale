@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/reducer';
 import { FC, PropsWithChildren, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../store/reducer';
 
 const AuthWrapper: FC<PropsWithChildren> = ({ children }) => {
   const navigate = useNavigate();

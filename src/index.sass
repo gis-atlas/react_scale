@@ -5,6 +5,10 @@
 @import './assets/styles/_defaultstyles'
 @import './assets/styles/_templates'
 
+// @tailwind base
+@tailwind components
+@tailwind utilities
+
 *
   transition: all .2s !important
 
@@ -22,6 +26,9 @@ header
 header, footer, main > .content
   @include max-width($m-width: $max-inner-width)
   @include margin-padding($p-direction: all, $p-amount: 0 10px)
+
+.content
+  padding-top: 40px !important
 
 header, footer
   @include align-items($value: center)

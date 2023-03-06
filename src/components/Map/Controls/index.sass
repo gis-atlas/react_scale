@@ -5,3 +5,53 @@
   @include position($position: absolute, $left: -20px, $top: 40px)
   @include flexbox($gap: 10px)
   
+  button
+    &.active
+      background: $color-primary
+    
+    &.ruler
+      .ruler-types
+        li, li > span, li > span > sup
+          @include font($size: 10px, $weight: 700)
+        li
+          @include flexbox($gap: 5px)
+          @include align-items($value: center)
+          @include justify-content($value: space-between)
+          @include border-radius($radius: 22px)
+          @include margin-padding($p-direction: all, $p-amount: 5px 11px)
+          background: $color-light
+          &.active
+            background: $color-primary
+            
+          span
+            @include flexbox
+            @include align-items($value: center)
+            @include justify-content($value: center)
+            @include border-radius($radius: 6px)
+            @include figure($width: 30px, $height: 18px)
+            background: $color-primary-light
+
+    &.view
+      .views
+        li, li > span, li > span > sup
+          @include font($size: 10px, $weight: 700)
+
+        li
+          @include flexbox($gap: 5px)
+          @include align-items($value: center)
+          @include justify-content($value: center)
+          @include border-radius($radius: 22px)
+          @include margin-padding($p-direction: all, $p-amount: 5px 11px)
+          @include figure($width: 100px, $height: 24px)
+          background: $color-light
+
+          &.active
+            background: $color-primary
+            
+          span
+            @include flexbox
+            @include align-items($value: center)
+            @include justify-content($value: center)
+            @include border-radius($radius: 6px)
+            @include figure($width: 30px, $height: 18px)
+            background: $color-primary-light

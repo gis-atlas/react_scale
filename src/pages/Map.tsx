@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch } from '../store';
-import { getProject } from '../store/project';
-import { loadLayerGroups } from '../store/layer';
-import { IProject } from '../store/project/type';
-import { RootState } from '../store/reducer';
-import MapMenu from '../components/Map/Menu/MapMenu';
 import MapControls from '../components/Map/Controls/MapControls';
 import DeckMap from '../components/Map/Deck/DeckMap';
-import EditMapMenu from '../components/Map/Menu/Edit/EditMapMenu';
+import EditDeckMap from '../components/Map/Edit/EditMap';
+import EditMapMenu from '../components/Map/Edit/EditMapMenu';
+import MapMenu from '../components/Map/Menu/MapMenu';
+import { useAppDispatch } from '../store';
+import { loadLayerGroups } from '../store/layer';
+import { getProject } from '../store/project';
+import { IProject } from '../store/project/type';
+import { RootState } from '../store/reducer';
 
 const Map = () => {
   const dispatch = useAppDispatch();
@@ -33,16 +34,31 @@ const Map = () => {
   return (
     <div className='map'>
       {mode === 'editing' ? (
-        <EditMapMenu />
+        <>
+          <EditMapMenu />
+          <EditDeckMap mapStyle={baseLayer.layer} viewState={viewState} />
+        </>
+      ) : mode === 'measuring' ? (
+        <>
+          <MapMenu
+            projectId={projectId}
+            title={project.name}
+            layerGroups={layerGroups}
+          />
+          <EditDeckMap mapStyle={baseLayer.layer} viewState={viewState} />
+          <MapControls />
+        </>
       ) : (
-        <MapMenu
-          projectId={projectId}
-          title={project.name}
-          layerGroups={layerGroups}
-        />
+        <>
+          <MapMenu
+            projectId={projectId}
+            title={project.name}
+            layerGroups={layerGroups}
+          />
+          <DeckMap mapStyle={baseLayer.layer} viewState={viewState} />
+          <MapControls />
+        </>
       )}
-      <MapControls />
-      <DeckMap mapStyle={baseLayer.layer} viewState={viewState} />
     </div>
   );
 };

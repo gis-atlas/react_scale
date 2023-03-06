@@ -1,18 +1,18 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './index.sass';
-import LayersTab from './Tabs/Layers/LayersTab';
-import DataTab from './Tabs/Data/DataTab';
-import PublicationTab from './Tabs/Publication/PublicationTab';
-import Button from '../../UI/Button/Button';
-import MapsTab from './Tabs/Maps/MapsTab';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/reducer';
-import AddLayer from './SubMenu/Layers/AddLayer';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../store';
 import { closeSubMenu, openSubMenu } from '../../../store/map';
+import { RootState } from '../../../store/reducer';
 import UploadAPI from '../../../store/upload/api';
+import Button from '../../UI/Button/Button';
+import './index.sass';
+import AddLayer from './SubMenu/Layers/AddLayer';
+import DataTab from './Tabs/Data/DataTab';
+import LayersTab from './Tabs/Layers/LayersTab';
+import MapsTab from './Tabs/Maps/MapsTab';
+import PublicationTab from './Tabs/Publication/PublicationTab';
 
 interface IMapMenu {
   projectId: string | undefined;
@@ -42,7 +42,7 @@ const MapMenu = ({ projectId, title, layerGroups }: IMapMenu) => {
   const uploadData = useSelector((state: RootState) => state.upload);
   const onSave = async () => {
     console.log(uploadData);
-    await UploadAPI.publish(uploadData).then((response) => {
+    await UploadAPI.publish(uploadData).then(response => {
       dispatch(closeSubMenu());
       console.log(response.data);
     });
@@ -101,7 +101,7 @@ const MapMenu = ({ projectId, title, layerGroups }: IMapMenu) => {
           <span onClick={goToOtherProjects}>К другим проектам</span>
         </div>
         <ul className='map-tabs-control'>
-          {tabs.map((tab) => (
+          {tabs.map(tab => (
             <li
               key={tab.id}
               onClick={() => setCurrentTab(tab.name)}
@@ -130,7 +130,10 @@ const MapMenu = ({ projectId, title, layerGroups }: IMapMenu) => {
         {subMenuName && (
           <div className='map-tabs-submenu'>
             {subMenuName === 'layers' ? (
-              <AddLayer projectId={projectId} layerGroups={layerGroups} />
+              <AddLayer
+                projectId={Number(projectId)}
+                layerGroups={layerGroups}
+              />
             ) : (
               <></>
             )}

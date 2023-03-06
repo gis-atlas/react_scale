@@ -1,163 +1,144 @@
 import { FC, useState } from 'react';
+import { useAppDispatch } from '../../../../../store';
+import { enableEditMode } from '../../../../../store/map';
+import UploadAPI from '../../../../../store/upload/api';
+import Button from '../../../../UI/Button/Button';
 import Input from '../../../../UI/Input/Input';
 import Select from '../../../../UI/Select/Select';
 import DataUploader from '../../../../Uploaders/Data/DataUploader';
-import './index.sass';
-import { useAppDispatch } from '../../../../../store';
-import { enableEditMode } from '../../../../../store/map';
-import { setUploadData as setUploadDataServer } from '../../../../../store/upload';
-import Button from '../../../../UI/Button/Button';
-import UploadAPI from '../../../../../store/upload/api';
 
 interface IAddLayer {
-  layerGroups?: Array<any>;
-  projectId: string | undefined;
+  projectId: number;
+  layerGroups: Array<any>;
 }
 
-const AddLayer: FC<IAddLayer> = ({ projectId, layerGroups = [] }) => {
+const AddLayer: FC<IAddLayer> = ({ projectId, layerGroups }) => {
   const dispatch = useAppDispatch();
-  const [isDataUploaderOpened, setIsDataUploaderOpened] = useState(false);
-  const [uploadedData, setUploadedData]: any = useState(null);
-  const [isUploadedDataOpened, setIsUploadedDataOpened] = useState(false);
-  const enableEditing = (): any => {
+  const [fromPC, setFromPC] = useState<boolean>(false);
+  const [fileData, setFileData] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  console.log('groups', layerGroups);
+
+  const editModeOn = () => {
     dispatch(enableEditMode());
   };
+
   const getUploadedData = (data: any) => {
     if (!data) return;
-    const { name, fileSize, fileType, file } = data;
-    setUploadedData({
-      name,
-      fileSize,
-      fileType,
-    });
-    UploadAPI.upload(Number(projectId), file).then((res) => {
-      console.log(res.data);
-      setUploadedData({
-        layerId: res.data.id,
-        name,
-        fileSize,
-        fileType,
-        extension: res.data.extension,
-        srs: res.data.srs,
-      });
-      dispatch(
-        setUploadDataServer({
-          layerId: res.data.id,
-          layerName: res.data.name,
-          layerGroupId: layerGroups[0].id,
-          srs: res.data.srs,
-        })
-      );
-    });
+    const { fileType, name, file } = data;
+    setLoading(true);
+    UploadAPI.upload(projectId, file)
+      .then(res => {
+        setFileData({ ...res.data, layerName: name, fileType: fileType });
+      })
+      .catch(() => setFileData(null));
+    setLoading(false);
   };
+
+  const changeSource = () => setFileData(null);
+
   return (
-    <div className='sub-menu sub-menu-layers'>
-      <h3>Новый слой</h3>
-      {uploadedData && (
-        <div className='layer-parameters'>
-          <h5>Параметры слоя</h5>
+    <div className='sub-menu sub-menu-layers flex flex-col gap-7'>
+      <h3 className='ml-3'>Новый слой</h3>
+      {fileData && (
+        <div className='flex flex-col gap-4'>
+          <h4 className='ml-3'>Параметры слоя</h4>
           <Input
             label='Имя слоя'
             name='layerName'
-            defaultValue={uploadedData.name}
+            defaultValue={`${fileData?.layerName}.${fileData?.fileType}`}
           />
         </div>
       )}
-      <div className='data-source'>
-        <h5>Источник данных</h5>
-        <div className='data-source-list'>
-          {uploadedData ? (
-            <div
-              className='d-flex f-column'
-              style={{ gap: isUploadedDataOpened ? '30px' : '10px' }}
-            >
-              <Select
-                state={`${uploadedData.name}.${uploadedData.fileType}`}
-                variant='contained'
-                getSelectStatus={setIsUploadedDataOpened}
-              />
-              {isUploadedDataOpened && (
-                <div className='d-flex f-column' style={{ gap: '20px' }}>
-                  <Input
-                    label='Имя датасета'
-                    defaultValue={`${uploadedData.name}.${uploadedData.fileType}`}
-                  />
-                  <Input
-                    label='Формат файла'
-                    defaultValue={uploadedData.extension}
-                    readonly
-                    withLabel
-                  />
-                  <span
-                    style={{
-                      fontSize: '12px',
-                      marginTop: '-14px',
-                      marginLeft: '12px',
-                      color: '#9BAAC2',
-                    }}
-                  >
-                    Определяется автоматически
-                  </span>
-                  <Input
-                    label='Система координат'
-                    defaultValue={uploadedData?.srs?.name}
-                    readonly
-                    withLabel
-                  />
-                  <span
-                    style={{
-                      fontSize: '12px',
-                      marginTop: '-14px',
-                      marginLeft: '12px',
-                      color: '#9BAAC2',
-                    }}
-                  >
-                    Определяется автоматически
-                  </span>
-                </div>
-              )}
-              <Button
-                color='secondary'
-                size='small'
-                styles={{ alignSelf: 'end', marginTop: '10px' }}
-                onClick={() => setUploadedData(null)}
-              >
-                Выбрать другой источник
-              </Button>
-            </div>
-          ) : (
-            <>
-              <Select
-                state='Выбрать из каталога'
-                variant='contained'
-                size='large'
-              />
-              <Select
-                state='Загрузить с компьютера'
-                variant='contained'
-                size='large'
-                getSelectStatus={setIsDataUploaderOpened}
-              />
-              {isDataUploaderOpened && (
-                <DataUploader getUploadedData={getUploadedData} />
-              )}
-              <Select
-                state='Создать новый'
-                variant='contained'
-                size='large'
-                options={[
-                  {
-                    id: 1,
-                    name: 'Перейти в режим редактирования',
-                    icon: '/images/icons/pencil-filled.svg',
-                    onClick: enableEditing,
-                  },
-                ]}
-              />
-            </>
-          )}
-        </div>
+      <div className='flex flex-col gap-3'>
+        <h4 className='ml-3 mb-1'>Источник данных</h4>
+        {fileData ? (
+          <UploadedFromPCFile
+            changeSource={changeSource}
+            layerGroups={layerGroups}
+            datasetName={fileData?.name}
+            fileFormat={fileData?.extension}
+            coordSystem={fileData?.srs?.name}
+          />
+        ) : (
+          <>
+            <Select state='Выбрать из каталога' variant='contained' />
+            <Select
+              state='Загрузить с компьютера'
+              variant='contained'
+              getSelectStatus={setFromPC}
+            />
+            {fromPC && !fileData && !loading && (
+              <DataUploader getUploadedData={getUploadedData} />
+            )}
+            <Select
+              state='Создать новый'
+              variant='contained'
+              type='list'
+              options={[
+                {
+                  id: 1,
+                  name: 'Перейти в режим редактирования',
+                  onClick: editModeOn,
+                },
+              ]}
+            />
+          </>
+        )}
       </div>
+    </div>
+  );
+};
+
+interface IUploadedFromPCFile {
+  layerGroups?: Array<any>;
+  datasetName?: string;
+  fileFormat?: string;
+  coordSystem?: string;
+  changeSource?: () => void;
+}
+
+const UploadedFromPCFile: FC<IUploadedFromPCFile> = ({
+  layerGroups,
+  datasetName,
+  fileFormat,
+  coordSystem,
+  changeSource = () => {},
+}) => {
+  const [layerGroup, setLayerGroup] = useState<any>('Выберите группу');
+  const [opened, setOpened] = useState<boolean>(true);
+  return (
+    <div className='flex flex-col gap-5'>
+      <Select
+        state={datasetName}
+        variant='contained'
+        selectStatus={opened}
+        getSelectStatus={setOpened}
+      />
+      {opened && (
+        <>
+          <Input label='Имя датасета' defaultValue={datasetName} />
+          <Input label='Формат файла' defaultValue={fileFormat} />
+          <span className='text-xs ml-3 -mt-3'>Определяется автоматически</span>
+          <Input label='Система координат' defaultValue={coordSystem} />
+          <span className='text-xs ml-3 -mt-3'>Определяется автоматически</span>
+          <Select
+            state={layerGroup}
+            setState={setLayerGroup}
+            // options={layerGroups}
+            variant='contained'
+          />
+        </>
+      )}
+      <Button
+        color='secondary'
+        styles={{ alignSelf: 'end', marginTop: '13px' }}
+        size='small'
+        onClick={changeSource}
+      >
+        Выбрать другой источник
+      </Button>
     </div>
   );
 };

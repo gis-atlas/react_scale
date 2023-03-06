@@ -1,12 +1,12 @@
+import { FormEvent, ReactNode, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/reducer';
 import Card from '../components/Cards/Card';
 import Button from '../components/UI/Button/Button';
-import Input from '../components/UI/Input/Input';
-import { FormEvent, ReactNode, useEffect, useState } from 'react';
-import { useAppDispatch } from '../store';
-import { getPhoto, getProfileData, updateProfileData } from '../store/user';
 import UserImage from '../components/UI/Image/UserImage';
+import Input from '../components/UI/Input/Input';
+import { useAppDispatch } from '../store';
+import { RootState } from '../store/reducer';
+import { getPhoto, getProfileData, updateProfileData } from '../store/user';
 
 const Profile = () => {
   const dispatch = useAppDispatch();

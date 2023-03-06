@@ -1,15 +1,15 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
-import Header from '../components/Headers/Header/Header';
+import AuthWrapper from '../components/Auth/AuthWrapper';
+import Footer from '../components/Footer/Footer';
 import AuthHeader from '../components/Headers/AuthHeader/AuthHeader';
+import Header from '../components/Headers/Header/Header';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
+import Map from '../pages/Map';
 import Profile from '../pages/Profile';
 import Projects from '../pages/Projects';
 import Registration from '../pages/Registration';
 import Test from '../pages/Test';
-import Footer from '../components/Footer/Footer';
-import Map from '../pages/Map';
-import AuthWrapper from '../components/Auth/AuthWrapper';
 
 export const router = createBrowserRouter([
   {

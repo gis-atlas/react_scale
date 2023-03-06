@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
+import { useEffect, useRef, useState } from 'react';
 import './index.sass';
 
 interface IInput {

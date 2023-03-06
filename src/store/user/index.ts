@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import UserAPI from './api';
-import { ILogin, IRegister, IProfileUpdate } from './type';
+import { ILogin, IProfileUpdate, IRegister } from './type';
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
@@ -68,7 +68,7 @@ export const userSlice = createSlice({
     },
   },
   reducers: {
-    logout: (state) => {
+    logout: state => {
       localStorage.clear();
       state.accessToken = '';
       state.isLoggedIn = false;
