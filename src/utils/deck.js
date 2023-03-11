@@ -1,3 +1,4 @@
+import { COORDINATE_SYSTEM } from '@deck.gl/core';
 import { TileLayer } from '@deck.gl/geo-layers';
 import { BitmapLayer, GeoJsonLayer } from '@deck.gl/layers';
 import { ScenegraphLayer } from '@deck.gl/mesh-layers';
@@ -8,7 +9,7 @@ import center from '@turf/center';
 
 // layers
 
-export const createTileLayer = mapStyle => {
+export const createTileLayer = (mapStyle, mode) => {
   return new TileLayer({
     minZoom: 0,
     maxZoom: 19,
@@ -22,6 +23,7 @@ export const createTileLayer = mapStyle => {
       return new BitmapLayer(props, {
         data: null,
         image: props.data,
+        _imageCoordinateSystem: mode === 'Globe' && COORDINATE_SYSTEM.CARTESIAN,
         bounds: [west, south, east, north],
       });
     },

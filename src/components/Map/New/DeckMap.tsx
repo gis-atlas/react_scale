@@ -8,14 +8,12 @@ const DeckMap = () => {
   const {
     layers: { baseTile },
     config: { controller, view, viewState },
-  } = useSelector((state: RootState) => state.newMap);
+  } = useSelector((state: RootState) => state.newMap) as any;
 
   const baseLayer = useMemo(
-    () => createTileLayer(baseTile.layer),
-    [baseTile.layer]
+    () => createTileLayer(baseTile.layer, view.shortName),
+    [baseTile.layer, view.shortName]
   );
-
-  console.log(baseLayer);
 
   const [layers, setLayers] = useState<any>([baseLayer]);
 
@@ -28,7 +26,7 @@ const DeckMap = () => {
       layers={layers}
       initialViewState={viewState}
       controller={controller}
-      views={view.view}
+      views={view.mode}
     />
   );
 };
