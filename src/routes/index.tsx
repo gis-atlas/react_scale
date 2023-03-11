@@ -6,6 +6,7 @@ import Header from '../components/Headers/Header/Header';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Map from '../pages/Map';
+import NewMapPage from '../pages/NewMapPage';
 import Profile from '../pages/Profile';
 import Projects from '../pages/Projects';
 import Registration from '../pages/Registration';
@@ -76,6 +77,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '/map/:projectId',
-    element: <Map />,
+    element: <NewMapPage />,
   },
 ]);

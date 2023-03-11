@@ -8,7 +8,7 @@ import {
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { mapBaseLayers } from '../../data/baselayers';
 import { findLayer, getCenterOfLayer, lat2Zoom } from '../../utils/deck';
-import { RootState } from './../reducer';
+import { RootState } from '../reducer';
 import { INITIAL_VIEW_STATE, views } from './mapConfig';
 
 export const flyToLayer = createAsyncThunk(

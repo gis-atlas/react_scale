@@ -3,7 +3,6 @@ import { BitmapLayer, GeoJsonLayer } from '@deck.gl/layers';
 import { ScenegraphLayer } from '@deck.gl/mesh-layers';
 import { load } from '@loaders.gl/core';
 import { GLTFLoader } from '@loaders.gl/gltf';
-import { EditableGeoJsonLayer } from '@nebula.gl/layers';
 import bboxPolygon from '@turf/bbox-polygon';
 import center from '@turf/center';
 
