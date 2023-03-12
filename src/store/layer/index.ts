@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import bbox from '@turf/bbox';
-import { findLayer } from '../../utils/deck';
+import { createVectorLayer, findLayer } from '../../utils/deck';
+import { addLayer, showLayer } from '../newMap';
 import { RootState } from './../reducer';
 import LayerAPI from './api';
 
@@ -47,13 +48,20 @@ export const loadLayer = createAsyncThunk(
 
 export const loadVectorLayer = createAsyncThunk(
   'layer/loadVectorLayer',
-  async (layerId: number) => {
+  async (layerId: number, thunkApi) => {
+    const state = thunkApi.getState() as RootState;
+    const cashedLayer = findLayer({ id: layerId }, state.newMap.layers.cashed);
+    if (cashedLayer) {
+      thunkApi.dispatch(showLayer(layerId));
+      return;
+    }
     const result = await LayerAPI.loadVectorLayer(layerId);
     const extent = bbox(result.data);
-    return {
-      id: layerId,
-      data: { ...result.data, bounds: extent },
-    };
+    const layer = createVectorLayer(layerId, {
+      ...result.data,
+      bounds: extent,
+    });
+    thunkApi.dispatch(addLayer(layer));
   }
 );
 
@@ -105,15 +113,6 @@ export const layerSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(loadLayerGroups.fulfilled, (state, action) => {
       state.layerGroups = action.payload.list;
-    });
-    builder.addCase(loadVectorLayer.fulfilled, (state, action) => {
-      const layerData = {
-        id: action.payload.id,
-        layer: action.payload.data,
-        type: 'VECTOR',
-      };
-      state.openedLayers.push(layerData);
-      state.downloadedLayers.push(layerData);
     });
     builder.addCase(loadRasterLayer.fulfilled, (state, action) => {
       const layerData = {

@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { useAppDispatch } from '../../../../../store';
-import { enableEditMode } from '../../../../../store/map';
+import { enableEditMode } from '../../../../../store/newMap';
 import UploadAPI from '../../../../../store/upload/api';
 import Button from '../../../../UI/Button/Button';
 import Input from '../../../../UI/Input/Input';

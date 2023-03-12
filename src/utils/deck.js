@@ -9,7 +9,7 @@ import center from '@turf/center';
 
 // layers
 
-export const createTileLayer = (mapStyle, mode) => {
+export const createTileLayer = (mapStyle, mode = '') => {
   return new TileLayer({
     minZoom: 0,
     maxZoom: 19,
@@ -45,8 +45,10 @@ export const createLayer = async (id, type, data) => {
 
 export const createVectorLayer = (id, data) => {
   return new GeoJsonLayer({
-    id: `vector-${id}`,
+    id,
     data,
+    bounds: data.bounds,
+    visible: true,
     opacity: 0.75,
     stroked: true,
     filled: true,
@@ -57,7 +59,7 @@ export const createVectorLayer = (id, data) => {
 export const createRasterLayer = (id, data) => {
   const { minzoom, maxzoom } = data;
   return new TileLayer({
-    id: `raster-${id}`,
+    id,
     tileSize: 256,
     data: `/api/TMS/${id}/{z}/{x}/{-y}.png`,
     minZoom: minzoom,
@@ -139,8 +141,5 @@ export const getCenterOfLayer = bounds => {
 };
 
 export const findLayer = (layer, layerList) => {
-  return layerList.filter(
-    layerListItem =>
-      layerListItem.id === layer.id && layerListItem.type === layer.type
-  )[0];
+  return layerList.filter(layerListItem => layerListItem.id === layer.id)[0];
 };

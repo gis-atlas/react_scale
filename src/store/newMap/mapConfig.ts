@@ -1,5 +1,12 @@
 import { MapView, OrthographicView, _GlobeView } from '@deck.gl/core/typed';
-import { MeasureAngleMode, MeasureAreaMode } from 'nebula.gl';
+import {
+  DrawLineStringMode,
+  DrawPointMode,
+  DrawPolygonMode,
+  MeasureAngleMode,
+  MeasureAreaMode,
+  ViewMode,
+} from 'nebula.gl';
 
 export const INITIAL_VIEW_STATE = {
   longitude: 37.618423,
@@ -49,6 +56,33 @@ export const modes = {
       label: 'Площадь',
       units: 'км',
       mode: MeasureAreaMode,
+    },
+  ],
+  view: [
+    {
+      label: 'Просмотр',
+      name: 'view',
+      mode: ViewMode,
+    },
+  ],
+  draw: [
+    {
+      label: 'Точки',
+      name: 'dots',
+      icon: '/images/icons/layers/dots.svg',
+      mode: DrawPointMode,
+    },
+    {
+      label: 'Линии',
+      name: 'lines',
+      icon: '/images/icons/layers/lines.svg',
+      mode: DrawLineStringMode,
+    },
+    {
+      label: 'Полигоны',
+      name: 'polygons',
+      icon: '/images/icons/layers/polygons.svg',
+      mode: DrawPolygonMode,
     },
   ],
 };

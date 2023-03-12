@@ -2,35 +2,37 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../store';
-import { disableMode, setDrawMode } from '../../../store/map';
+import { disableEditMode, setDrawMode } from '../../../store/newMap';
+import { modes } from '../../../store/newMap/mapConfig';
 import { RootState } from '../../../store/reducer';
 import { formatDatasetType } from '../../../utils';
 import LayerTypeCard from '../../Cards/Layers/Type/LayerTypeCard';
 import Button from '../../UI/Button/Button';
 import Input from '../../UI/Input/Input';
 import Select from '../../UI/Select/Select';
-import { drawModes } from './drawModes';
 import './index.sass';
 
 const EditMapMenu = () => {
   const dispatch = useAppDispatch();
   const [opened, setOpened] = useState<boolean>(true);
   const selectedDrawMode = useSelector(
-    (state: RootState) => state.map.drawMode
+    (state: RootState) => state.newMap.mode.mode.name
   );
 
   const dataset = useSelector((state: RootState) => state.map.newDataset);
+  
   const [isDatasetObjectsOpened, setDatasetObjectsOpened] =
     useState<boolean>(false);
 
   const closeEditMenu = () => {
-    dispatch(disableMode());
+    dispatch(disableEditMode());
   };
-  const changeDrawMode = (name: string) => {
-    if (selectedDrawMode === name) {
-      dispatch(setDrawMode(''));
+  const changeDrawMode = (mode: any) => {
+    console.log(mode);
+    if (selectedDrawMode === mode.name) {
+      dispatch(setDrawMode(modes.view[0]));
     } else {
-      dispatch(setDrawMode(name));
+      dispatch(setDrawMode(mode));
     }
   };
 
@@ -82,14 +84,14 @@ const EditMapMenu = () => {
         <div className='layer-type-choise'>
           <h5>Создать</h5>
           <div className='layer-type-choise-list'>
-            {drawModes.map(drawMode => (
+            {modes.draw?.map(drawMode => (
               <LayerTypeCard
-                key={drawMode.id}
+                key={drawMode.label}
                 icon={drawMode.icon}
                 name={drawMode.name}
-                title={drawMode.title}
-                selected={selectedDrawMode === drawMode.name}
-                setSelected={changeDrawMode}
+                title={drawMode.label}
+                selected={drawMode.name === selectedDrawMode}
+                setSelected={() => changeDrawMode(drawMode)}
               />
             ))}
           </div>
