@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../store';
-import { disableEditMode, setDrawMode } from '../../../store/newMap';
-import { modes } from '../../../store/newMap/mapConfig';
+import { disableEditMode, setDrawMode } from '../../../store/map';
+import { modes } from '../../../store/map/mapConfig';
 import { RootState } from '../../../store/reducer';
 import { formatDatasetType } from '../../../utils';
 import LayerTypeCard from '../../Cards/Layers/Type/LayerTypeCard';
@@ -16,11 +16,13 @@ const EditMapMenu = () => {
   const dispatch = useAppDispatch();
   const [opened, setOpened] = useState<boolean>(true);
   const selectedDrawMode = useSelector(
-    (state: RootState) => state.newMap.mode.mode.name
+    (state: RootState) => state.map.mode.mode.name
   );
 
-  const dataset = useSelector((state: RootState) => state.map.newDataset);
-  
+  const dataset = useSelector(
+    (state: RootState) => state.map.data.createdDataset
+  );
+
   const [isDatasetObjectsOpened, setDatasetObjectsOpened] =
     useState<boolean>(false);
 

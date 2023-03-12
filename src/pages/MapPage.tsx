@@ -11,7 +11,7 @@ import { getProject } from '../store/project';
 import { IProject } from '../store/project/type';
 import { RootState } from '../store/reducer';
 
-const NewMapPage = () => {
+const MapPage = () => {
   const dispatch = useAppDispatch();
   const { projectId } = useParams();
   const project: IProject = useSelector(
@@ -20,7 +20,7 @@ const NewMapPage = () => {
   const layerGroups: any = useSelector(
     (state: RootState) => state.layer.layerGroups
   );
-  const { status } = useSelector((state: RootState) => state.newMap.mode);
+  const { status } = useSelector((state: RootState) => state.map.mode);
 
   useEffect(() => {
     dispatch(getProject(Number(projectId)));
@@ -44,4 +44,4 @@ const NewMapPage = () => {
   );
 };
 
-export default NewMapPage;
+export default MapPage;

@@ -5,7 +5,7 @@ import AuthHeader from '../components/Headers/AuthHeader/AuthHeader';
 import Header from '../components/Headers/Header/Header';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
-import NewMapPage from '../pages/NewMapPage';
+import MapPage from '../pages/MapPage';
 import Profile from '../pages/Profile';
 import Projects from '../pages/Projects';
 import Registration from '../pages/Registration';
@@ -76,6 +76,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '/map/:projectId',
-    element: <NewMapPage />,
+    element: <MapPage />,
   },
 ]);

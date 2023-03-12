@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../store';
-import { closeSubMenu, openSubMenu } from '../../../store/map';
+import { closeSubMenu, setSubMenu } from '../../../store/map';
 import { RootState } from '../../../store/reducer';
 import UploadAPI from '../../../store/upload/api';
 import Button from '../../UI/Button/Button';
@@ -35,9 +35,11 @@ const MapMenu = ({ projectId, title, layerGroups }: IMapMenu) => {
   };
   const [currentTab, setCurrentTab] = useState<string>(tabs[0].name);
   const [opened, setOpened] = useState<boolean>(true);
-  const subMenuName = useSelector((state: RootState) => state.map.subMenuName);
+  const subMenuName = useSelector(
+    (state: RootState) => state.map.user.subMenu.name
+  );
   const setSubMenuName = (name: string) => {
-    dispatch(openSubMenu(name));
+    dispatch(setSubMenu(name));
   };
   const uploadData = useSelector((state: RootState) => state.upload);
   const onSave = async () => {

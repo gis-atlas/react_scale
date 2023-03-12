@@ -14,7 +14,7 @@ const DeckMap = () => {
     mode: { status, mode },
     layers: { baseTile, opened },
     config: { controller, view, viewState },
-  } = useSelector((state: RootState) => state.newMap);
+  } = useSelector((state: RootState) => state.map);
 
   const baseLayer = useMemo(
     () => createTileLayer(baseTile.layer, view.shortName),

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { useAppDispatch } from '../../../store';
 import { loadLayer } from '../../../store/layer';
-import { flyToLayer, hideLayer } from '../../../store/newMap';
+import { flyToLayer, hideLayer } from '../../../store/map';
 import './index.sass';
 
 const LayerCard = ({

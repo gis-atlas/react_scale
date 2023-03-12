@@ -7,8 +7,8 @@ import {
   setViewMode,
   toggleRuler,
   toggleView,
-} from '../../../store/newMap';
-import { modes, views } from '../../../store/newMap/mapConfig';
+} from '../../../store/map';
+import { modes, views } from '../../../store/map/mapConfig';
 import { RootState } from '../../../store/reducer';
 import Button from '../../UI/Button/Button';
 import './index.sass';
@@ -16,9 +16,7 @@ import './index.sass';
 const MapControls = () => {
   const dispatch = useAppDispatch();
 
-  const { ruler, view } = useSelector(
-    (state: RootState) => state.newMap.controls
-  );
+  const { ruler, view } = useSelector((state: RootState) => state.map.controls);
 
   const changeRulerMode = (e: SyntheticEvent, mode: any) => {
     e.stopPropagation();

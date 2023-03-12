@@ -5,7 +5,7 @@ import {
   createVectorLayer,
   findLayer,
 } from '../../utils/deck';
-import { addLayer, showLayer } from '../newMap';
+import { addLayer, showLayer } from '../map';
 import { RootState } from './../reducer';
 import LayerAPI from './api';
 
@@ -54,7 +54,7 @@ export const loadVectorLayer = createAsyncThunk(
   'layer/loadVectorLayer',
   async (layerId: number, thunkApi) => {
     const state = thunkApi.getState() as RootState;
-    const cashedLayer = findLayer({ id: layerId }, state.newMap.layers.opened);
+    const cashedLayer = findLayer({ id: layerId }, state.map.layers.opened);
     if (cashedLayer) {
       thunkApi.dispatch(showLayer(layerId));
       return;
@@ -73,7 +73,7 @@ export const loadRasterLayer = createAsyncThunk(
   'layer/loadRasterLayer',
   async (layerId: number, thunkApi) => {
     const state = thunkApi.getState() as RootState;
-    const cashedLayer = findLayer({ id: layerId }, state.newMap.layers.opened);
+    const cashedLayer = findLayer({ id: layerId }, state.map.layers.opened);
     if (cashedLayer) {
       thunkApi.dispatch(showLayer(layerId));
       return;
