@@ -57,7 +57,7 @@ export const mapSlice = createSlice({
       },
       ruler: {
         status: false,
-        mode: modes.measure[0],
+        mode: modes.view[0],
       },
     },
     data: {
@@ -67,11 +67,15 @@ export const mapSlice = createSlice({
   reducers: {
     toggleRuler: state => {
       state.controls.ruler.status = !state.controls.ruler.status;
+      if (state.controls.ruler.status) {
+        state.mode.status = 'edit';
+      } else {
+        state.mode.status = 'view';
+      }
     },
     setRulerMode: (state, action) => {
-      console.log(action.payload);
       state.controls.ruler.mode = action.payload;
-      state.controls.ruler.status = false;
+      state.mode.mode = action.payload;
     },
     toggleView: state => {
       state.controls.view.status = !state.controls.view.status;

@@ -39,8 +39,9 @@ const DeckMap = () => {
       },
       selectedFeatureIndexes,
     });
+    console.log(layer);
     setEditableLayer(layer);
-  }, [mode.mode, features, selectedFeatureIndexes]);
+  }, [mode, features, selectedFeatureIndexes]);
 
   useEffect(() => {
     setLayers([baseLayer, opened]);

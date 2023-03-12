@@ -3,8 +3,8 @@ import {
   DrawLineStringMode,
   DrawPointMode,
   DrawPolygonMode,
-  MeasureAngleMode,
   MeasureAreaMode,
+  MeasureDistanceMode,
   ViewMode,
 } from 'nebula.gl';
 
@@ -50,7 +50,7 @@ export const modes = {
     {
       label: 'Расстояние',
       units: 'км',
-      mode: MeasureAngleMode,
+      mode: MeasureDistanceMode,
     },
     {
       label: 'Площадь',
