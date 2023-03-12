@@ -33,9 +33,9 @@ export const createTileLayer = (mapStyle, mode = '') => {
 export const createLayer = async (id, type, data) => {
   switch (type) {
     case 'VECTOR':
-      return await createVectorLayer(id, data);
+      return createVectorLayer(id, data);
     case 'RASTER':
-      return await createRasterLayer(id, data);
+      return createRasterLayer(id, data);
     case 'MODEL':
       return await createModelLayer(id, data);
     default:
@@ -57,9 +57,10 @@ export const createVectorLayer = (id, data) => {
 };
 
 export const createRasterLayer = (id, data) => {
-  const { minzoom, maxzoom } = data;
+  const { minzoom, maxzoom, bounds } = data;
   return new TileLayer({
     id,
+    bounds,
     tileSize: 256,
     data: `/api/TMS/${id}/{z}/{x}/{-y}.png`,
     minZoom: minzoom,

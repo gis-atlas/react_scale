@@ -19,7 +19,7 @@ export const flyToLayer = createAsyncThunk(
 
     let centerOfLayer;
     let maxDiff;
-    console.log('2', bounds);
+    console.log('2', layer);
 
     centerOfLayer = getCenterOfLayer(bounds);
     const dx = bounds[2] - bounds[0];
@@ -43,7 +43,6 @@ export const mapSlice = createSlice({
     },
     layers: {
       opened: [] as any,
-      cashed: [] as any,
       baseTile: mapBaseLayers[3],
     },
     config: {
@@ -85,7 +84,6 @@ export const mapSlice = createSlice({
     },
     addLayer: (state, action) => {
       state.layers.opened.push(action.payload);
-      state.layers.cashed.push(action.payload);
     },
     hideLayer: (state, action) => {
       state.layers.opened.forEach((layer: any, index: number) => {

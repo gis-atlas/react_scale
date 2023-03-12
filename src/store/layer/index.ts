@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import bbox from '@turf/bbox';
-import { createVectorLayer, findLayer } from '../../utils/deck';
+import {
+  createRasterLayer,
+  createVectorLayer,
+  findLayer,
+} from '../../utils/deck';
 import { addLayer, showLayer } from '../newMap';
 import { RootState } from './../reducer';
 import LayerAPI from './api';
@@ -50,7 +54,7 @@ export const loadVectorLayer = createAsyncThunk(
   'layer/loadVectorLayer',
   async (layerId: number, thunkApi) => {
     const state = thunkApi.getState() as RootState;
-    const cashedLayer = findLayer({ id: layerId }, state.newMap.layers.cashed);
+    const cashedLayer = findLayer({ id: layerId }, state.newMap.layers.opened);
     if (cashedLayer) {
       thunkApi.dispatch(showLayer(layerId));
       return;
@@ -67,12 +71,17 @@ export const loadVectorLayer = createAsyncThunk(
 
 export const loadRasterLayer = createAsyncThunk(
   'layer/loadRasterLayer',
-  async (layerId: number) => {
+  async (layerId: number, thunkApi) => {
+    const state = thunkApi.getState() as RootState;
+    const cashedLayer = findLayer({ id: layerId }, state.newMap.layers.opened);
+    if (cashedLayer) {
+      thunkApi.dispatch(showLayer(layerId));
+      return;
+    }
     const result = await LayerAPI.loadRasterLayer(layerId);
-    return {
-      id: layerId,
-      data: result.data,
-    };
+    console.log(result.data);
+    const layer = createRasterLayer(layerId, result.data);
+    thunkApi.dispatch(addLayer(layer));
   }
 );
 
@@ -113,15 +122,6 @@ export const layerSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(loadLayerGroups.fulfilled, (state, action) => {
       state.layerGroups = action.payload.list;
-    });
-    builder.addCase(loadRasterLayer.fulfilled, (state, action) => {
-      const layerData = {
-        id: action.payload.id,
-        layer: action.payload.data,
-        type: 'RASTER',
-      };
-      state.openedLayers.push(layerData);
-      state.downloadedLayers.push(layerData);
     });
     builder.addCase(loadModelLayer.fulfilled, (state, action) => {
       const layerData = {
