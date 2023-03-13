@@ -4,6 +4,7 @@ import { BitmapLayer, GeoJsonLayer } from '@deck.gl/layers';
 import { ScenegraphLayer } from '@deck.gl/mesh-layers';
 import { load } from '@loaders.gl/core';
 import { GLTFLoader } from '@loaders.gl/gltf';
+import bbox from '@turf/bbox';
 import bboxPolygon from '@turf/bbox-polygon';
 import center from '@turf/center';
 
@@ -137,7 +138,9 @@ export const lat2Zoom = lat => {
 };
 
 export const getCenterOfLayer = bounds => {
-  const centerOfLayer = center(bboxPolygon(bounds));
+  console.log('bounds', bounds);
+  console.log('bboxpoly', bboxPolygon(bounds));
+  const centerOfLayer = center(bbox(bounds));
   return centerOfLayer.geometry.coordinates;
 };
 

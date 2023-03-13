@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import ObjectCard from '../components/Cards/Dataset/ObjectCard';
 import MapControls from '../components/Map/Controls/MapControls';
 import EditMapMenu from '../components/Map/Edit/EditMapMenu';
 import MapMenu from '../components/Map/Menu/MapMenu';
@@ -40,6 +41,7 @@ const MapPage = () => {
       )}
       <MapControls />
       <DeckMap />
+      <ObjectCard id={1} title='Точка рекогносцировки 3' key={1} />
     </>
   );
 };

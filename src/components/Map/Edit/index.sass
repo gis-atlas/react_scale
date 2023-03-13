@@ -2,8 +2,13 @@
 @import '../../../assets/styles/_variables'
 
 .edit-menu
+  @include position($position: absolute, $left: -20px, $top: 90px)
   @include flexbox($gap: 20px)
   @include flex-direction($direction: column)
+  @include margin-padding($p-direction: all, $p-amount: 21px 16px 38px 19px)
+  @include border-radius($radius: 15px)
+  background: $color-secondary-light
+  width: 300px
 
   .map-menu-title
     img
@@ -25,4 +30,9 @@
     .layer-type-choise-list
       @include flexbox($gap: 5px)
 
-    
+  .dataset-list
+    @include margin-padding($p-direction: all, $p-amount: 8px 6px)
+    @include border-radius($radius: 6px)
+    max-height: 128px
+    overflow-y: auto
+    background: $color-primary-dark

@@ -1,4 +1,5 @@
 const OSM = {
+  abbr: 'OSM',
   title: 'Open Street Map',
   imageSrc: '/images/map/open-street-maps.jpg',
   layer: {
@@ -10,6 +11,7 @@ const OSM = {
 
 const GoogleMaps = [
   {
+    abbr: 'Hybrid',
     title: 'Google Hybrid',
     imageSrc: '/images/map/google-maps.jpg',
     layer: {
@@ -24,6 +26,7 @@ const GoogleMaps = [
     },
   },
   {
+    abbr: 'Sattelite',
     title: 'Google Sattelite',
     imageSrc: '/images/map/google-maps.jpg',
     layer: {
@@ -38,6 +41,7 @@ const GoogleMaps = [
     },
   },
   {
+    abbr: 'Streets',
     title: 'Google Streets',
     imageSrc: '/images/map/google-maps.jpg',
     layer: {
@@ -52,6 +56,7 @@ const GoogleMaps = [
     },
   },
   {
+    abbr: 'Terrain',
     title: 'Google Terrain',
     imageSrc: '/images/map/google-maps.jpg',
     layer: {

@@ -14,9 +14,11 @@ interface IInput {
   className?: string;
 
   type?: 'text' | 'password' | 'email' | 'number';
+  size?: 'large' | 'medium' | 'small';
 
   useGradient?: boolean;
   readonly?: boolean;
+  disabled?: boolean;
   withLabel?: boolean;
 
   prevIcon?: string;
@@ -31,6 +33,7 @@ const Input = ({
   placeholder = '',
   defaultValue = '',
   onInput = () => {},
+  size = 'medium',
   styles,
   className,
   type = 'text',
@@ -38,6 +41,7 @@ const Input = ({
   readonly = false,
   prevIcon,
   onPrevIconClick,
+  disabled,
   appendIcon,
   onAppendIconClick,
   withLabel = false,
@@ -70,6 +74,8 @@ const Input = ({
     <div
       className={classNames('custom-input', {
         [`${className}`]: className,
+        [`${size}`]: size,
+        disabled: disabled,
       })}
       style={styles}
     >
@@ -87,13 +93,15 @@ const Input = ({
           onFocus={onFocus}
           onBlur={onBlur}
           onChange={onChange}
-          placeholder={(focused || !label) && !readonly ? placeholder : ''}
+          placeholder={
+            (focused || !label) && !readonly && !disabled ? placeholder : ''
+          }
           type={type}
           value={inputValue}
-          readOnly={readonly}
+          readOnly={readonly || disabled}
           autoComplete='new-password'
         />
-        {(!readonly || withLabel) && (
+        {((!readonly && !disabled) || withLabel) && (
           <span
             className={classNames({
               gradient: useGradient,
