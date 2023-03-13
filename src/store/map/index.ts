@@ -1,125 +1,142 @@
-import {
-  FlyToInterpolator,
-  MapView,
-  OrbitView,
-  OrthographicView,
-  _GlobeView,
-} from '@deck.gl/core/typed';
+import { FlyToInterpolator } from '@deck.gl/core/typed';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { mapBaseLayers } from '../../data/baselayers';
 import { findLayer, getCenterOfLayer, lat2Zoom } from '../../utils/deck';
 import { RootState } from './../reducer';
-import { INITIAL_VIEW_STATE, views } from './mapConfig';
+import { mapBaseLayers } from './baseLayers';
+import { INITIAL_VIEW_STATE, modes, views } from './mapConfig';
 
 export const flyToLayer = createAsyncThunk(
   'map/flyToLayer',
-  async ({ id, layerType }: any, thunkApi) => {
+  async ({ id }: any, thunkApi) => {
     const state = thunkApi.getState() as RootState;
     const {
-      layer: { openedLayers },
+      map: {
+        layers: { opened },
+      },
     } = state;
-    const { layer } = findLayer({ id: id, type: layerType }, openedLayers);
+    const layer = findLayer({ id }, opened);
+    const { bounds } = layer.props;
 
     let centerOfLayer;
     let maxDiff;
+    console.log('2', layer);
 
-    if (layerType === 'MODEL') {
-      const [dx, dy] = layer.info[1].position.cartographicDegrees.slice(0, 2);
-      centerOfLayer = [dx, dy];
-      maxDiff = 0.02;
-    } else {
-      console.log('pizdez2');
-      centerOfLayer = getCenterOfLayer(layer.bounds);
-      const dx = layer.bounds[2] - layer.bounds[0];
-      const dy = layer.bounds[3] - layer.bounds[1];
-      maxDiff = Math.max(dx, dy);
-    }
+    centerOfLayer = getCenterOfLayer(bounds);
+    const dx = bounds[2] - bounds[0];
+    const dy = bounds[3] - bounds[1];
+    maxDiff = Math.max(dx, dy);
+    console.log('3', layer);
+
+    console.log(layer);
+    console.log(centerOfLayer, bounds);
 
     return { centerOfLayer, maxDiff };
   }
 );
 
 export const mapSlice = createSlice({
-  name: 'user',
+  name: 'map',
   initialState: {
-    view: new MapView({}) as any,
-    mode: '',
-    drawMode: '',
-    subMenuName: '',
-    baseLayer: mapBaseLayers[0],
-    viewState: INITIAL_VIEW_STATE,
-    newDataset: {} as any,
+    user: {
+      subMenu: {
+        name: '',
+      },
+    },
+    mode: {
+      status: 'view',
+      mode: modes.view[0],
+    },
+    layers: {
+      opened: [] as any,
+      baseTile: mapBaseLayers[3],
+    },
+    config: {
+      view: views[1],
+      viewState: INITIAL_VIEW_STATE,
+      controller: { doubleClickZoom: false },
+    },
     controls: {
-      ruler: {
-        state: false,
-        type: 'distance',
-      },
       view: {
-        state: false,
-        text: '2D',
-        icon: '',
+        status: false,
+        mode: views[1],
       },
+      ruler: {
+        status: false,
+        mode: modes.view[0],
+      },
+    },
+    data: {
+      createdDataset: {} as any,
     },
   },
   reducers: {
-    setBaseLayer: (state, action) => {
-      state.baseLayer = action.payload;
-    },
-    setViewState: (state, action) => {
-      state.viewState = action.payload;
-    },
-    openSubMenu: (state, action) => {
-      state.subMenuName = action.payload;
-    },
-    closeSubMenu: state => {
-      state.subMenuName = '';
-    },
-    enableMeasureMode: state => {
-      state.mode = 'measuring';
-    },
-    enableEditMode: state => {
-      state.mode = 'editing';
-    },
-    disableMode: state => {
-      state.mode = '';
-    },
-    setDrawMode: (state, action) => {
-      state.drawMode = action.payload;
-    },
-    setDataset: (state, action) => {
-      state.newDataset = action.payload;
-    },
-    removeFeatureFromDataset: (state, action) => {
-      state.newDataset.features.filter(
-        (datasetFeature: any) => datasetFeature.id !== action.payload
-      );
-    },
     toggleRuler: state => {
-      state.controls.ruler.state = !state.controls.ruler.state;
+      state.controls.ruler.status = !state.controls.ruler.status;
+      if (state.controls.ruler.status) {
+        state.mode.status = 'edit';
+      } else {
+        state.mode.status = 'view';
+      }
     },
-    setRulerType: (state, action) => {
-      state.controls.ruler.type = action.payload;
-    },
-    setViewMode: (
-      state,
-      action: { payload: '2D' | '3D' | 'GLOBE' | 'TERRAIN' }
-    ) => {
-      const { view, ...viewControl } = views[action.payload] as any;
-      state.view = view;
-      state.controls.view = viewControl;
-
-      // state.controls.view.text = text;
+    setRulerMode: (state, action) => {
+      state.controls.ruler.mode = action.payload;
+      state.mode.mode = action.payload;
     },
     toggleView: state => {
-      state.controls.view.state = !state.controls.view.state;
+      state.controls.view.status = !state.controls.view.status;
+    },
+    setViewMode: (state, action) => {
+      console.log(action.payload);
+      state.controls.view.mode = action.payload;
+      state.config.view = action.payload;
+      state.controls.view.status = false;
+    },
+    addLayer: (state, action) => {
+      state.layers.opened.push(action.payload);
+    },
+    hideLayer: (state, action) => {
+      state.layers.opened.forEach((layer: any, index: number) => {
+        if (layer.id === action.payload) {
+          state.layers.opened[index] = layer.clone({ visible: false });
+        }
+      });
+    },
+    showLayer: (state, action) => {
+      state.layers.opened.forEach((layer: any, index: number) => {
+        if (layer.id === action.payload) {
+          state.layers.opened[index] = layer.clone({ visible: true });
+        }
+      });
+    },
+    enableEditMode: state => {
+      state.mode.status = 'edit';
+    },
+    disableEditMode: state => {
+      state.mode.status = 'view';
+    },
+    setDrawMode: (state, action) => {
+      state.mode.mode = action.payload;
+    },
+    setDataset: (state, action) => {
+      state.data.createdDataset = action.payload;
+    },
+    setBaseTile: (state, action) => {
+      state.layers.baseTile = action.payload;
+    },
+    setSubMenu: (state, action) => {
+      state.user.subMenu.name = action.payload;
+    },
+    closeSubMenu: state => {
+      state.user.subMenu.name = '';
     },
   },
   extraReducers(builder) {
     builder.addCase(flyToLayer.fulfilled, (state, action) => {
+      console.log('act', action.payload);
       const [longitude, latitude] = action.payload.centerOfLayer;
       const maxDiff = action.payload.maxDiff;
       const zoom = lat2Zoom(maxDiff);
-      state.viewState = {
+      state.config.viewState = {
         pitch: 0,
         bearing: 0,
         transitionDuration: 2000,
@@ -133,19 +150,20 @@ export const mapSlice = createSlice({
 });
 
 export const {
-  setBaseLayer,
-  setViewState,
-  openSubMenu,
-  closeSubMenu,
+  disableEditMode,
   enableEditMode,
-  disableMode,
-  setDrawMode,
-  setDataset,
-  removeFeatureFromDataset,
-  toggleRuler,
-  setRulerType,
-  enableMeasureMode,
+  setRulerMode,
+  closeSubMenu,
   setViewMode,
+  setDrawMode,
+  setBaseTile,
+  toggleRuler,
   toggleView,
+  setDataset,
+  setSubMenu,
+  hideLayer,
+  showLayer,
+  addLayer,
 } = mapSlice.actions;
+
 export default mapSlice.reducer;

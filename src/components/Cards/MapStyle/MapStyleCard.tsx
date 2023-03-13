@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useAppDispatch } from '../../../store';
-import { setBaseLayer } from '../../../store/map';
+import { setBaseTile } from '../../../store/map';
 import './index.sass';
 
 interface IMapStyleCard {
@@ -13,7 +13,7 @@ interface IMapStyleCard {
 const MapStyleCard = ({ src, isActive = false, baseLayer }: IMapStyleCard) => {
   const dispatch = useAppDispatch();
   const onChangeMapStyle = () => {
-    dispatch(setBaseLayer(baseLayer));
+    dispatch(setBaseTile(baseLayer));
   };
   return (
     <div

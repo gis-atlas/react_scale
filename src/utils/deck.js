@@ -1,15 +1,15 @@
+import { COORDINATE_SYSTEM } from '@deck.gl/core';
 import { TileLayer } from '@deck.gl/geo-layers';
 import { BitmapLayer, GeoJsonLayer } from '@deck.gl/layers';
 import { ScenegraphLayer } from '@deck.gl/mesh-layers';
 import { load } from '@loaders.gl/core';
 import { GLTFLoader } from '@loaders.gl/gltf';
-import { EditableGeoJsonLayer } from '@nebula.gl/layers';
 import bboxPolygon from '@turf/bbox-polygon';
 import center from '@turf/center';
 
 // layers
 
-export const createTileLayer = mapStyle => {
+export const createTileLayer = (mapStyle, mode = '') => {
   return new TileLayer({
     minZoom: 0,
     maxZoom: 19,
@@ -23,6 +23,7 @@ export const createTileLayer = mapStyle => {
       return new BitmapLayer(props, {
         data: null,
         image: props.data,
+        _imageCoordinateSystem: mode === 'Globe' && COORDINATE_SYSTEM.CARTESIAN,
         bounds: [west, south, east, north],
       });
     },
@@ -32,9 +33,9 @@ export const createTileLayer = mapStyle => {
 export const createLayer = async (id, type, data) => {
   switch (type) {
     case 'VECTOR':
-      return await createVectorLayer(id, data);
+      return createVectorLayer(id, data);
     case 'RASTER':
-      return await createRasterLayer(id, data);
+      return createRasterLayer(id, data);
     case 'MODEL':
       return await createModelLayer(id, data);
     default:
@@ -44,8 +45,10 @@ export const createLayer = async (id, type, data) => {
 
 export const createVectorLayer = (id, data) => {
   return new GeoJsonLayer({
-    id: `vector-${id}`,
+    id,
     data,
+    bounds: data.bounds,
+    visible: true,
     opacity: 0.75,
     stroked: true,
     filled: true,
@@ -54,9 +57,10 @@ export const createVectorLayer = (id, data) => {
 };
 
 export const createRasterLayer = (id, data) => {
-  const { minzoom, maxzoom } = data;
+  const { minzoom, maxzoom, bounds } = data;
   return new TileLayer({
-    id: `raster-${id}`,
+    id,
+    bounds,
     tileSize: 256,
     data: `/api/TMS/${id}/{z}/{x}/{-y}.png`,
     minZoom: minzoom,
@@ -138,8 +142,5 @@ export const getCenterOfLayer = bounds => {
 };
 
 export const findLayer = (layer, layerList) => {
-  return layerList.filter(
-    layerListItem =>
-      layerListItem.id === layer.id && layerListItem.type === layer.type
-  )[0];
+  return layerList.filter(layerListItem => layerListItem.id === layer.id)[0];
 };

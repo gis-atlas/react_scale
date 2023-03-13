@@ -8,7 +8,7 @@ import './index.sass';
 
 const MapsTab = () => {
   const currentMapInfo: any = useSelector(
-    (state: RootState) => state.map.baseLayer
+    (state: RootState) => state.map.layers.baseTile
   );
   return (
     <div className='tab tab-maps'>

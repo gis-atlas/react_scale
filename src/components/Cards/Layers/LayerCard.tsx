@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { useAppDispatch } from '../../../store';
-import { loadLayer, removeLayer } from '../../../store/layer';
-import { flyToLayer } from '../../../store/map';
+import { loadLayer } from '../../../store/layer';
+import { flyToLayer, hideLayer } from '../../../store/map';
 import './index.sass';
 
 const LayerCard = ({
@@ -22,11 +22,11 @@ const LayerCard = ({
     if (!showed) {
       await showLayer();
     }
-    dispatch(flyToLayer({ id, layerType }));
+    dispatch(flyToLayer({ id }));
   };
-  const hideLayer = () => {
+  const removeLayer = () => {
     setShowed(false);
-    dispatch(removeLayer(id));
+    dispatch(hideLayer(id));
   };
   return (
     <div
@@ -43,7 +43,11 @@ const LayerCard = ({
       <div className='layer-card-controls'>
         <img src='/images/icons/layers/target.svg' alt='' onClick={flyTo} />
         {showed ? (
-          <img src='/images/icons/layers/eye.svg' alt='' onClick={hideLayer} />
+          <img
+            src='/images/icons/layers/eye.svg'
+            alt=''
+            onClick={removeLayer}
+          />
         ) : (
           <img
             src='/images/icons/layers/eye-closed.svg'
