@@ -1,4 +1,12 @@
-import { MapView, _GlobeView } from '@deck.gl/core/typed';
+import { MapView, OrthographicView, _GlobeView } from '@deck.gl/core/typed';
+import {
+  DrawLineStringMode,
+  DrawPointMode,
+  DrawPolygonMode,
+  MeasureAreaMode,
+  MeasureDistanceMode,
+  ViewMode,
+} from 'nebula.gl';
 
 export const INITIAL_VIEW_STATE = {
   longitude: 37.618423,
@@ -6,25 +14,75 @@ export const INITIAL_VIEW_STATE = {
   zoom: 9,
 } as any;
 
-export const views = {
-  '2D': {
-    text: '2D',
-    type: '2D',
+// icon === true ? (оставляем shortName, но ставим src до картинки)
+// : (оставляем shortName без src)
+
+export const views: any = [
+  {
+    name: '2D',
+    shortName: '2D',
+    icon: false,
+    mode: new OrthographicView({}),
+  },
+  {
+    name: '3D',
+    shortName: '3D',
+    icon: false,
+    mode: new MapView({}),
+  },
+  {
+    name: 'Terrain',
+    icon: true,
+    src: '/images/icons/map/terrain.svg',
     view: new MapView({}),
   },
-  '3D': {
-    text: '3D',
-    type: '3D',
-    view: new MapView({}),
+  {
+    name: 'Глобус',
+    shortName: 'Globe',
+    icon: true,
+    src: '/images/icons/map/globe.svg',
+    mode: new _GlobeView({}),
   },
-  TERRAIN: {
-    icon: '/images/icons/map/terrain.svg',
-    type: 'TERRAIN',
-    view: new MapView({}),
-  },
-  GLOBE: {
-    icon: '/images/icons/map/globe.svg',
-    type: 'GLOBE',
-    view: new _GlobeView({}),
-  },
+];
+
+export const modes = {
+  measure: [
+    {
+      label: 'Расстояние',
+      units: 'км',
+      mode: MeasureDistanceMode,
+    },
+    {
+      label: 'Площадь',
+      units: 'км',
+      mode: MeasureAreaMode,
+    },
+  ],
+  view: [
+    {
+      label: 'Просмотр',
+      name: 'view',
+      mode: ViewMode,
+    },
+  ],
+  draw: [
+    {
+      label: 'Точки',
+      name: 'dots',
+      icon: '/images/icons/layers/dots.svg',
+      mode: DrawPointMode,
+    },
+    {
+      label: 'Линии',
+      name: 'lines',
+      icon: '/images/icons/layers/lines.svg',
+      mode: DrawLineStringMode,
+    },
+    {
+      label: 'Полигоны',
+      name: 'polygons',
+      icon: '/images/icons/layers/polygons.svg',
+      mode: DrawPolygonMode,
+    },
+  ],
 };

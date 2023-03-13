@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { useAppDispatch } from '../../../../../store';
 import { enableEditMode } from '../../../../../store/map';
+import { setUploadData } from '../../../../../store/upload';
 import UploadAPI from '../../../../../store/upload/api';
 import Button from '../../../../UI/Button/Button';
 import Input from '../../../../UI/Input/Input';
@@ -47,7 +48,7 @@ const AddLayer: FC<IAddLayer> = ({ projectId, layerGroups }) => {
           <Input
             label='Имя слоя'
             name='layerName'
-            defaultValue={`${fileData?.layerName}.${fileData?.fileType}`}
+            value={`${fileData?.layerName}.${fileData?.fileType}`}
           />
         </div>
       )}
@@ -117,19 +118,18 @@ const UploadedFromPCFile: FC<IUploadedFromPCFile> = ({
         getSelectStatus={setOpened}
       />
       {opened && (
-        <>
-          <Input label='Имя датасета' defaultValue={datasetName} />
-          <Input label='Формат файла' defaultValue={fileFormat} />
+        <form className='flex flex-col gap-5'>
+          <Input label='Имя датасета' value={datasetName} />
+          <Input label='Формат файла' value={fileFormat} readonly />
           <span className='text-xs ml-3 -mt-3'>Определяется автоматически</span>
-          <Input label='Система координат' defaultValue={coordSystem} />
+          <Input label='Система координат' value={coordSystem} readonly />
           <span className='text-xs ml-3 -mt-3'>Определяется автоматически</span>
           <Select
             state={layerGroup}
             setState={setLayerGroup}
-            // options={layerGroups}
             variant='contained'
           />
-        </>
+        </form>
       )}
       <Button
         color='secondary'

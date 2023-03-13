@@ -59,6 +59,7 @@ const LayerGroupCard = ({ layers, openedLayers }: ILayerGroupCard) => {
             }
             active={findLayer(layer, openedLayers)}
             layerType={layer.layerType}
+            inGroup
           />
         ))}
       </div>

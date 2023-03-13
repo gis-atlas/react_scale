@@ -1,5 +1,3 @@
-import { RGBAColor } from 'deck.gl';
-
 interface IProject {
   id: number;
   name: string;
@@ -72,17 +70,17 @@ export const randomRGBA = () => {
   const g = Math.round(Math.random() * coef);
   const b = Math.round(Math.random() * coef);
   console.log(r, g, b);
-  return [r, g, b] as RGBAColor;
+  return [r, g, b];
 };
 
-export const formatDatasetType = (datasetType: string) => {
+export const formatDatasetType = (datasetType: string, id: number) => {
   switch (datasetType) {
     case 'LineString':
-      return 'Линия';
+      return `Линия ${id}`;
     case 'Point':
-      return 'Точка';
+      return `Точка рекогносцировки ${id}`;
     case 'Polygon':
-      return 'Полигон';
+      return `Полигон ${id}`;
     default:
       return 'Неизвестно';
   }

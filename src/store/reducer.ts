@@ -10,8 +10,8 @@ export const rootReducer = combineReducers({
   user,
   project,
   layer,
-  map,
   upload,
+  map,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

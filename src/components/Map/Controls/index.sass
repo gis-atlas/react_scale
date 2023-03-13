@@ -23,7 +23,7 @@
           &.active
             background: $color-primary
             
-          span
+          span.unit
             @include flexbox
             @include align-items($value: center)
             @include justify-content($value: center)
@@ -55,3 +55,26 @@
             @include border-radius($radius: 6px)
             @include figure($width: 30px, $height: 18px)
             background: $color-primary-light
+
+  .search-input
+    @include border-radius($radius: inherit)
+    height: 100%
+    border: none
+    width: 0
+    visibility: hidden
+    opacity: 0
+    &.active
+      @include margin-padding($p-direction: all, $p-amount: 3px 3px)
+      width: 170px !important
+      visibility: visible
+      opacity: 1
+  .searched-items
+    max-width: 200px
+    li    
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+      padding-bottom: 12px
+      &:hover
+        background: $color-primary-light
+        overflow-x: auto

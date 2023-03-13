@@ -1,14 +1,14 @@
 import { useSelector } from 'react-redux';
 import { mapBaseLayers } from '../../../../../data/baselayers';
 import { RootState } from '../../../../../store/reducer';
-import MapViewCard from '../../../../Cards/MapStyle/MapStyleCard';
+import MapStyleCard from '../../../../Cards/MapStyle/MapStyleCard';
 import Button from '../../../../UI/Button/Button';
 import Input from '../../../../UI/Input/Input';
 import './index.sass';
 
 const MapsTab = () => {
   const currentMapInfo: any = useSelector(
-    (state: RootState) => state.map.baseLayer
+    (state: RootState) => state.map.layers.baseTile
   );
   return (
     <div className='tab tab-maps'>
@@ -21,7 +21,7 @@ const MapsTab = () => {
       <Input prevIcon='/images/icons/loupe.svg' placeholder='поиск по картам' />
       <ul className='tab-list'>
         {mapBaseLayers?.map((baseLayer: any) => (
-          <MapViewCard
+          <MapStyleCard
             key={baseLayer.layer.id}
             baseLayer={baseLayer}
             isActive={currentMapInfo.layer.id === baseLayer.layer.id}

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import './index.sass';
 
 interface IInput {
@@ -7,6 +7,7 @@ interface IInput {
   label?: string;
   placeholder?: string;
   defaultValue?: string;
+  value?: string;
 
   onInput?: any;
 
@@ -14,9 +15,11 @@ interface IInput {
   className?: string;
 
   type?: 'text' | 'password' | 'email' | 'number';
+  size?: 'large' | 'medium' | 'small';
 
   useGradient?: boolean;
   readonly?: boolean;
+  disabled?: boolean;
   withLabel?: boolean;
 
   prevIcon?: string;
@@ -31,6 +34,7 @@ const Input = ({
   placeholder = '',
   defaultValue = '',
   onInput = () => {},
+  size = 'medium',
   styles,
   className,
   type = 'text',
@@ -38,8 +42,10 @@ const Input = ({
   readonly = false,
   prevIcon,
   onPrevIconClick,
+  disabled,
   appendIcon,
   onAppendIconClick,
+  value = '',
   withLabel = false,
 }: IInput) => {
   const [focused, setFocused] = useState<boolean>(false);
@@ -60,8 +66,12 @@ const Input = ({
     } else {
       setFilled(false);
     }
-    onInput(target.value);
+    onInput({ name, value: target.value });
   };
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   useEffect(() => {
     inputValue.length !== 0 && setFilled(true);
@@ -70,6 +80,8 @@ const Input = ({
     <div
       className={classNames('custom-input', {
         [`${className}`]: className,
+        [`${size}`]: size,
+        disabled: disabled,
       })}
       style={styles}
     >
@@ -87,13 +99,15 @@ const Input = ({
           onFocus={onFocus}
           onBlur={onBlur}
           onChange={onChange}
-          placeholder={(focused || !label) && !readonly ? placeholder : ''}
+          placeholder={
+            (focused || !label) && !readonly && !disabled ? placeholder : ''
+          }
           type={type}
           value={inputValue}
-          readOnly={readonly}
+          readOnly={readonly || disabled}
           autoComplete='new-password'
         />
-        {(!readonly || withLabel) && (
+        {((!readonly && !disabled) || withLabel) && (
           <span
             className={classNames({
               gradient: useGradient,
