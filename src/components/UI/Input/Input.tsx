@@ -66,7 +66,7 @@ const Input = ({
     } else {
       setFilled(false);
     }
-    onInput(target.value);
+    onInput({ name, value: target.value });
   };
 
   useEffect(() => {

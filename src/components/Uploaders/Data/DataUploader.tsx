@@ -5,16 +5,16 @@ import DataCard from '../../Cards/Data/DataCard';
 import './index.sass';
 
 const DataUploader = ({ getUploadedData }: any) => {
-  const [uploadedFile, setUplodedFile] = useState<File | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
   const onUploadFile = (e: SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
     const files = target.files as FileList;
-    setUplodedFile(files[0]);
+    setUploadedFile(files[0]);
   };
 
   const onDelete = () => {
-    setUplodedFile(null);
+    setUploadedFile(null);
   };
 
   useEffect(() => {

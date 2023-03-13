@@ -17,8 +17,8 @@ const Geocoder = ({ classNames }: GeocoderProps) => {
     (state: RootState) => state.map.controls.search
   );
 
-  const inputHandler = (text: string) => {
-    dispatch(setSearchText(text));
+  const inputHandler = (text: any) => {
+    dispatch(setSearchText(text.value));
   };
 
   useEffect(() => {

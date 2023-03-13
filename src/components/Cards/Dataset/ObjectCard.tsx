@@ -21,7 +21,7 @@ const ObjectCard = ({ id, title }: ObjectCardProps) => {
 
   return (
     <div
-      className='absolute left-64 top-80 center p-4 max-w-xss rounded-lg cursor-move'
+      className='absolute left-96 top-36 center p-4 max-w-xss rounded-lg cursor-move'
       style={{ background: '#F7F9FC', width: '100%' }}
     >
       <div className='flex justify-between items-center'>
@@ -107,8 +107,18 @@ const Field = ({ name, value }: any) => {
   console.log(name, value);
   return (
     <div className='flex gap-1 w-full'>
-      <Input defaultValue={name} size='small' disabled={name === 'id'} />
-      <Input defaultValue={`${value}`} size='small' disabled={name === 'id'} />
+      <Input
+        value={name}
+        size='small'
+        disabled={name === 'id'}
+        placeholder='name'
+      />
+      <Input
+        value={`${value}`}
+        size='small'
+        disabled={name === 'id'}
+        placeholder='value'
+      />
     </div>
   );
 };

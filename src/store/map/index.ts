@@ -58,6 +58,11 @@ export const mapSlice = createSlice({
       subMenu: {
         name: '',
       },
+      selectedLayer: {
+        status: false,
+        id: 0.5,
+        name: '',
+      } as any,
     },
     mode: {
       status: 'view',
@@ -146,6 +151,7 @@ export const mapSlice = createSlice({
       state.layers.baseTile = action.payload;
     },
     setSubMenu: (state, action) => {
+      state.user.selectedLayer.status = false;
       state.user.subMenu.name = action.payload;
     },
     closeSubMenu: state => {
@@ -159,6 +165,26 @@ export const mapSlice = createSlice({
     },
     setSearchItems: (state, action) => {
       state.controls.search.searchedItems = action.payload;
+    },
+    setSelectedLayer: (state, action) => {
+      state.user.subMenu.name = '';
+      if (
+        state.user.selectedLayer.id === action.payload.id &&
+        state.user.selectedLayer.status
+      ) {
+        state.user.selectedLayer.status = false;
+      } else {
+        state.user.selectedLayer.id = action.payload.id;
+        state.user.selectedLayer.name = action.payload.name;
+        state.user.selectedLayer.status = true;
+      }
+    },
+    disableSelectedLayer: state => {
+      state.user.selectedLayer = {
+        id: 0.5,
+        name: '',
+        status: false,
+      };
     },
   },
   extraReducers(builder) {
@@ -196,6 +222,8 @@ export const mapSlice = createSlice({
 });
 
 export const {
+  disableSelectedLayer,
+  setSelectedLayer,
   disableEditMode,
   enableEditMode,
   setSearchItems,

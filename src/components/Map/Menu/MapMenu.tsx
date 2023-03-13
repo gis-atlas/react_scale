@@ -3,11 +3,16 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../store';
-import { closeSubMenu, setSubMenu } from '../../../store/map';
+import {
+  closeSubMenu,
+  disableSelectedLayer,
+  setSubMenu,
+} from '../../../store/map';
 import { RootState } from '../../../store/reducer';
 import UploadAPI from '../../../store/upload/api';
 import Button from '../../UI/Button/Button';
 import './index.sass';
+import LayerData from './SubMenu/Layer/LayerData';
 import AddLayer from './SubMenu/Layers/AddLayer';
 import DataTab from './Tabs/Data/DataTab';
 import LayersTab from './Tabs/Layers/LayersTab';
@@ -38,16 +43,20 @@ const MapMenu = ({ projectId, title, layerGroups }: IMapMenu) => {
   const subMenuName = useSelector(
     (state: RootState) => state.map.user.subMenu.name
   );
+  const { status } = useSelector(
+    (state: RootState) => state.map.user.selectedLayer
+  );
   const setSubMenuName = (name: string) => {
     dispatch(setSubMenu(name));
   };
   const uploadData = useSelector((state: RootState) => state.upload);
   const onSave = async () => {
-    console.log(uploadData);
-    await UploadAPI.publish(uploadData).then(response => {
-      dispatch(closeSubMenu());
-      console.log(response.data);
-    });
+    subMenuName === 'layers'
+      ? await UploadAPI.publish(uploadData).then(response => {
+          dispatch(closeSubMenu());
+          console.log(response.data);
+        })
+      : console.log(1);
   };
 
   return (
@@ -129,13 +138,15 @@ const MapMenu = ({ projectId, title, layerGroups }: IMapMenu) => {
             <PublicationTab />
           )}
         </div>
-        {subMenuName && (
+        {(subMenuName || status) && (
           <div className='map-tabs-submenu'>
             {subMenuName === 'layers' ? (
               <AddLayer
                 projectId={Number(projectId)}
                 layerGroups={layerGroups}
               />
+            ) : status ? (
+              <LayerData />
             ) : (
               <></>
             )}
@@ -144,7 +155,11 @@ const MapMenu = ({ projectId, title, layerGroups }: IMapMenu) => {
               color='secondary'
               className='close-button'
               onClick={() => {
-                dispatch(closeSubMenu());
+                dispatch(
+                  subMenuName
+                    ? closeSubMenu()
+                    : status && disableSelectedLayer()
+                );
               }}
             >
               <img

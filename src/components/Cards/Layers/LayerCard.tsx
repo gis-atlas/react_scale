@@ -1,8 +1,10 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../store';
 import { loadLayer } from '../../../store/layer';
-import { flyToLayer, hideLayer } from '../../../store/map';
+import { flyToLayer, hideLayer, setSelectedLayer } from '../../../store/map';
+import { RootState } from '../../../store/reducer';
 import './index.sass';
 
 const LayerCard = ({
@@ -11,9 +13,13 @@ const LayerCard = ({
   layerIconType,
   layerType,
   active = false,
+  inGroup = false,
 }: ILayerCard) => {
   const dispatch = useAppDispatch();
   const [showed, setShowed] = useState<boolean>(active);
+  const {
+    user: { selectedLayer },
+  } = useSelector((state: RootState) => state.map);
   const showLayer = async () => {
     await dispatch(loadLayer({ type: layerType, id: id }));
     setShowed(true);
@@ -28,11 +34,22 @@ const LayerCard = ({
     setShowed(false);
     dispatch(hideLayer(id));
   };
+  const openLayerMenu = () => {
+    dispatch(setSelectedLayer({ id, name }));
+  };
+
+  useEffect(() => {
+    console.log(selectedLayer.id, selectedLayer.status);
+  }, [selectedLayer]);
+
   return (
     <div
       className={classNames('layer-card', {
         active: showed,
+        selected: id === selectedLayer.id && selectedLayer.status,
+        'group-item': inGroup,
       })}
+      onClick={openLayerMenu}
     >
       <div className='layer-card-title'>
         <div className={`type-${layerIconType} layer-card-type`}>
@@ -46,13 +63,19 @@ const LayerCard = ({
           <img
             src='/images/icons/layers/eye.svg'
             alt=''
-            onClick={removeLayer}
+            onClick={(e: SyntheticEvent) => {
+              e.stopPropagation();
+              removeLayer();
+            }}
           />
         ) : (
           <img
             src='/images/icons/layers/eye-closed.svg'
             alt=''
-            onClick={showLayer}
+            onClick={(e: SyntheticEvent) => {
+              e.stopPropagation();
+              showLayer();
+            }}
           />
         )}
       </div>

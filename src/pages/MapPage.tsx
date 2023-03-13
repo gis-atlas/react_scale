@@ -41,7 +41,6 @@ const MapPage = () => {
       )}
       <MapControls />
       <DeckMap />
-      <ObjectCard id={1} title='Точка рекогносцировки 3' key={1} />
     </>
   );
 };
