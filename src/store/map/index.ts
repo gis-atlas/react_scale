@@ -5,6 +5,28 @@ import { RootState } from './../reducer';
 import { mapBaseLayers } from './baseLayers';
 import { INITIAL_VIEW_STATE, modes, views } from './mapConfig';
 
+export const flyToSearchedItem = createAsyncThunk(
+  'map/flyToSearchedItem',
+  async (stringBounds: Array<any>) => {
+    const bounds: any = [
+      Number(stringBounds[2]),
+      Number(stringBounds[0]),
+      Number(stringBounds[3]),
+      Number(stringBounds[1]),
+    ];
+
+    const centerOfItem = getCenterOfLayer(bounds);
+    const dx = bounds[2] - bounds[0];
+    const dy = bounds[3] - bounds[1];
+    const maxDiff = Math.max(dx, dy);
+
+    return {
+      centerOfItem,
+      maxDiff,
+    };
+  }
+);
+
 export const flyToLayer = createAsyncThunk(
   'map/flyToLayer',
   async ({ id }: any, thunkApi) => {
@@ -24,9 +46,6 @@ export const flyToLayer = createAsyncThunk(
     const dx = bounds[2] - bounds[0];
     const dy = bounds[3] - bounds[1];
     maxDiff = Math.max(dx, dy);
-
-    console.log(layer);
-    console.log(centerOfLayer, bounds);
 
     return { centerOfLayer, maxDiff };
   }
@@ -61,6 +80,11 @@ export const mapSlice = createSlice({
       ruler: {
         status: false,
         mode: modes.view[0],
+      },
+      search: {
+        status: false,
+        text: '',
+        searchedItems: [],
       },
     },
     data: {
@@ -127,11 +151,35 @@ export const mapSlice = createSlice({
     closeSubMenu: state => {
       state.user.subMenu.name = '';
     },
+    toggleSearch: state => {
+      state.controls.search.status = !state.controls.search.status;
+    },
+    setSearchText: (state, action) => {
+      state.controls.search.text = action.payload;
+    },
+    setSearchItems: (state, action) => {
+      state.controls.search.searchedItems = action.payload;
+    },
   },
   extraReducers(builder) {
     builder.addCase(flyToLayer.fulfilled, (state, action) => {
       console.log('act', action.payload);
       const [longitude, latitude] = action.payload.centerOfLayer;
+      const maxDiff = action.payload.maxDiff;
+      const zoom = lat2Zoom(maxDiff);
+      state.config.viewState = {
+        pitch: 0,
+        bearing: 0,
+        transitionDuration: 2000,
+        transitionInterpolator: new FlyToInterpolator(),
+        latitude,
+        longitude,
+        zoom,
+      };
+    });
+    builder.addCase(flyToSearchedItem.fulfilled, (state, action) => {
+      console.log('act', action.payload);
+      const [longitude, latitude] = action.payload.centerOfItem;
       const maxDiff = action.payload.maxDiff;
       const zoom = lat2Zoom(maxDiff);
       state.config.viewState = {
@@ -150,7 +198,10 @@ export const mapSlice = createSlice({
 export const {
   disableEditMode,
   enableEditMode,
+  setSearchItems,
+  setSearchText,
   setRulerMode,
+  toggleSearch,
   closeSubMenu,
   setViewMode,
   setDrawMode,

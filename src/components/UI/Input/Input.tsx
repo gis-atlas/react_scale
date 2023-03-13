@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import './index.sass';
 
 interface IInput {
@@ -7,6 +7,7 @@ interface IInput {
   label?: string;
   placeholder?: string;
   defaultValue?: string;
+  value?: string;
 
   onInput?: any;
 
@@ -44,6 +45,7 @@ const Input = ({
   disabled,
   appendIcon,
   onAppendIconClick,
+  value = '',
   withLabel = false,
 }: IInput) => {
   const [focused, setFocused] = useState<boolean>(false);
@@ -66,6 +68,10 @@ const Input = ({
     }
     onInput(target.value);
   };
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   useEffect(() => {
     inputValue.length !== 0 && setFilled(true);

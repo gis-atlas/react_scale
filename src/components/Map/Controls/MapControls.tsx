@@ -4,13 +4,16 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../store';
 import {
   disableEditMode,
+  flyToSearchedItem,
   setRulerMode,
   setViewMode,
   toggleRuler,
+  toggleSearch,
   toggleView,
 } from '../../../store/map';
 import { modes, views } from '../../../store/map/mapConfig';
 import { RootState } from '../../../store/reducer';
+import Geocoder from '../../Geocoder/Geocoder';
 import Button from '../../UI/Button/Button';
 import './index.sass';
 
@@ -18,7 +21,7 @@ const MapControls = () => {
   const dispatch = useAppDispatch();
 
   const {
-    controls: { ruler, view },
+    controls: { ruler, view, search },
     mode: { status },
   } = useSelector((state: RootState) => state.map);
 
@@ -34,9 +37,36 @@ const MapControls = () => {
 
   return (
     <div className='map-controls'>
-      <Button variant='circle' color='secondary'>
-        <img src='/images/icons/map/loupe.svg' alt='' />
-      </Button>
+      <div className='flex bg-white rounded-2xl'>
+        <Geocoder
+          classNames={classNames('search-input', {
+            active: search.status,
+          })}
+        />
+        <ul className='searched-items top-10 absolute overflow-hidden bg-white rounded-xl flex flex-col py-4'>
+          {search.searchedItems?.map((item: any) => (
+            <li
+              key={item.place_id}
+              className='bg-white py-1 px-3 text-xss cursor-pointer'
+              onClick={() => {
+                dispatch(flyToSearchedItem(item.boundingbox));
+              }}
+            >
+              {item.display_name}
+            </li>
+          ))}
+        </ul>
+        <Button
+          variant='circle'
+          color='secondary'
+          className={classNames({
+            active: search.status,
+          })}
+          onClick={() => dispatch(toggleSearch())}
+        >
+          <img src='/images/icons/map/loupe.svg' alt='' />
+        </Button>
+      </div>
       <Button
         variant='circle'
         color='secondary'

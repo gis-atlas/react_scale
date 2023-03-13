@@ -1,5 +1,5 @@
 import { DeckGL } from '@deck.gl/react/typed';
-import { DrawPointMode, EditableGeoJsonLayer } from 'nebula.gl';
+import { EditableGeoJsonLayer } from 'nebula.gl';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../store';
@@ -30,11 +30,11 @@ const DeckMap = () => {
   const [editableLayer, setEditableLayer] = useState<any>();
 
   useEffect(() => {
-    const layer = new EditableGeoJsonLayer({
+    const layer = new (EditableGeoJsonLayer as any)({
       id: 'editable-layer',
       data: features,
       mode: mode.mode,
-      onEdit: ({ updatedData }) => {
+      onEdit: ({ updatedData }: any) => {
         setFeatures(updatedData);
       },
       selectedFeatureIndexes,

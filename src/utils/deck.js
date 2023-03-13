@@ -138,9 +138,8 @@ export const lat2Zoom = lat => {
 };
 
 export const getCenterOfLayer = bounds => {
-  console.log('bounds', bounds);
-  console.log('bboxpoly', bboxPolygon(bounds));
-  const centerOfLayer = center(bbox(bounds));
+  const centerOfLayer = center(bboxPolygon(bounds));
+  console.log('center', centerOfLayer);
   return centerOfLayer.geometry.coordinates;
 };
 
