@@ -16,3 +16,11 @@
   img
     @include figure($width: 40px, $height: 40px)
     @include border-radius($radius: 6px)
+  &.comfortable
+    @include flexbox($gap: 5px)
+    @include margin-padding($p-direction: all, $p-amount: 3px 5px)
+    img
+      @include figure($width: 30px, $height: 30px)
+    h6
+      @include font($size: 10px, $weight: 700)
+      

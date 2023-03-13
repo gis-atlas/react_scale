@@ -5,12 +5,17 @@ import './index.sass';
 
 interface IMapStyleCard {
   src?: string;
-  style?: string;
   isActive?: boolean;
   baseLayer?: any;
+  variant?: 'default' | 'comfortable';
 }
 
-const MapStyleCard = ({ src, isActive = false, baseLayer }: IMapStyleCard) => {
+const MapStyleCard = ({
+  src,
+  isActive = false,
+  baseLayer,
+  variant = 'default',
+}: IMapStyleCard) => {
   const dispatch = useAppDispatch();
   const onChangeMapStyle = () => {
     dispatch(setBaseTile(baseLayer));
@@ -19,11 +24,12 @@ const MapStyleCard = ({ src, isActive = false, baseLayer }: IMapStyleCard) => {
     <div
       className={classNames('map-view-card', {
         active: isActive,
+        [`${variant}`]: variant,
       })}
       onClick={onChangeMapStyle}
     >
       <img src={src || '/images/icons/plus.svg'} alt='' />
-      <h6>{baseLayer.title}</h6>
+      <h6>{variant === 'comfortable' ? baseLayer.abbr : baseLayer.title}</h6>
     </div>
   );
 };

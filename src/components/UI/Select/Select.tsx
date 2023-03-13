@@ -14,6 +14,7 @@ interface ISelect {
   triangle?: 'default' | 'closely';
   withoutBackground?: boolean;
   disabled?: boolean;
+  className?: string;
 }
 
 const Select = ({
@@ -28,6 +29,7 @@ const Select = ({
   withoutBackground = false,
   disabled = false,
   type = 'default',
+  className = '',
 }: ISelect) => {
   const [opened, setOpened] = useState<boolean>(selectStatus);
 
@@ -48,6 +50,7 @@ const Select = ({
         empty: options.length === 0,
         [`${variant}`]: variant,
         [`${size}`]: size,
+        [`${className}`]: className,
       })}
     >
       <div

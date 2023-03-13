@@ -19,13 +19,11 @@ export const flyToLayer = createAsyncThunk(
 
     let centerOfLayer;
     let maxDiff;
-    console.log('2', layer);
 
     centerOfLayer = getCenterOfLayer(bounds);
     const dx = bounds[2] - bounds[0];
     const dy = bounds[3] - bounds[1];
     maxDiff = Math.max(dx, dy);
-    console.log('3', layer);
 
     console.log(layer);
     console.log(centerOfLayer, bounds);

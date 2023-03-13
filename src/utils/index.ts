@@ -75,14 +75,14 @@ export const randomRGBA = () => {
   return [r, g, b] as RGBAColor;
 };
 
-export const formatDatasetType = (datasetType: string) => {
+export const formatDatasetType = (datasetType: string, id: number) => {
   switch (datasetType) {
     case 'LineString':
-      return 'Линия';
+      return `Линия ${id}`;
     case 'Point':
-      return 'Точка';
+      return `Точка рекогносцировки ${id}`;
     case 'Polygon':
-      return 'Полигон';
+      return `Полигон ${id}`;
     default:
       return 'Неизвестно';
   }

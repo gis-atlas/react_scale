@@ -2,11 +2,14 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../store';
-import { disableEditMode, setDrawMode } from '../../../store/map';
+import { setDrawMode } from '../../../store/map';
+import { mapBaseLayers } from '../../../store/map/baseLayers';
 import { modes } from '../../../store/map/mapConfig';
 import { RootState } from '../../../store/reducer';
 import { formatDatasetType } from '../../../utils';
+import DatasetCard from '../../Cards/Dataset/DatasetCard';
 import LayerTypeCard from '../../Cards/Layers/Type/LayerTypeCard';
+import MapStyleCard from '../../Cards/MapStyle/MapStyleCard';
 import Button from '../../UI/Button/Button';
 import Input from '../../UI/Input/Input';
 import Select from '../../UI/Select/Select';
@@ -14,21 +17,24 @@ import './index.sass';
 
 const EditMapMenu = () => {
   const dispatch = useAppDispatch();
-  const [opened, setOpened] = useState<boolean>(true);
   const selectedDrawMode = useSelector(
     (state: RootState) => state.map.mode.mode.name
   );
+
+  const [layersOpened, setLayersOpened] = useState<boolean>(false);
+  const [mapStylesOpened, setMapStylesOpened] = useState<boolean>(false);
 
   const dataset = useSelector(
     (state: RootState) => state.map.data.createdDataset
   );
 
-  const [isDatasetObjectsOpened, setDatasetObjectsOpened] =
-    useState<boolean>(false);
+  const currentMapInfo: any = useSelector(
+    (state: RootState) => state.map.layers.baseTile
+  );
 
-  const closeEditMenu = () => {
-    dispatch(disableEditMode());
-  };
+  const [isDatasetObjectsOpened, setDatasetObjectsOpened] =
+    useState<boolean>(true);
+
   const changeDrawMode = (mode: any) => {
     console.log(mode);
     if (selectedDrawMode === mode.name) {
@@ -40,51 +46,47 @@ const EditMapMenu = () => {
 
   return (
     <>
-      {!opened && (
-        <Button
-          variant='circle'
-          color='secondary'
-          styles={{
-            position: 'absolute',
-            top: '36px',
-            transform: 'rotate(180deg)',
-            left: '10px',
-            zIndex: 100,
-          }}
-          onClick={() => setOpened(true)}
-        >
-          <img src='/images/icons/map/chevron.svg' alt='' />
-          <img src='/images/icons/map/chevron.svg' alt='' />
-        </Button>
-      )}
-      <div
-        className={classNames('map-menu edit-menu', {
-          opened: opened,
-        })}
-      >
-        <div className='map-menu-controls'>
-          <Button
-            variant='circle'
-            color='secondary'
-            onClick={() => setOpened(false)}
-          >
-            <img src='/images/icons/map/chevron.svg' alt='' />
-            <img src='/images/icons/map/chevron.svg' alt='' />
-          </Button>
+      <div className='absolute left-7 top-8 flex gap-4'>
+        <div className='relative'>
+          <Select
+            state='Слои'
+            variant='contained'
+            triangle='closely'
+            getSelectStatus={setLayersOpened}
+          />
+          {layersOpened && (
+            <ul className='absolute top-10 center z-10'>нет слоев</ul>
+          )}
         </div>
+        <div className='relative'>
+          <Select
+            state='Карты'
+            variant='contained'
+            triangle='closely'
+            getSelectStatus={setMapStylesOpened}
+          />
+          {mapStylesOpened && (
+            <ul className='absolute flex flex-col top-10 center z-10 gap-2'>
+              {mapBaseLayers?.map((baseLayer: any) => (
+                <MapStyleCard
+                  key={baseLayer.layer.id}
+                  baseLayer={baseLayer}
+                  variant='comfortable'
+                  isActive={currentMapInfo.layer.id === baseLayer.layer.id}
+                  src={baseLayer.imageSrc}
+                />
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+      <div className={classNames('edit-menu', {})}>
         <div className='map-menu-title'>
           <div className='d-flex ai-c' style={{ gap: '12px' }}>
-            <img src='/images/icons/arrow.svg' alt='' onClick={closeEditMenu} />
             <h4>Режим редактирования</h4>
           </div>
         </div>
-        <Input
-          label='Имя датасета'
-          name='datasetName'
-          className='dataset-name'
-        />
         <div className='layer-type-choise'>
-          <h5>Создать</h5>
           <div className='layer-type-choise-list'>
             {modes.draw?.map(drawMode => (
               <LayerTypeCard
@@ -103,29 +105,37 @@ const EditMapMenu = () => {
           variant='text'
           triangle='closely'
           withoutBackground
+          selectStatus={isDatasetObjectsOpened}
           getSelectStatus={setDatasetObjectsOpened}
         />
         {isDatasetObjectsOpened && (
-          <ul className='flex flex-col gap-2 ml-2'>
-            {dataset?.features?.map((datasetItem: any) => (
+          <ul className='dataset-list flex flex-col gap-2 ml-2'>
+            {dataset.features?.length ? (
               <>
-                <li>{formatDatasetType(datasetItem.geometry.type)}</li>
+                {dataset.features?.map((datasetItem: any, index: number) => (
+                  <>
+                    <li>
+                      <DatasetCard
+                        key={index}
+                        id={index}
+                        datasetItem={datasetItem}
+                        selected={false}
+                      />
+                    </li>
+                  </>
+                ))}
               </>
-            ))}
+            ) : (
+              <li className='text-sm font-bold'>
+                Вы не добавили ни одного объекта
+              </li>
+            )}
           </ul>
         )}
-        <Select
-          state='Слои'
-          variant='text'
-          triangle='closely'
-          withoutBackground
-        />
-        <Select
-          state='Карты'
-          variant='text'
-          triangle='closely'
-          withoutBackground
-        />
+        <div className='flex gap-2 mt-6'>
+          <Button color='secondary'>Выйти</Button>
+          <Button color='primary'>Сохранить</Button>
+        </div>
       </div>
     </>
   );

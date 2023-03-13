@@ -3,6 +3,7 @@ import { SyntheticEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../store';
 import {
+  disableEditMode,
   setRulerMode,
   setViewMode,
   toggleRuler,
@@ -16,7 +17,10 @@ import './index.sass';
 const MapControls = () => {
   const dispatch = useAppDispatch();
 
-  const { ruler, view } = useSelector((state: RootState) => state.map.controls);
+  const {
+    controls: { ruler, view },
+    mode: { status },
+  } = useSelector((state: RootState) => state.map);
 
   const changeRulerMode = (e: SyntheticEvent, mode: any) => {
     e.stopPropagation();
@@ -89,6 +93,18 @@ const MapControls = () => {
           </ul>
         )}
       </Button>
+      {status === 'edit' && (
+        <Button
+          variant='circle'
+          color='secondary'
+          className={classNames({
+            active: status === 'edit',
+          })}
+          onClick={() => dispatch(disableEditMode())}
+        >
+          <img src='/images/icons/map/pencil.svg' alt='' />
+        </Button>
+      )}
       <Button variant='circle' color='secondary'>
         <img src='/images/icons/map/notification.svg' alt='' />
       </Button>
