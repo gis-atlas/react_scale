@@ -13,7 +13,7 @@ const LayerData = () => {
       <h3 className='ml-3'>{name}</h3>
       <h5>Управление слоем</h5>
       <div className='layer-controller flex flex-col pt-3 pr-5 pb-3 pl-4'>
-        <div className='grid grid-cols-3 gap-3 items-center'>
+        <div className='flex gap-3 items-center'>
           <img
             src='/images/icons/layers/cloud-off.svg'
             alt=''
@@ -24,7 +24,7 @@ const LayerData = () => {
           </span>
           <div className='self-end'>tgl</div>
         </div>
-        <div className='grid grid-cols-3 gap-3 items-center'>
+        <div className='flex gap-3 items-center'>
           <img src='/images/icons/layers/eye-closed.svg' alt='' />
           <span className='text-xss font-bold'>Сделать видимым</span>
           <div>tgl</div>
