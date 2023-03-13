@@ -2,7 +2,13 @@
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,sass}'],
   theme: {
+    extend: {
+      maxWidth: {
+        xss: '220px',
+      },
+    },
     fontSize: {
+      vsm: '8px',
       xss: '10px',
       sm: '0.8rem',
       base: '1rem',
@@ -12,7 +18,6 @@ module.exports = {
       '4xl': '2.441rem',
       '5xl': '3.052rem',
     },
-    extend: {},
   },
   plugins: [],
 };
